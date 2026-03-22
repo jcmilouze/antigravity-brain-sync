@@ -1,27 +1,21 @@
-node_modules/
-.env
-dist/
-out/
-build/
-# .vsix
-*.log
 .DS_Store
-.venv/
-__pycache__/
-*.sqlite
-*.db
-.cache/
-
-# Agent Data (Full Sync Mode)
-# brain/
-# conversations/
+annotations/
+antigravity-brain-sync/
+brain/
 browser_recordings/
-# html_artifacts/
-# mcp-bridge-lmstudio/
-# context_state/
-# annotations/
-# installation_id
-
-# Local Temp/Scratch
-/tmp/
-.temp/
+browserAllowlist.txt
+browserOnboardingStatus.txt
+code_tracker/
+context_state/
+conversations/
+html_artifacts/
+implicit/
+installation_id
+knowledge/
+playground/
+scratch/
+user_settings.pb
+extension/node_modules/
+extension/dist/
+extension/package-lock.json
+extension/*.vsix
