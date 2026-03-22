@@ -1,0 +1,56 @@
+# 🏛️ Skill: OLLAMA-GOVERNOR (VRAM Dynamic Orchestrator)
+
+## 🆔 ID & Mission
+**Nom** : `ollama-governor`
+**Mission** : Gérer l'alternance entre les modèles de Codage Lourd (32B+) et les modèles de Raisonnement (14B) sur une RTX 4090 pour garantir 0 lag et 100% de précision. 
+**Priorité Absolue** : Le Local-First. Utiliser les modèles Ollama au détriment des jetons Gemini payants pour toutes les tâches de code et de raisonnement standard.
+
+---
+
+## 🏗️ PROTOCOLE DE DÉMARRAGE (Bootstrap Antigravity)
+À chaque début de session ou de nouveau développement :
+1. **Audit Serveur** : Vérifier si `ollama` est en cours d'exécution via le port 11434.
+2. **Auto-Lancement** : Si le serveur est éteint, lancer `& "$env:LOCALAPPDATA\Programs\Ollama\ollama.exe" serve`.
+3. **Ciblage Antigravity** : S'assurer que les deux agents (`ministral-3:14b` et `qwen2.5-coder:32b`) sont présents.
+
+---
+
+## 🛠️ MODES D'EXÉCUTION
+
+### 1. 💻 MODE CODAGE (Power Shift)
+- **Modèle** : `qwen2.5-coder:32b`
+- **Action** : 
+  1. Décharger le modèle de raisonnement : `Invoke-RestMethod -Method Post -Uri "http://localhost:11434/api/generate" -Body '{"model": "ministral-3:14b", "keep_alive": 0}'`
+  2. Charger le Coder : `& "$env:LOCALAPPDATA\Programs\Ollama\ollama.exe" run qwen2.5-coder:32b`
+- **Usage** : Génération de composants React, refactorisation massive, CSS complexe.
+
+### 2. 🧠 MODE ANALYSE (Reasoning Shift)
+- **Modèle** : `ministral-3:14b`
+- **Action** :
+  1. **API Unload** : `Invoke-RestMethod -Method Post -Uri "http://localhost:11434/api/generate" -Body '{"model": "qwen2.5-coder:32b", "keep_alive": 0}'`
+  2. **Load Analyst** : `ollama run ministral-3:14b`
+- **Usage** : Planification, audit UI/UX, stratégie de marque, logique métier.
+
+### 3. ⚡ ASTUCE PERFORMANCE (Zero-Restart)
+Pour basculer instantanément sans redémarrer le serveur Ollama : 
+Utiliser systématiquement `keep_alive: 0` via l'API `/api/generate` ou `/api/chat` pour forcer la libération de la VRAM avant de charger le modèle suivant.
+
+---
+
+## 📏 RÈGLES DE GOUVERNANCE
+- **Vérification VRAM** : Avant chaque switch, lancer `nvidia-smi`.
+- **Zéro Conflit** : Ne JAMAIS charger les deux modèles simultanément s'ils dépassent 20 Go au total.
+- **Transparence** : Toujours annoncer le switch à l'utilisateur : *"Gouverneur, je bascule en Mode Codage..."*
+
+---
+
+## 💰 POLITIQUE D'ÉCONOMIE D'ÉNERGIE (Quotas Cloud)
+**Règle d'or** : Antigravity n'appelle Gemini que si :
+1. La fenêtre de contexte dépasse 32k tokens.
+2. Une analyse de vision (image) complexe est requise (si non gérée localement).
+3. Le besoin de raisonnement dépasse les capacités de Ministral-14B (rareté extrême).
+
+**Dans tous les autres cas : Use Local.**
+
+---
+*Initialisé le : 22 Mars 2026 — Antigravity Execution Governor.*

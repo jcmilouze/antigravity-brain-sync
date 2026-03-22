@@ -1,0 +1,27 @@
+node_modules/
+.env
+dist/
+out/
+build/
+# .vsix
+*.log
+.DS_Store
+.venv/
+__pycache__/
+*.sqlite
+*.db
+.cache/
+
+# Agent Data (Full Sync Mode)
+# brain/
+# conversations/
+browser_recordings/
+# html_artifacts/
+# mcp-bridge-lmstudio/
+# context_state/
+# annotations/
+# installation_id
+
+# Local Temp/Scratch
+/tmp/
+.temp/
