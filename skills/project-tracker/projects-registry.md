@@ -236,14 +236,14 @@
 - **Localisation** : `C:\Users\mimilouze\.gemini\antigravity\scratch\antigravity-vscode-sync`
 - **Dernière session** : 2026-03-22 — Création du projet. Objectif : synchroniser les skills, projets et listes LLM Ollama
 ### Achievements (Current Session)
-- **Antigravity Sync v1.2.1**: **Bug Fix Edition**.
-    - **Dynamic Branch Detection**: Detects automatically if you use `master`, `main` or any other branch.
-    - **Visual States**: Green/Orange/Red reactive status bar.
-    - **File Watcher**: Instant awareness of memory changes.
+- **Antigravity Sync v1.2.2**: **Connection Resilience Edition**.
+    - **SSH Bypass**: Added automatic bypass for first-time SSH connections (`StrictHostKeyChecking=no`).
+    - **First Sync UI**: New `$(cloud) First Sync` cyan status when the remote isn't pushed yet.
+    - **Stability**: Prevents the `fatal: ambiguous argument` crash.
 
-### STATUS: READY v1.2.1 ("The Multi-Branch Pulse")
-- **Next Steps**: Install the latest `.vsix` v1.2.1 to fix the branch error.
-- **Tech Stack**: TypeScript, VS Code API, Git (Dynamic Branching).
+### STATUS: READY v1.2.2 ("The Resilient Pulse")
+- **Next Steps**: Install v1.2.2 vsix and Cloud Push to initialize the brain on GitHub.
+- **Tech Stack**: TypeScript, VS Code API, Git (SSH optimized).
 - **Prochaine action** : 
   1. Initialiser le socle de l'extension VS Code.
   2. Définir le mécanisme de synchronisation (Git privé, Gist ou API).

@@ -13,66 +13,83 @@ export function activate(context: vscode.ExtensionContext) {
     // Status Bar Item
     const statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
     statusBarItem.text = `$(sync) Antigravity`;
-    statusBarItem.tooltip = 'Analyse du Brain...';
+    statusBarItem.tooltip = 'Connexion au Cloud...';
     statusBarItem.command = 'antigravity.syncMenu';
     context.subscriptions.push(statusBarItem);
     statusBarItem.show();
 
-    // Helper: Run Git command in brain directory
+    // Helper: Run Git command with SSH bypass
     const gitExec = async (cmd: string) => {
-        return execAsync(`cd "${antigravityPath}" && ${cmd}`);
+        // -c core.sshCommand="ssh -o StrictHostKeyChecking=no" helps with first-time prompts
+        return execAsync(`cd "${antigravityPath}" && git -c core.sshCommand="ssh -o StrictHostKeyChecking=no" ${cmd}`);
     };
 
     // Polling Logic
     const pollSyncStatus = async () => {
         try {
             // 0. Detect Current Branch
-            const { stdout: branchRaw } = await gitExec(`git branch --show-current`);
-            const currentBranch = branchRaw.trim() || 'main';
+            const { stdout: branchRaw } = await gitExec(`branch --show-current`);
+            const currentBranch = branchRaw.trim() || 'master';
 
-            // 1. Fetch remote but fail silently if no network
+            // 1. Fetch remote but fail silently if no network/auth
             try {
-                await gitExec(`git fetch origin ${currentBranch}`);
+                await gitExec(`fetch origin ${currentBranch}`);
             } catch (e) {}
 
             // 2. Check Local Changes (Dirty state)
-            const { stdout: statusRaw } = await gitExec(`git status --porcelain`);
+            const { stdout: statusRaw } = await gitExec(`status --porcelain`);
             const isDirty = statusRaw.trim().length > 0;
 
-            // 3. Check Ahead/Behind counts with detected branch
-            const { stdout: revRaw } = await gitExec(`git rev-list --left-right --count origin/${currentBranch}...${currentBranch}`);
-            const counts = revRaw.trim().split(/\s+/).map(Number);
-            const behind = counts[0] || 0;
-            const ahead = counts[1] || 0;
+            // 3. Verify if remote ref actually exists
+            let behind = 0;
+            let ahead = 0;
+            let remoteExists = false;
+
+            try {
+                await gitExec(`show-ref --quiet --verify refs/remotes/origin/${currentBranch}`);
+                remoteExists = true;
+                
+                // Only check rev-list if ref exists
+                const { stdout: revRaw } = await gitExec(`rev-list --left-right --count origin/${currentBranch}...${currentBranch}`);
+                const counts = revRaw.trim().split(/\s+/).map(Number);
+                behind = counts[0] || 0;
+                ahead = counts[1] || 0;
+            } catch (e) {
+                remoteExists = false; // "First Sync" state
+            }
 
             // 4. Update UI
-            if (behind > 0) {
-                statusBarItem.text = `$(cloud-download) Antigravity Behind (-${behind})`;
-                statusBarItem.color = '#ff5555';
-                statusBarItem.tooltip = `🚨 Le Cloud [${currentBranch}] est en avance.\nPull required.\n\nFichiers modifiés localement: ${isDirty ? 'OUI' : 'NON'}`;
+            if (!remoteExists) {
+                statusBarItem.text = `$(cloud) Brain: First Sync`;
+                statusBarItem.color = '#7adcf0'; // Cyan
+                statusBarItem.tooltip = `🔌 Prêt pour la première connexion à GitHub.\nBranche locale: [${currentBranch}]\nCliquez pour Push.`;
+            } else if (behind > 0) {
+                statusBarItem.text = `$(cloud-download) Brain Behind (-${behind})`;
+                statusBarItem.color = '#ff5555'; // Red
+                statusBarItem.tooltip = `🚨 Conscience distante [${currentBranch}] en avance.\nPull requis.`;
             } else if (isDirty || ahead > 0) {
-                statusBarItem.text = `$(cloud-upload) Antigravity Dirty (+${ahead})`;
-                statusBarItem.color = '#ffcc00';
-                statusBarItem.tooltip = `📤 Ton PC [${currentBranch}] a de nouveaux souvenirs.\nPush recommended.\n\nFichiers à commit: ${isDirty ? 'OUI' : 'NON'}`;
+                statusBarItem.text = `$(cloud-upload) Brain Dirty (+${ahead})`;
+                statusBarItem.color = '#ffcc00'; // Orange
+                statusBarItem.tooltip = `📤 Nouveaux souvenirs sur [${currentBranch}] à archiver.\nPush recommandé.`;
             } else {
-                statusBarItem.text = `$(pass) Antigravity [${currentBranch}]`;
-                statusBarItem.color = '#00ff88';
+                statusBarItem.text = `$(pass) Brain Synced`;
+                statusBarItem.color = '#00ff88'; // Matrix Green
                 statusBarItem.tooltip = `✅ Brain synchronisé sur [${currentBranch}].\nDernier check: ${new Date().toLocaleTimeString()}`;
             }
 
         } catch (error: any) {
-            statusBarItem.text = `$(warning) Antigravity (Local Only)`;
+            statusBarItem.text = `$(warning) Brain (Offline)`;
             statusBarItem.color = '#777777';
-            statusBarItem.tooltip = `Erreur lors de l'analyse: ${error.message}`;
+            statusBarItem.tooltip = `Erreur d'analyse: ${error.message}`;
         }
     };
 
-    // Auto-poll every 5 minutes
+    // Auto-poll
     const pollTimer = setInterval(pollSyncStatus, 5 * 60 * 1000);
     context.subscriptions.push({ dispose: () => clearInterval(pollTimer) });
     pollSyncStatus();
 
-    // Watcher: trigger poll if a file changes
+    // Watcher
     const watcher = vscode.workspace.createFileSystemWatcher(new vscode.RelativePattern(antigravityPath, '+(skills|scripts)/**/*'));
     watcher.onDidChange(pollSyncStatus);
     watcher.onDidCreate(pollSyncStatus);
@@ -88,8 +105,8 @@ export function activate(context: vscode.ExtensionContext) {
 
         if (url) {
             try {
-                await gitExec(`(git remote set-url origin "${url}" || git remote add origin "${url}")`);
-                vscode.window.showInformationMessage(`✅ Remote Cloud aligné : ${url}`);
+                await gitExec(`remote set-url origin "${url}" || git remote add origin "${url}"`);
+                vscode.window.showInformationMessage(`✅ Remote Cloud configuré : ${url}`);
                 pollSyncStatus();
             } catch (e) {
                 vscode.window.showErrorMessage(`❌ Échec : ${e}`);
@@ -99,17 +116,17 @@ export function activate(context: vscode.ExtensionContext) {
 
     // Command: Menu
     const menuCommand = vscode.commands.registerCommand('antigravity.syncMenu', async () => {
-        const { stdout: branchRaw } = await gitExec(`git branch --show-current`);
-        const currentBranch = branchRaw.trim() || 'main';
+        const { stdout: branchRaw } = await gitExec(`branch --show-current`);
+        const currentBranch = branchRaw.trim() || 'master';
 
         const options: vscode.QuickPickItem[] = [
-            { label: '📤 Archiver mes souvenirs (Push)', description: `Envoie sur [${currentBranch}]` },
-            { label: '📥 Récupérer la conscience (Pull)', description: `Depuis [${currentBranch}] (Rebase)` },
-            { label: '⚙️ Configuration Cloud', description: 'Changer de dépôt distant' },
-            { label: '🔍 Check Status Now', description: 'Vérifier maintenant' }
+            { label: '📤 Archiver mes souvenirs (Push)', description: `Vers [${currentBranch}]` },
+            { label: '📥 Récupérer la conscience (Pull)', description: `D'après [${currentBranch}]` },
+            { label: '⚙️ Configuration Cloud', description: 'Changer la destination' },
+            { label: '🔍 Check Status Now', description: 'Vérifier la connexion' }
         ];
         
-        const choice = await vscode.window.showQuickPick(options, { placeHolder: '🌌 Antigravity Brain Control Center' });
+        const choice = await vscode.window.showQuickPick(options, { placeHolder: '🌌 Control Center : Antigravity synchronization' });
 
         if (!choice) return;
         if (choice.label.includes('Check')) { pollSyncStatus(); return; }
@@ -117,24 +134,24 @@ export function activate(context: vscode.ExtensionContext) {
 
         vscode.window.withProgress({
             location: vscode.ProgressLocation.Notification,
-            title: `Antigravity : ${choice.label}`,
+            title: `Sync [${currentBranch}]...`,
             cancellable: false
         }, async (progress) => {
             try {
                 if (choice.label.includes('Push')) {
-                    progress.report({ message: "Écriture des synapses..." });
-                    await gitExec(`git add . && git commit -m "🌀 Brain Sync [${machineName}]: ${new Date().toLocaleString()}" && git push origin ${currentBranch}`);
+                    progress.report({ message: "Émission vers le Cloud..." });
+                    await gitExec(`add . && git commit -m "🌀 Brain Sync [${machineName}]: ${new Date().toLocaleString()}" && git push -u origin ${currentBranch}`);
                 } else {
-                    progress.report({ message: "Inclusion des souvenirs distants..." });
-                    await gitExec(`git pull --rebase origin ${currentBranch}`);
+                    progress.report({ message: "Fusion neuronale..." });
+                    await gitExec(`pull --rebase origin ${currentBranch}`);
                 }
-                vscode.window.showInformationMessage(`✅ Antigravity Core : ${choice.label} terminé.`);
+                vscode.window.showInformationMessage(`✅ Brain : ${choice.label} terminé.`);
                 pollSyncStatus();
             } catch (error: any) {
                 if (error.stdout?.includes("nothing to commit")) {
-                    vscode.window.showInformationMessage("ℹ️ Aucun changement détecté.");
+                    vscode.window.showInformationMessage("ℹ️ Aucun changement.");
                 } else if (error.stderr?.includes("CONFLICT")) {
-                    vscode.window.showErrorMessage("🚨 Conflits critiques ! Allez dans l'onglet Git.");
+                    vscode.window.showErrorMessage("🚨 Conflit détecté !");
                 } else {
                     vscode.window.showErrorMessage(`❌ Échec : ${error.stderr || error.message}`);
                 }

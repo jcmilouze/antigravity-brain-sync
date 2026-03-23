@@ -2,7 +2,7 @@
   "name": "antigravity-vscode-sync",
   "displayName": "Antigravity Cloud Sync",
   "description": "Synchronize Antigravity memory and skills via private Git repository",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "publisher": "mimilouze",
   "repository": {
     "type": "git",
