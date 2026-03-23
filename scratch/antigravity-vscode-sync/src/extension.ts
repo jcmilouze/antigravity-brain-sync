@@ -18,29 +18,23 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(statusBarItem);
     statusBarItem.show();
 
-    // Helper: Run Git command with SSH bypass
-    const gitExec = async (cmd: string) => {
-        // -c core.sshCommand="ssh -o StrictHostKeyChecking=no" helps with first-time prompts
-        return execAsync(`cd "${antigravityPath}" && git -c core.sshCommand="ssh -o StrictHostKeyChecking=no" ${cmd}`);
+    // Helper: Run Git command safely
+    const gitExec = async (cmd: string, useSSH: boolean = false) => {
+        const sshOpt = useSSH ? '-c core.sshCommand="ssh -o StrictHostKeyChecking=no" ' : '';
+        return execAsync(`cd "${antigravityPath}" && git ${sshOpt}${cmd}`);
     };
 
     // Polling Logic
     const pollSyncStatus = async () => {
         try {
-            // 0. Detect Current Branch
             const { stdout: branchRaw } = await gitExec(`branch --show-current`);
             const currentBranch = branchRaw.trim() || 'master';
 
-            // 1. Fetch remote but fail silently if no network/auth
-            try {
-                await gitExec(`fetch origin ${currentBranch}`);
-            } catch (e) {}
+            try { await gitExec(`fetch origin ${currentBranch}`, true); } catch (e) {}
 
-            // 2. Check Local Changes (Dirty state)
             const { stdout: statusRaw } = await gitExec(`status --porcelain`);
             const isDirty = statusRaw.trim().length > 0;
 
-            // 3. Verify if remote ref actually exists
             let behind = 0;
             let ahead = 0;
             let remoteExists = false;
@@ -48,35 +42,31 @@ export function activate(context: vscode.ExtensionContext) {
             try {
                 await gitExec(`show-ref --quiet --verify refs/remotes/origin/${currentBranch}`);
                 remoteExists = true;
-                
-                // Only check rev-list if ref exists
                 const { stdout: revRaw } = await gitExec(`rev-list --left-right --count origin/${currentBranch}...${currentBranch}`);
                 const counts = revRaw.trim().split(/\s+/).map(Number);
                 behind = counts[0] || 0;
                 ahead = counts[1] || 0;
             } catch (e) {
-                remoteExists = false; // "First Sync" state
+                remoteExists = false;
             }
 
-            // 4. Update UI
             if (!remoteExists) {
                 statusBarItem.text = `$(cloud) Brain: First Sync`;
-                statusBarItem.color = '#7adcf0'; // Cyan
+                statusBarItem.color = '#7adcf0';
                 statusBarItem.tooltip = `🔌 Prêt pour la première connexion à GitHub.\nBranche locale: [${currentBranch}]\nCliquez pour Push.`;
             } else if (behind > 0) {
                 statusBarItem.text = `$(cloud-download) Brain Behind (-${behind})`;
-                statusBarItem.color = '#ff5555'; // Red
+                statusBarItem.color = '#ff5555';
                 statusBarItem.tooltip = `🚨 Conscience distante [${currentBranch}] en avance.\nPull requis.`;
             } else if (isDirty || ahead > 0) {
                 statusBarItem.text = `$(cloud-upload) Brain Dirty (+${ahead})`;
-                statusBarItem.color = '#ffcc00'; // Orange
+                statusBarItem.color = '#ffcc00';
                 statusBarItem.tooltip = `📤 Nouveaux souvenirs sur [${currentBranch}] à archiver.\nPush recommandé.`;
             } else {
                 statusBarItem.text = `$(pass) Brain Synced`;
-                statusBarItem.color = '#00ff88'; // Matrix Green
+                statusBarItem.color = '#00ff88';
                 statusBarItem.tooltip = `✅ Brain synchronisé sur [${currentBranch}].\nDernier check: ${new Date().toLocaleTimeString()}`;
             }
-
         } catch (error: any) {
             statusBarItem.text = `$(warning) Brain (Offline)`;
             statusBarItem.color = '#777777';
@@ -84,12 +74,10 @@ export function activate(context: vscode.ExtensionContext) {
         }
     };
 
-    // Auto-poll
     const pollTimer = setInterval(pollSyncStatus, 5 * 60 * 1000);
     context.subscriptions.push({ dispose: () => clearInterval(pollTimer) });
     pollSyncStatus();
 
-    // Watcher
     const watcher = vscode.workspace.createFileSystemWatcher(new vscode.RelativePattern(antigravityPath, '+(skills|scripts)/**/*'));
     watcher.onDidChange(pollSyncStatus);
     watcher.onDidCreate(pollSyncStatus);
@@ -140,10 +128,12 @@ export function activate(context: vscode.ExtensionContext) {
             try {
                 if (choice.label.includes('Push')) {
                     progress.report({ message: "Émission vers le Cloud..." });
-                    await gitExec(`add . && git commit -m "🌀 Brain Sync [${machineName}]: ${new Date().toLocaleString()}" && git push -u origin ${currentBranch}`);
+                    await gitExec(`add .`);
+                    await gitExec(`commit -m "🌀 Brain Sync [${machineName}]: ${new Date().toLocaleString()}"`);
+                    await gitExec(`push -u origin ${currentBranch}`, true);
                 } else {
                     progress.report({ message: "Fusion neuronale..." });
-                    await gitExec(`pull --rebase origin ${currentBranch}`);
+                    await gitExec(`pull --rebase origin ${currentBranch}`, true);
                 }
                 vscode.window.showInformationMessage(`✅ Brain : ${choice.label} terminé.`);
                 pollSyncStatus();

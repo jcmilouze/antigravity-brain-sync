@@ -237,16 +237,17 @@
 - **Dernière session** : 2026-03-22 — Création du projet. Objectif : synchroniser les skills, projets et listes LLM Ollama
 ### Achievements (Current Session)
 - **Antigravity Sync v1.2.2**: **Connection Resilience Edition**.
-    - **SSH Bypass**: Added automatic bypass for first-time SSH connections (`StrictHostKeyChecking=no`).
-    - **First Sync UI**: New `$(cloud) First Sync` cyan status when the remote isn't pushed yet.
-    - **Stability**: Prevents the `fatal: ambiguous argument` crash.
+- **Antigravity Sync v1.2.3**: **Windows Shell Fix**.
+    - **Atomic Steps**: Separated `add`, `commit`, and `push` to avoid shell quoting/concatenation issues.
+    - **Network Specific SSH**: Bypass SSH prompts only on network tasks (`fetch`, `push`, `pull`).
+    - **Reliability**: Highest stability for synchronization between PC/Mac.
 
-### STATUS: READY v1.2.2 ("The Resilient Pulse")
-- **Next Steps**: Install v1.2.2 vsix and Cloud Push to initialize the brain on GitHub.
-- **Tech Stack**: TypeScript, VS Code API, Git (SSH optimized).
+### STATUS: READY v1.2.3 ("The Atomic Pulse")
+- **Next Steps**: Install v1.2.3 and run the first push.
+- **Tech Stack**: TypeScript, VS Code API, Git (Atomic).
 - **Prochaine action** : 
-  1. Initialiser le socle de l'extension VS Code.
-  2. Définir le mécanisme de synchronisation (Git privé, Gist ou API).
+  1. Installer le `.vsix` v1.2.3.
+  2. Lancer un push pour activer le cloud-sync.
 - **Blockers** : Aucun
 - **Priorité** : P2
 - **Deadline** : Pas de deadline
