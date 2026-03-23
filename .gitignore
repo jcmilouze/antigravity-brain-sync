@@ -4,6 +4,7 @@ dist/
 out/
 build/
 # .vsix
+*.vsix
 *.log
 .DS_Store
 .venv/
@@ -13,15 +14,25 @@ __pycache__/
 .cache/
 
 # Agent Data (Full Sync Mode)
-# brain/
-# conversations/
+brain/
+conversations/
 browser_recordings/
-# html_artifacts/
-# mcp-bridge-lmstudio/
-# context_state/
-# annotations/
-# installation_id
+html_artifacts/
+mcp-bridge-lmstudio/
+context_state/
+annotations/
+installation_id
+
+# Antigravity System
+.agents/
+mcp_config.json*
+browserAllowlist.txt
+browserOnboardingStatus.txt
+user_settings.pb
+prompting/
+*.zip
 
 # Local Temp/Scratch
 /tmp/
 .temp/
+

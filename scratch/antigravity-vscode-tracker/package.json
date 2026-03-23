@@ -1,0 +1,38 @@
+{
+  "name": "antigravity-ollama-monitor",
+  "displayName": "Antigravity Ollama Monitor",
+  "description": "Monitore l'état d'Ollama (Online/Busy) directement dans la barre de statut de VS Code.",
+  "version": "0.1.5",
+  "publisher": "antigravity",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/antigravity/ollama-monitor"
+  },
+  "engines": {
+    "vscode": "^1.100.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "antigravity-ollama.mainMenu",
+        "title": "Antigravity: Ollama Main Menu"
+      },
+      {
+        "command": "antigravity-ollama.quickUnload",
+        "title": "Antigravity: Quick VRAM Purge"
+      }
+    ]
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.100.0",
+    "@vscode/vsce": "^3.7.1",
+    "typescript": "^4.9.5"
+  }
+}

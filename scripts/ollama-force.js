@@ -1,6 +1,6 @@
 const http = require('http');
 const fs = require('fs');
-const path = require('fs');
+const path = require('path');
 
 /**
  * Antigravity Ollama Force Connector v1.1.0

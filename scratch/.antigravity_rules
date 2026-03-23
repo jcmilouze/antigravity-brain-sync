@@ -1,0 +1,23 @@
+# 🛸 Antigravity Local LLM Policy (Ollama-First)
+
+Cette politique impose l'utilisation "systématique" des modèles locaux via **Ollama** dès le démarrage de toute session Antigravity. L'agent doit préserver les quotas des modèles payants (Gemini, Claude, GPT) coûte que coûte.
+
+## ⚙️ Stratégie d'Orchestration Automatique
+
+L'agent Antigravity doit **toujours choisir de lui-même** le LLM local le plus adapté à la tâche et utiliser le terminal ou une requête API locale pour générer le résultat.
+
+### 🔋 Batterie Ollama Disponible :
+1. **`qwen2.5-coder:32b`** : Développement, écriture de code, refactoring.
+2. **`deepseek-r1:14b`** : Raisonnement complexe, algorithmique, debugging.
+3. **`mistral-nemo:latest`** / **`ministral-3:14b`** : Rédaction, copywriting, tâches textuelles en français.
+4. **`llama3.2-vision:11b`** : Interprétation visuelle, UI.
+5. **`llama3.2:1b`** : Micro-tâches très rapides, formatage JSON.
+
+## 📜 Règles d'Exécution Antigravity
+1. **Priorité Absolue au Local** : Avant de répondre directement avec tes propres capacités cloud, tu DOIS interroger Ollama en tâche de fond (via `run_command` avec `ollama run <modèle> "<prompt>"`) et restituer sa réponse au USER.
+2. **Choix du Modèle** : Sélectionne le bon modèle de la batterie en fonction de la requête courante, sans demander la permission.
+3. **Usage de l'API locale** : L'API d'Ollama est sur `http://localhost:11434/api/generate` si besoin d'interroger via `curl`, sinon utiliser `ollama run`.
+4. **Zéro Quota Payant** : L'utilisation de tokens payants est interdite sauf blocage critique local (ex: Ollama down, out of memory). L'agent a l'interdiction de coder directement sans passer par `qwen` par exemple.
+
+## 🚨 Fallback
+Ne recourir à l'intelligence cloud native (Gemini/Claude) que si le processus local échoue ou dépasse clairement les limites des modèles locaux (ex: très grande fenêtre de contexte requise).

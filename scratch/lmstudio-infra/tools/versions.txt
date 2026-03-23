@@ -1,0 +1,4 @@
+model_name=qwen2.5-coder-32b-instruct
+model_version=1.0.0
+format=gguf
+quantization=none

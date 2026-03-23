@@ -1,0 +1,1 @@
+{"error":{"message":"Unsupported Media Type. POST requests must use 'application/json'","type":"invalid_request_error","code":"unsupported_media_type"}}

@@ -25,7 +25,7 @@
 | Antigravity Skills       | 🟡 En cours  | P3       | Enrichir skills existantes + sync MacBook            |
 | Antigravity LLM Tracker  | 🟡 En cours  | P1       | Intégration Protocole **Ollama Force** (Génération locale) |
 | Antigravity VSCode Sync  | 🟡 En cours  | P2       | Initialisation du projet d'extension de synchro      |
-| **OLLAMA FORCE**         | 🚀 ACTIVE     | P0       | Système de délégation de génération locale (Scripts) |
+| **OLLAMA FORCE**         | 🚀 ACTIVE     | P0       | Système de délégation locale (Ready v1.2.0)          |
 
 ---
 
@@ -234,7 +234,17 @@
 - **Statut** : 🟡 En cours — Phase 1 : Initialisation
 - **Stack** : TypeScript · VS Code Extension API
 - **Localisation** : `C:\Users\mimilouze\.gemini\antigravity\scratch\antigravity-vscode-sync`
-- **Dernière session** : 2026-03-22 — Création du projet. Objectif : synchroniser les skills, projets et listes LLM Ollama entre PC et Mac.
+- **Dernière session** : 2026-03-22 — Création du projet. Objectif : synchroniser les skills, projets et listes LLM Ollama
+### Achievements (Current Session)
+- **Antigravity Sync v1.2.0**: Enhanced UI with a **Reactive Status Bar**:
+    - **Visual States**: Green (Synced), Orange (Dirty/Ahead), Red (Behind/Mac has work).
+    - **File Watcher**: Instant update of the status bar when skills or scripts are modified.
+    - **QuickPick Center**: Unified menu for all cloud operations.
+- **Protocol Security**: Integrated `OLLAMA-STRATEGY` across all skills.
+
+### STATUS: READY v1.2.0 ("The Reactive Pulse")
+- **Next Steps**: Install the latest `.vsix` and enjoy real-time sync awareness.
+- **Tech Stack**: TypeScript, VS Code API, Git (CLI), FileSystemWatcher.
 - **Prochaine action** : 
   1. Initialiser le socle de l'extension VS Code.
   2. Définir le mécanisme de synchronisation (Git privé, Gist ou API).
@@ -245,11 +255,11 @@
 
 ## 🟢 Antigravity LLM Tracker (Extension VSCode)
 
-- **Statut** : 🟢 Stable — **v1.1.0 Premium Release**
+- **Statut** : 🟢 Stable — **v1.2.1 "Real-time VRAM"**
 - **Stack** : VS Code API · TypeScript · Esbuild · Ollama (RTX 4090 Optimised)
-- **Localisation** : `C:\Users\mimilouze\.gemini\antigravity\scratch\llm-usage-tracker`
-- **Dernière session** : 2026-03-22 — **Session "LLM Cluster Upgrade"**. Remplacement de DeepSeek-R1 14B par la version **32B** (Logic focus). Ajout de **GLM-4.7-Flash** (MoE 1M context agentic) et **Codestral 22B** (Mistral Syntax). Extension upgrader en **v1.1.0 Premium** avec Dashboard VRAM et monitoring temps-réel.
-- **Prochaine action** : Installer le fichier `llm-usage-tracker-1.1.0.vsix` dans VS Code pour profiter des derniers changements.
+- **Localisation** : `C:\Users\mimilouze\.\.gemini\antigravity\scratch\llm-usage-tracker`
+- **Dernière session** : 2026-03-23 — **Session "VRAM Commander & Quick Actions"**. Implémentation du QuickPick dynamiques dans la barre d'état (Unload individuel). Ajout de la jauge de capacité VRAM (24GB) dans le Dashboard et affichage direct de la VRAM utilisée dans la StatusBar à côté du modèle. Nettoyage complet du repository Git. Version **v1.2.1** buildée.
+- **Prochaine action** : Faire glisser `llm-usage-tracker-1.2.1.vsix` dans VS Code pour installer la mise à jour.
 - **Blockers** : Aucun.
 - **Priorité** : P1
 - **Deadline** : Pas de deadline

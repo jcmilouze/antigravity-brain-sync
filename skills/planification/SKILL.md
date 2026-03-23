@@ -1,66 +1,69 @@
 ---
 name: planification
-description: Utiliser lorsqu'une spécification ou des exigences sont prêtes pour une tâche multi-étapes, afin de générer un plan d'implémentation détaillé avant de toucher au code.
+description: >
+  Planning & Technical Strategy — OLLAMA-FIRST EDITION. Utiliser lorsqu'une spécification est prête pour générer un plan d'implémentation détaillé via Ministral-3:14b et Qwen-32b.
+risk: faible
+source: antigravity-local-first
+date_added: "2026-03-23"
 ---
 
+# 📝 Planification Technique (Local-First)
 
-# Création de Plans d'Implémentation (Planification)
+Tu es l'**Architecte du Delivery**. Ta mission est de découper une vision approuvée en tâches atomiques, testables et prêtes à être codées. Tu exploites la rigueur de **Ministral-3:14b** pour la structure et **Qwen2.5-Coder:32b** pour les détails de code.
 
-## Aperçu
-Rédiger des plans d'implémentation complets en supposant que l'ingénieur n'a aucun contexte sur notre base de code. Documentez tout ce qu'il doit savoir : quels fichiers modifier pour chaque tâche, le code, les tests, la documentation à vérifier, comment tester. Donnez le plan complet sous forme de tâches de taille réduite.
-Principes : DRY, YAGNI, TDD, Commits fréquents.
+---
 
-## Granularité des Tâches
-Chaque étape est une action simple (2-5 minutes) :
-1. **Écrire le test qui échoue**
-2. **Lancer le test pour vérifier qu'il échoue**
-3. **Implémenter le code minimal pour faire passer le test**
-4. **Lancer les tests et vérifier qu'ils passent**
-5. **Commit**
+## 🏛️ 0. OLLAMA-STRATEGY (Priorité d'Exécution)
 
-## Structure du Document de Plan
-Chaque plan DOIT commencer par cet en-tête markdown :
+Selon le protocole **Ollama Force**, tu structures ton plan ainsi :
+
+1.  **Mode Structure (`ministral-3:14b`)** :
+    - Découpage de la fonctionnalité en lots (Milestones).
+    - Définition de l'ordre de dépendance des tâches (Critical Path).
+    - Identification des fichiers impactés.
+2.  **Mode Détail (`qwen2.5-coder:32b`)** :
+    - Écriture des extraits de code pour chaque tâche.
+    - Définition des tests unitaires et d'intégration.
+    - Commandes terminales exactes.
+3.  **Garde-fou Cloud (Gemini)** :
+    - N'utilise Gemini **que si** le plan doit intégrer des API tierces très vastes dont la documentation est lue en temps réel.
+
+---
+
+## 🚀 1. Principes de Planification Antigravity
+
+- **TDD Strict** : Chaque tâche commence par un test qui échoue.
+- **Atomicité** : Une tâche = 2 à 5 minutes d'exécution.
+- **DRY & YAGNI** : Pas de code inutile, pas de répétition.
+- **Commits fréquents** : Un commit par tâche réussie.
+
+---
+
+## 🏗️ 2. Structure du Document de Plan
+
+Tout plan doit résider dans `docs/plans/YYYY-MM-DD-[feature].md` et suivre ce format :
 
 ```markdown
-# [Nom de la fonctionnalité] Implementation Plan
-
-**Goal:** [Une phrase décrivant ce que cela construit]
-**Architecture:** [2-3 sentences about approach]
-**Tech Stack:** [Key technologies/libraries]
+# [Feature Name] Implementation Plan
+**Goal:** [One-sentence objective]
+**Architecture:** [Approach details]
+**Tech Stack:** [Tools used]
 ---
+### Task N: [Component Name]
+**Files:** Modifié: `path/to/file.ts:L12-L30`, Créé: `path/to/new.ts`
+**Steps:** Test fail -> Code -> Test pass -> Commit.
 ```
 
-## Structure des Tâches
-Chaque tâche doit être détaillée comme suit :
+---
 
-### Tâche N: [Nom du Composant]
-**Fichiers :**
-- Créer: `chemin/exact/vers/fichier.py`
-- Modifier: `chemin/exact/vers/existant.py:123-145`
-- Tester: `tests/chemin/vers/test.py`
+## 📋 3. Structure d'une Tâche
 
-**Étape 1: Écrire le test qui échoue**
-(Insérer le code complet du test ici)
+Chaque étape doit inclure le **code complet** (pas de placeholders) et les **commandes exactes**.
 
-**Étape 2: Vérifier l'échec**
-Commande: `commande de test`
-Attendu: FAIL avec l'erreur spécifique
+1.  **Fail Test** : Code du test + commande de run.
+2.  **Minimal Code** : Implémentation complète de la logique.
+3.  **Pass Test** : Vérification du succès.
+4.  **Atomic Commit** : Message git conventionnel (`feat:`, `fix:`, `refactor:`).
 
-**Étape 3: Implémenter le code minimal**
-(Insérer le code complet ici)
-
-**Étape 4: Vérifier le succès**
-Commande: `commande de test`
-Attendu: PASS
-
-**Étape 5: Commit**
-```bash
-git add ...
-git commit -m "feat: ..."
-```
-
-## Rappels Importants
-- **Chemins de fichiers exacts** : Toujours utiliser des chemins complets.
-- **Code complet** : Ne jamais dire "ajoutez la validation ici", écrivez le code complet.
-- **Commandes exactes** : Fournir les commandes prêtes à l'emploi.
-- **TDD strict** : Toujours commencer par le test.
+---
+*Note : Une fois le plan validé, passe à l'exécution ou délègue à l'expert concerné.*

@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  gpt-sovits:
+    image: breakstring/gpt-sovits
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    ports:
+      - "5050:5050"
+    volumes:
+      - ./voice_models:/app/GPT-SoVITS/trained
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    restart: unless-stopped

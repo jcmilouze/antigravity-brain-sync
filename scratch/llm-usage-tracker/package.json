@@ -1,0 +1,55 @@
+{
+  "name": "llm-usage-tracker",
+  "displayName": "Antigravity LLM Tracker",
+  "description": "Track Ollama LLM usage time within VS Code",
+  "version": "1.2.1",
+  "publisher": "mimilouze",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mimilouze/antigravity-llm-tracker.git"
+  },
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+        {
+          "command": "llm-usage-tracker.showDashboard",
+          "title": "LLM Tracker: Show Usage Dashboard"
+        },
+        {
+          "command": "llm-usage-tracker.resetStats",
+          "title": "LLM Tracker: Reset Statistics"
+        },
+        {
+          "command": "llm-usage-tracker.unloadAll",
+          "title": "LLM Tracker: Unload All Models from VRAM"
+        },
+        {
+          "command": "llm-usage-tracker.statusBarActions",
+          "title": "LLM Tracker: Status Bar Quick Actions"
+        }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node",
+    "build:vsix": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "@types/vscode": "^1.90.0",
+    "esbuild": "^0.20.2",
+    "typescript": "^5.4.5"
+  }
+}
