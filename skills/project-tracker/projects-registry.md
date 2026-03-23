@@ -237,17 +237,17 @@
 - **Dernière session** : 2026-03-22 — Création du projet. Objectif : synchroniser les skills, projets et listes LLM Ollama
 ### Achievements (Current Session)
 - **Antigravity Sync v1.2.2**: **Connection Resilience Edition**.
-- **Antigravity Sync v1.2.3**: **Windows Shell Fix**.
-    - **Atomic Steps**: Separated `add`, `commit`, and `push` to avoid shell quoting/concatenation issues.
-    - **Network Specific SSH**: Bypass SSH prompts only on network tasks (`fetch`, `push`, `pull`).
-    - **Reliability**: Highest stability for synchronization between PC/Mac.
+- **Antigravity Sync v1.2.4**: **Hybrid Auth & MCP Emergency**.
+    - **Emergency Sync**: Brain core assets (Skills, Registry) successfully pushed to GitHub via MCP.
+    - **Hybrid Auth**: Added detection for "Permission Denied (SSH)" with automatic offer to switch to HTTPS (using VS Code native auth).
+    - **Visual Lock**: StatusBar now shows `$(lock)` when SSH fails, with a direct repair menu.
 
-### STATUS: READY v1.2.3 ("The Atomic Pulse")
-- **Next Steps**: Install v1.2.3 and run the first push.
-- **Tech Stack**: TypeScript, VS Code API, Git (Atomic).
+### STATUS: READY v1.2.4 ("The Hybrid Pulse")
+- **Next Steps**: Install v1.2.4 and accept the "Passer en HTTPS" suggestion if Push fails.
+- **Tech Stack**: TypeScript, VS Code API, GitHub MCP (Bypass).
 - **Prochaine action** : 
-  1. Installer le `.vsix` v1.2.3.
-  2. Lancer un push pour activer le cloud-sync.
+  1. Installer le `.vsix` v1.2.4.
+  2. Cliquer sur le menu pour réparer la connexion (Switch HTTPS).
 - **Blockers** : Aucun
 - **Priorité** : P2
 - **Deadline** : Pas de deadline

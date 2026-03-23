@@ -30,7 +30,22 @@ export function activate(context: vscode.ExtensionContext) {
             const { stdout: branchRaw } = await gitExec(`branch --show-current`);
             const currentBranch = branchRaw.trim() || 'master';
 
-            try { await gitExec(`fetch origin ${currentBranch}`, true); } catch (e) {}
+                try { 
+                    const { stderr } = await gitExec(`fetch origin ${currentBranch}`, true); 
+                    if (stderr && stderr.includes("Permission denied")) {
+                        statusBarItem.text = `$(lock) Brain: Access Denied`;
+                        statusBarItem.color = '#ff4444';
+                        statusBarItem.tooltip = `🚨 Erreur SSH : Permission denied.\nGitHub refuse la clé publique.\nCliquez pour changer en HTTPS.`;
+                        return;
+                    }
+                } catch (e: any) {
+                    if (e.stderr?.includes("Permission denied")) {
+                        statusBarItem.text = `$(lock) Brain: Access Denied`;
+                        statusBarItem.color = '#ff4444';
+                        statusBarItem.tooltip = `🚨 Erreur SSH : Permission denied.\nGitHub refuse la clé publique.\nCliquez pour changer en HTTPS.`;
+                        return;
+                    }
+                }
 
             const { stdout: statusRaw } = await gitExec(`status --porcelain`);
             const isDirty = statusRaw.trim().length > 0;
@@ -142,6 +157,25 @@ export function activate(context: vscode.ExtensionContext) {
                     vscode.window.showInformationMessage("ℹ️ Aucun changement.");
                 } else if (error.stderr?.includes("CONFLICT")) {
                     vscode.window.showErrorMessage("🚨 Conflit détecté !");
+                } else if (error.stderr?.includes("Permission denied")) {
+                    const btn = 'Passer en HTTPS';
+                    const act = await vscode.window.showErrorMessage("🚨 Erreur SSH (Permission denied). Pourriez-vous passer par l'authentification HTTPS ?", btn);
+                    if (act === btn) {
+                        try {
+                            const { stdout: remoteUrlRaw } = await gitExec(`remote get-url origin`);
+                            const currentUrl = remoteUrlRaw.trim();
+                            if (currentUrl.startsWith('git@github.com:')) {
+                                const httpsUrl = currentUrl.replace('git@github.com:', 'https://github.com/').replace('.git', '');
+                                await gitExec(`remote set-url origin "${httpsUrl}"`);
+                                vscode.window.showInformationMessage(`✅ Cloud basculé en HTTPS : ${httpsUrl}`);
+                                pollSyncStatus();
+                            } else {
+                                vscode.commands.executeCommand('antigravity.syncConfig');
+                            }
+                        } catch (e) {
+                            vscode.commands.executeCommand('antigravity.syncConfig');
+                        }
+                    }
                 } else {
                     vscode.window.showErrorMessage(`❌ Échec : ${error.stderr || error.message}`);
                 }
