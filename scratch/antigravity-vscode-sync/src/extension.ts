@@ -143,8 +143,10 @@ export function activate(context: vscode.ExtensionContext) {
             try {
                 if (choice.label.includes('Push')) {
                     progress.report({ message: "Émission vers le Cloud..." });
+                    const stamp = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                    const commitMsg = `🌀 Brain Sync [${machineName}]: ${stamp}`;
                     await gitExec(`add .`);
-                    await gitExec(`commit -m "🌀 Brain Sync [${machineName}]: ${new Date().toLocaleString()}"`);
+                    await gitExec(`commit -m "${commitMsg}"`);
                     await gitExec(`push -u origin ${currentBranch}`, true);
                 } else {
                     progress.report({ message: "Fusion neuronale..." });

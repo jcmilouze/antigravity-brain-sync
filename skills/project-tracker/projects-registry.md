@@ -237,17 +237,17 @@
 - **Dernière session** : 2026-03-22 — Création du projet. Objectif : synchroniser les skills, projets et listes LLM Ollama
 ### Achievements (Current Session)
 - **Antigravity Sync v1.2.2**: **Connection Resilience Edition**.
-- **Antigravity Sync v1.2.4**: **Hybrid Auth & MCP Emergency**.
-    - **Emergency Sync**: Brain core assets (Skills, Registry) successfully pushed to GitHub via MCP.
-    - **Hybrid Auth**: Added detection for "Permission Denied (SSH)" with automatic offer to switch to HTTPS (using VS Code native auth).
-    - **Visual Lock**: StatusBar now shows `$(lock)` when SSH fails, with a direct repair menu.
+- **Antigravity Sync v1.2.5**: **Commit Integrity Fix**.
+    - **Windows Compatibility**: Fixed commit message quoting (removed problematic commas and localized strings).
+    - **Hybrid Auth**: Automatic fallback to HTTPS (VS Code native auth) if SSH is denied.
+    - **Visual Lock**: Status bar shows `$(lock)` for auth repair.
 
-### STATUS: READY v1.2.4 ("The Hybrid Pulse")
-- **Next Steps**: Install v1.2.4 and accept the "Passer en HTTPS" suggestion if Push fails.
-- **Tech Stack**: TypeScript, VS Code API, GitHub MCP (Bypass).
+### STATUS: READY v1.2.5 ("The Integrity Pulse")
+- **Next Steps**: Install v1.2.4 or v1.2.5 and activate HTTPS mode if SSH fails.
+- **Tech Stack**: TypeScript, VS Code API, Git (Atomic + Escaped).
 - **Prochaine action** : 
-  1. Installer le `.vsix` v1.2.4.
-  2. Cliquer sur le menu pour réparer la connexion (Switch HTTPS).
+  1. Installer le `.vsix` v1.2.5.
+  2. Lancer un push. Si une erreur d'authentification s'affiche, cliquer sur "Passer en HTTPS".
 - **Blockers** : Aucun
 - **Priorité** : P2
 - **Deadline** : Pas de deadline
