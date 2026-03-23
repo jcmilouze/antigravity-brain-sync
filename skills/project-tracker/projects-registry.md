@@ -236,15 +236,14 @@
 - **Localisation** : `C:\Users\mimilouze\.gemini\antigravity\scratch\antigravity-vscode-sync`
 - **Dernière session** : 2026-03-22 — Création du projet. Objectif : synchroniser les skills, projets et listes LLM Ollama
 ### Achievements (Current Session)
-- **Antigravity Sync v1.2.0**: Enhanced UI with a **Reactive Status Bar**:
-    - **Visual States**: Green (Synced), Orange (Dirty/Ahead), Red (Behind/Mac has work).
-    - **File Watcher**: Instant update of the status bar when skills or scripts are modified.
-    - **QuickPick Center**: Unified menu for all cloud operations.
-- **Protocol Security**: Integrated `OLLAMA-STRATEGY` across all skills.
+- **Antigravity Sync v1.2.1**: **Bug Fix Edition**.
+    - **Dynamic Branch Detection**: Detects automatically if you use `master`, `main` or any other branch.
+    - **Visual States**: Green/Orange/Red reactive status bar.
+    - **File Watcher**: Instant awareness of memory changes.
 
-### STATUS: READY v1.2.0 ("The Reactive Pulse")
-- **Next Steps**: Install the latest `.vsix` and enjoy real-time sync awareness.
-- **Tech Stack**: TypeScript, VS Code API, Git (CLI), FileSystemWatcher.
+### STATUS: READY v1.2.1 ("The Multi-Branch Pulse")
+- **Next Steps**: Install the latest `.vsix` v1.2.1 to fix the branch error.
+- **Tech Stack**: TypeScript, VS Code API, Git (Dynamic Branching).
 - **Prochaine action** : 
   1. Initialiser le socle de l'extension VS Code.
   2. Définir le mécanisme de synchronisation (Git privé, Gist ou API).
