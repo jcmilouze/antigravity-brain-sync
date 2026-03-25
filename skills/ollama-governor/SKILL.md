@@ -1,3 +1,13 @@
+---
+name: ollama-governor
+description: >
+  Orchestrateur dynamique de VRAM pour RTX 4090. Gère le cycle de vie des modèles locaux (chargement/déchargement) pour optimiser les performances et minimiser les coûts cloud.
+category: "IA & Agents"
+risk: bas
+source: antigravity-manifesto-2.0
+date_added: "2026-03-23"
+---
+
 # 🏛️ Skill: OLLAMA-GOVERNOR (VRAM Dynamic Orchestrator)
 
 ## 🆔 ID & Mission
@@ -53,4 +63,4 @@ Utiliser systématiquement `keep_alive: 0` via l'API `/api/generate` ou `/api/ch
 **Dans tous les autres cas : Use Local.**
 
 ---
-*Initialisé le : 22 Mars 2026 — Antigravity Execution Governor.*
+*Initialisé le : 22 Mars 2026 — Antigravity Execution Governor (v2.1 - Standardized).*

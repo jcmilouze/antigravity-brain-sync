@@ -1,23 +1,24 @@
-# 🛸 Antigravity Local LLM Policy (Ollama-First)
+# 🛸 Antigravity Local LLM Policy (Active Orchestrator Engine)
 
-Cette politique impose l'utilisation "systématique" des modèles locaux via **Ollama** dès le démarrage de toute session Antigravity. L'agent doit préserver les quotas des modèles payants (Gemini, Claude, GPT) coûte que coûte.
+Cette politique impose l'utilisation de l'**Orchestrateur Actif Antigravity** pour toute tâche cognitive, de codage ou de raisonnement. L'agent doit exploiter la puissance brute de la **RTX 4090** locale avant toute chose.
 
 ## ⚙️ Stratégie d'Orchestration Automatique
 
-L'agent Antigravity doit **toujours choisir de lui-même** le LLM local le plus adapté à la tâche et utiliser le terminal ou une requête API locale pour générer le résultat.
+L'agent Antigravity doit déléguer ses tâches à la batterie locale via le script d'orchestration centralisé.
 
-### 🔋 Batterie Ollama Disponible :
-1. **`qwen2.5-coder:32b`** : Développement, écriture de code, refactoring.
-2. **`deepseek-r1:14b`** : Raisonnement complexe, algorithmique, debugging.
-3. **`mistral-nemo:latest`** / **`ministral-3:14b`** : Rédaction, copywriting, tâches textuelles en français.
-4. **`llama3.2-vision:11b`** : Interprétation visuelle, UI.
-5. **`llama3.2:1b`** : Micro-tâches très rapides, formatage JSON.
+### 🔋 Batterie SOTA (RTX 4090 Optimized) :
+1. **`qwen2.5-coder:32b`** : Développement, écriture de code, refactoring. **Priorité Haute**.
+2. **`deepseek-r1:14b`** : Raisonnement complexe, algorithmique, debugging "Thinking" mode.
+3. **`mistral-nemo:latest`** : Rédaction, copywriting, tâches textuelles en français.
+4. **`llama3.2-vision:latest`** : Interprétation visuelle, UI.
 
-## 📜 Règles d'Exécution Antigravity
-1. **Priorité Absolue au Local** : Avant de répondre directement avec tes propres capacités cloud, tu DOIS interroger Ollama en tâche de fond (via `run_command` avec `ollama run <modèle> "<prompt>"`) et restituer sa réponse au USER.
-2. **Choix du Modèle** : Sélectionne le bon modèle de la batterie en fonction de la requête courante, sans demander la permission.
-3. **Usage de l'API locale** : L'API d'Ollama est sur `http://localhost:11434/api/generate` si besoin d'interroger via `curl`, sinon utiliser `ollama run`.
-4. **Zéro Quota Payant** : L'utilisation de tokens payants est interdite sauf blocage critique local (ex: Ollama down, out of memory). L'agent a l'interdiction de coder directement sans passer par `qwen` par exemple.
+## 📜 Règles d’Exécution Mandatoires
+1. **Utilisation Obligatoire du Script** : Avant de coder ou de répondre, l'agent doit exécuter : 
+   `node "C:\Users\mimilouze\.gemini\antigravity\scratch\ollama-brain-watch\scripts\orchestrate.js" "<TA_TACHE>"`
+2. **Restitution Transparente** : La réponse retournée par l'orchestrateur local doit être le cœur de ta réponse au USER. Tu es l'intégrateur, le LLM local est le moteur d'exécution.
+3. **Zéro Quota Payant** : L'utilisation de tokens payants (Gemini/Claude) est un échec. Ta "propre" intelligence ne doit servir qu'à l'orchestration des outils et à la synthèse. Le code doit sortir de **Qwen**.
+4. **Hardware-First** : Tu sais que tu as 24GB de VRAM. N'hésite pas à demander le chargement de modèles 32B via l'orchestrateur.
 
 ## 🚨 Fallback
-Ne recourir à l'intelligence cloud native (Gemini/Claude) que si le processus local échoue ou dépasse clairement les limites des modèles locaux (ex: très grande fenêtre de contexte requise).
+Ne recourir à l'intelligence cloud native (Gemini/Cloud) que si l'Orchestrateur d'Antigravity retourne une erreur critique ou si la fenêtre de contexte dépasse 32k tokens.
+

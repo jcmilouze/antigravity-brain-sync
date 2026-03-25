@@ -92,24 +92,22 @@
 ---
 
 ## 🟡 Memovoice (iOS Voice Memos AI)
-
-- **Statut** : 🟡 En cours — Refonte Todo Système
-- **Stack** : React · Vite · Tailwind v4 · Framer Motion · Node.js (Express) · Prisma (PostgreSQL) · Docker · Groq
+- **Statut** : 🟡 En cours — **FORCE OLLAMA ACTIVE (v3.2.0)**
+- **Stack** : React · Vite · Tailwind v4 · Framer Motion · Node.js (Express) · Prisma (PostgreSQL) · **Ollama (DeepSeek-R1:14b)** · Groq (Whisper)
 - **Localisation** : `C:\Users\mimilouze\.gemini\antigravity\scratch\ios-voice-memos-ai`
 - **GitHub** : https://github.com/jcmilouze/ios-voice-memos-ai
-- **Dernière session** : 2026-03-13 — **Optimisation Assistant & Mobilité**. Automatisation complète du flux de courses (extraction + auto-archivage). Implémentation de la saisie personnalisée dans l'onglet Assistant avec dictée vocale native. Verrouillage de l'interface en mode Portrait (PWA + CSS Guard) pour une expérience type application mobile. Migration SQLite local finalisée et fonctionnelle.
+- **Dernière session** : 2026-03-24 — **Pure-Groq Architecture Realignment**. Adoption définitive d'un moteur **100% Groq Cloud** (STT + LLM) pour la stabilité et la simplicité de production. Suppression de toute la logique complexe de fallback hybride OLLAMA/Local.
 - **Artifact Trail** :
-  - `src/components/tabs/EnrichmentTab.jsx` - Saisie personnalisée + Dictée vocale.
-  - `public/manifest.json` & `index.html` - Configuration PWA & Orientation lock.
-  - `src/index.css` - Guard-rail mode portrait forcé.
-  - `server/index.js` - Logique d'archivage auto des courses.
+  - `server/services/ai.service.js` - Refactor en Groq Client Pur.
+  - `server/.env` - Nettoyage des variables local-only.
+  - `src/components/layout/StatusBar.jsx` - UI Status Force Groq.
 - **Prochaine action** : 
-  1. Continuer d'enrichir les actions "Sparkles" (suggestions IA plus fines).
-  2. Préparer le support des notifications de rappels.
-- **Blockers** : Aucun. Projet stabilisé et repoussé sur GitHub.
+  1. Suivre le build Coolify (Binding 0.0.0.0 actif).
+  2. Valider la performance de transcription Groq en temps réel.
+- **Blockers** : Aucun. Système simplifié et optimisé pour le Cloud.
 - **Priorité** : P1
 - **Deadline** : Pas de deadline
-- **Notes** : Experience "App-Native" sur mobile. Serveurs opérationnels : Backend (:3001) et Frontend (:5173). Push GitHub effectué.
+- **Notes** : L'app est désormais ultra-rapide et facile à maintenir (Single Provider).
 
 ---
 

@@ -21,7 +21,7 @@ Selon le protocole **Ollama Force**, tu structures ton travail ainsi :
     - Écriture de Dockerfile multi-stage optimisés.
     - Configuration de proxys Nginx et règles de firewall (UFW).
     - Scripts d'automatisation CI/CD et déploiement Coolify.
-2.  **Mode Analyse (`ministral-3:14b`)** :
+2.  **Mode Analyse (`deepseek-r1:14b`)** :
     - Audit de sécurité (OWASP), analyse des vulnérabilités (Snyk/Trivy).
     - Design d'architectures réseau et politiques de secrets (Vault/Env).
     - Audit de performance réseau et latence API.
