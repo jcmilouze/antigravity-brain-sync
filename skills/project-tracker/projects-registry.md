@@ -24,7 +24,11 @@
 | Simulateur Bac Pro       | 🟢 En veille | P3       | Vérifier le simulateur oral de rattrapage            |
 | Antigravity Skills       | 🟡 En cours  | P3       | Enrichir skills existantes + sync MacBook            |
 | Antigravity LLM Tracker  | 🟡 En cours  | P1       | Intégration Protocole **Ollama Force** (Génération locale) |
+<<<<<<< HEAD
 | Antigravity VSCode Sync  | 🟡 En cours  | P2       | Initialisation du projet d'extension de synchro      |
+=======
+| **Antigravity VSCode Sync** | 🟢 Stable    | P2       | v1.2.3 (Atomic Git) installed. Sync awareness ACTIVE  |
+>>>>>>> origin/main
 | **OLLAMA FORCE**         | 🚀 ACTIVE     | P0       | Système de délégation locale (Ready v1.2.0)          |
 
 ---
@@ -36,11 +40,14 @@
 - **Localisation** : `C:\Users\mimilouze\.gemini\antigravity\scratch\premium-coffee-landing`
 - **GitHub** : https://github.com/jcmilouze/premium-coffee-landing
 - **Dernière session** : 2026-03-22 — **Livraison Premium & Orchestration Hybride**. Création complète d'une landing page ultra-luxe. Implémentation d'un système d'XP, d'une carte d'origine interactive (OriginMap), et d'effets 3D parallax. Utilisation intensive de **Qwen2.5-Coder:32B** en local (RTX 4090) supervisé par Gemini. Préparation Docker/Nginx pour Coolify.
+<<<<<<< HEAD
 - **Artifact Trail** :
   - `src/App.tsx` - Core logic & UI (XP system, Product listing).
   - `src/components/OriginMap.tsx` - Carte interactive dorée.
   - `Dockerfile` & `nginx.conf` - Conteneurisation de production.
   - `README.md` & `DEPLOYMENT.md` - Documentation complète.
+=======
+>>>>>>> origin/main
 - **Prochaine action** : 
   1. Suivre le guide `DEPLOYMENT.md` sur Coolify.
 - **Blockers** : Aucun. Projet livré et pushé.
@@ -57,11 +64,14 @@
 - **Localisation** : `C:\Users\mimilouze\.gemini\antigravity\scratch\div2-exotics`
 - **GitHub** : [https://github.com/jcmilouze/division-exotics-manager-mcp](https://github.com/jcmilouze/division-exotics-manager-mcp)
 - **Dernière session** : 2026-03-22 — **Réactivation & Overhaul Tactique**. Reprise exhaustive du projet Division 2. Implémentation du système de **Favoris**, du **Tri Dynamique** (Nom, Type, Statut) et de la **Suppression d'items personnalisés**. Mise à jour des données **Project Resolve** et intégration d'une identité visuelle SHD générée par IA. Création et push du repo GitHub privé.
+<<<<<<< HEAD
 - **Artifact Trail** :
   - `src/App.tsx` - Logique de filtrage complexe et dashboard stats.
   - `src/components/ExoticCard.tsx` - UI tactique avec feedback Favori/Obtenu.
   - `src/data/exotics.ts` - Ajout items Resolve (Ageless, Rugged Gauntlets).
   - `public/shd-logo.png` - Logo de marque SHD généré.
+=======
+>>>>>>> origin/main
 - **Prochaine action** : 
   1. Implémenter l'export/import CSV pour le backup d'agent.
   2. Ajouter le mode "Wishlist" (Farm Strategy).
@@ -76,10 +86,13 @@
 - **Stack** : React 19 · Vite · Tailwind v4 · Framer Motion · Lucide React · Local SOTA AI (KokoroTTS / Faster-Whisper)
 - **Localisation** : `C:\Users\mimilouze\.gemini\antigravity\scratch\odyssee-des-murmures`
 - **Dernière session** : 2026-03-22 — **Intégration TTS & STT (Session 2)**. Création du module 'L'Écho de la Grotte' (Web Speech API). Tentative de déploiement Docker TTS échouée (Virtualisation bloquée). Création et validation d'un pont Node.js local avec Piper (Plan B) fonctionnel. Décision prise de basculer sur un vrai backend Python local (KokoroTTS + Faster-Whisper) pour atteindre la qualité SOTA.
+<<<<<<< HEAD
 - **Artifact Trail** :
   - `src/hooks/useSpeech.ts` & `src/hooks/useRecognition.ts` - Hooks de voix.
   - `src/components/EchoGrotte.tsx` - Mini-jeu de reconnaissance vocale.
   - `scripts/setup-piper.js` & `bin/tts/server-tts.js` - Backend TTS natif d'urgence.
+=======
+>>>>>>> origin/main
 - **Prochaine action** : 
   1. Attendre l'installation de Python 3.11/3.12 par l'utilisateur via le Microsoft Store.
   2. Créer l'environnement virtuel Python (`venv`) et installer FastApi + Kokoro-ONNX + Faster-Whisper.
@@ -92,6 +105,7 @@
 ---
 
 ## 🟡 Memovoice (iOS Voice Memos AI)
+<<<<<<< HEAD
 - **Statut** : 🟡 En cours — **FORCE OLLAMA ACTIVE (v3.2.0)**
 - **Stack** : React · Vite · Tailwind v4 · Framer Motion · Node.js (Express) · Prisma (PostgreSQL) · **Ollama (DeepSeek-R1:14b)** · Groq (Whisper)
 - **Localisation** : `C:\Users\mimilouze\.gemini\antigravity\scratch\ios-voice-memos-ai`
@@ -108,6 +122,21 @@
 - **Priorité** : P1
 - **Deadline** : Pas de deadline
 - **Notes** : L'app est désormais ultra-rapide et facile à maintenir (Single Provider).
+=======
+
+- **Statut** : 🟡 En cours — Refonte Todo Système
+- **Stack** : React · Vite · Tailwind v4 · Framer Motion · Node.js (Express) · Prisma (PostgreSQL) · Docker · Groq
+- **Localisation** : `C:\Users\mimilouze\.gemini\antigravity\scratch\ios-voice-memos-ai`
+- **GitHub** : https://github.com/jcmilouze/ios-voice-memos-ai
+- **Dernière session** : 2026-03-13 — **Optimisation Assistant & Mobilité**. Automatisation complète du flux de courses (extraction + auto-archivage). Implémentation de la saisie personnalisée dans l'onglet Assistant avec dictée vocale native. Verrouillage de l'interface en mode Portrait (PWA + CSS Guard) pour une expérience type application mobile. Migration SQLite local finalisée et fonctionnelle.
+- **Prochaine action** : 
+  1. Continuer d'enrichir les actions "Sparkles" (suggestions IA plus fines).
+  2. Préparer le support des notifications de rappels.
+- **Blockers** : Aucun. Projet stabilisé et repoussé sur GitHub.
+- **Priorité** : P1
+- **Deadline** : Pas de deadline
+- **Notes** : Experience "App-Native" sur mobile. Serveurs opérationnels : Backend (:3001) et Frontend (:5173). Push GitHub effectué.
+>>>>>>> origin/main
 
 ---
 
@@ -118,10 +147,13 @@
 - **Localisation** : `C:\Users\mimilouze\.gemini\antigravity\scratch\cahier-de-texte-pronote`
 - **Production** : Déployé via Coolify sur `bessacvps.fr`
 - **Dernière session** : 2026-03-06 — **Focus & Simplification**. Suppression intégrale du module Stages (PFMP) pour transfert vers le projet CRM Prof. Correction de la stack TypeScript (`esModuleInterop`), régénération Prisma (Correction de tous les types) et validation du cycle **Coach IA** (mémos de préparation).
+<<<<<<< HEAD
 - **Artifact Trail** :
   - `backend/server.ts` & `App.tsx` - Suppression des routes et composants PFMP.
   - `prisma/schema.prisma` - Suppression du modèle `PFMP`.
   - `tsconfig.json` - Correction de la compatibilité ESM/identifiants privés.
+=======
+>>>>>>> origin/main
 - **Prochaine action** : 
   1. Améliorer l'esthétique du Dashboard d'inspection.
   2. Intégrer des notifications ou alertes visuelles quand un mémo de séance précédente est détecté.
@@ -195,6 +227,7 @@
 
 ---
 
+<<<<<<< HEAD
 ## 🟢 Canal Top 14
 
 - **Statut** : 🟢 En veille — État inconnu
@@ -271,6 +304,24 @@
 | Antigravity VSCode Sync | Extension pour la synchro Gist complète    | P2       |
 | Netdata Advisor | Tableau de bord monitoring VPS intelligent | P4       |
 | Skill Creator   | Meta-skill de création de skills           | P4       |
+=======
+## 🟡 Antigravity Sync (PC/Mac)
+
+- **Statut** : 🟢 Stable — **v1.2.3 "Atomic Pulse"**
+- **Stack** : TypeScript · VS Code Extension API · Git (Atomic)
+- **Localisation** : `C:\Users\mimilouze\.gemini\antigravity\scratch\antigravity-vscode-sync`
+- **Dernière session** : 2026-03-23 — **Session "Resilience & Atomic Git"**. Résolution des erreurs de branche (master/main) et des bugs de shell Windows. Implémentation du système atomique (add, commit, push séparés) pour plus de stabilité.
+### Achievements (Current Session)
+- **Antigravity Sync v1.2.3**: **Atomic Git Edition**.
+    - **Dynamic Branch Detection**: Detects `master` or `main` automatically.
+    - **Visual States**: Green/Orange/Red Reactive Status Bar.
+    - **Atomic Steps**: Separated add/commit/push for Windows Shell reliability.
+- **GitHub MCP Support**: Brain synced to GitHub via MCP API to bypass local SSH issues.
+
+### STATUS: READY v1.2.3 ("The Atomic Pulse")
+- **Next Steps**: Keep using the status bar for awareness and use MCP for pushes if local SSH fails.
+- **Tech Stack**: TypeScript, VS Code API, Git (Atomic).
+>>>>>>> origin/main
 
 ---
 
@@ -278,6 +329,7 @@
 
 | Date       | Projet                 | Ce qui a été fait                                                                                                               |
 |------------|------------------------|---------------------------------------------------------------------------------------------------------------------------------|
+<<<<<<< HEAD
 | 2026-03-22 | Antigravity LLM Tracker| Session "Ollama-First" : Fix Git root overflow, Dashboard Premium Dark, Monitoring VRAM & Unload. Orchestration via Qwen-32B.     |
 | 2026-03-22 | L'Odyssée des Murmures | Intégration TTS & STT (Session 2). Pont Node.js Piper validé. Bascule SOTA planifiée (Attente instal Python).                   |
 | 2026-03-22 | L'Odyssée des Murmures | Initialisation, Tailwind v4, Lexend font, Mini-jeu "La Forge du Tempo" réécrit avec qwen2.5-coder:32b.                          |
@@ -297,3 +349,12 @@
 ---
 
 *Ce registre est maintenu automatiquement par l'agent Project Tracker. Ne pas modifier manuellement sans validation.*
+=======
+| 2026-03-23 | Antigravity Sync       | Overhaul v1.2.3 (Atomic Git), Reactive Status Bar, Multi-branch support, MCP Sync.                                               |
+| 2026-03-22 | Antigravity LLM Tracker| Session "Ollama-First" : Fix Git root overflow, Dashboard Premium Dark, Monitoring VRAM & Unload. Orchestration via Qwen-32B.     |
+| 2026-03-22 | L'Odyssée des Murmures | Intégration TTS & STT (Session 2). Pont Node.js Piper validé. Bascule SOTA planifiée (Attente instal Python).                   |
+
+---
+
+*Ce registre est maintenu par l'agent Project Tracker (Antigravity).*
+>>>>>>> origin/main

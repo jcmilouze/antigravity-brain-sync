@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 node_modules/
 .env
 dist/
@@ -36,3 +37,26 @@ prompting/
 /tmp/
 .temp/
 
+=======
+.DS_Store
+annotations/
+antigravity-brain-sync/
+brain/
+browser_recordings/
+browserAllowlist.txt
+browserOnboardingStatus.txt
+code_tracker/
+context_state/
+conversations/
+html_artifacts/
+implicit/
+installation_id
+knowledge/
+playground/
+scratch/
+user_settings.pb
+extension/node_modules/
+extension/dist/
+extension/package-lock.json
+extension/*.vsix
+>>>>>>> origin/main
