@@ -93,7 +93,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push({ dispose: () => clearInterval(pollTimer) });
     pollSyncStatus();
 
-    const watcher = vscode.workspace.createFileSystemWatcher(new vscode.RelativePattern(antigravityPath, '+(skills|scripts)/**/*'));
+    const watcher = vscode.workspace.createFileSystemWatcher(new vscode.RelativePattern(antigravityPath, '+(skills|scripts|rules|knowledge|scratch)/**/*'));
     watcher.onDidChange(pollSyncStatus);
     watcher.onDidCreate(pollSyncStatus);
     watcher.onDidDelete(pollSyncStatus);
