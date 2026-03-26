@@ -45,14 +45,19 @@ const BentoCard = ({ children, title, icon: Icon, className = "", delay = 0, hov
 
 // --- Main App ---
 
+import { 
+  AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer 
+} from 'recharts';
+
 export default function App() {
   const { hardware, loading: hwLoading } = useHardware();
   const { feed: watchFeed } = useLLMWatch();
   const [ollamaModels, setOllamaModels] = useState<any[]>([]);
+  const [history, setHistory] = useState<any[]>([]);
   const [recommendations, setRecommendations] = useState<RecommendedModel[]>([]);
   const [activeTab, setActiveTab] = useState('dashboard');
   
-  // Orchestrator States
+  // States
   const [taskInput, setTaskInput] = useState('');
   const [isOrchestrating, setIsOrchestrating] = useState(false);
   const [orchestrationResult, setOrchestrationResult] = useState<any>(null);
@@ -76,12 +81,21 @@ export default function App() {
       try {
         const { data } = await axios.get('http://localhost:11434/api/tags');
         setOllamaModels(data.models || []);
-      } catch (e) {
-        console.warn('Ollama API non disponible.');
-      }
+      } catch (e) { console.warn('Ollama API non disponible.'); }
     };
+    const fetchHistory = async () => {
+      try {
+        const { data } = await axios.get('http://localhost:3001/api/history');
+        setHistory(data);
+      } catch (e) { console.warn('History API non disponible.'); }
+    };
+
     fetchLocal();
-    const timer = setInterval(fetchLocal, 5000);
+    fetchHistory();
+    const timer = setInterval(() => {
+      fetchLocal();
+      fetchHistory();
+    }, 5000);
     return () => clearInterval(timer);
   }, []);
 
@@ -92,12 +106,12 @@ export default function App() {
   }, [hardware]);
 
   if (hwLoading) return (
-    <div className="h-screen w-full flex flex-col items-center justify-center text-white bg-black gap-6">
+    <div className="h-screen w-full flex flex-col items-center justify-center text-white bg-black gap-6 font-body">
        <div className="relative">
          <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 2, ease: 'linear' }} className="border border-white/10 border-t-white rounded-full w-24 h-24" />
          <Zap className="absolute inset-0 m-auto text-white animate-pulse" size={24} />
        </div>
-       <div className="text-[10px] tracking-[0.5em] font-black text-slate-500 uppercase">Synchronisation...</div>
+       <div className="text-[10px] tracking-[0.5em] font-black text-slate-500 uppercase">Synchronisation Cognitive...</div>
     </div>
   );
 
@@ -166,34 +180,67 @@ export default function App() {
         <AnimatePresence mode="wait">
           {activeTab === 'dashboard' && (
             <motion.div key="dash" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="grid grid-cols-12 gap-12">
-              <BentoCard title="Télémétrie LIVE" icon={Activity} className="col-span-12 lg:col-span-5 h-[480px]">
-                 <div className="flex flex-col items-center justify-center h-full gap-12">
-                    <div className="relative">
-                       <svg className="w-64 h-64 -rotate-90">
-                          <circle cx="128" cy="128" r="115" stroke="rgba(255,255,255,0.02)" strokeWidth="6" fill="none" />
-                          <circle cx="128" cy="128" r="115" stroke="rgba(255,255,255,0.05)" strokeWidth="12" fill="none" />
-                          <motion.circle 
-                            cx="128" cy="128" r="115" 
-                            stroke="#ffffff" strokeWidth="12" fill="none" strokeLinecap="square"
-                            initial={{ strokeDasharray: "0 722" }}
-                            animate={{ strokeDasharray: `${((hardware?.vram_used || 0) / (hardware?.vram_total || 24576) * 722)} 722` }}
-                            transition={{ duration: 2, ease: "circOut" }}
+              <BentoCard title="Historique Cognitif" icon={Activity} className="col-span-12 lg:col-span-8 h-[520px]">
+                 <div className="h-[320px] w-full mt-4">
+                    <ResponsiveContainer width="100%" height="100%">
+                       <AreaChart data={history}>
+                          <defs>
+                             <linearGradient id="colorVram" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="5%" stopColor="#ffffff" stopOpacity={0.3}/>
+                                <stop offset="95%" stopColor="#ffffff" stopOpacity={0}/>
+                             </linearGradient>
+                          </defs>
+                          <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+                          <XAxis 
+                            dataKey="timestamp" 
+                            stroke="rgba(255,255,255,0.3)" 
+                            fontSize={10} 
+                            tickLine={false} 
+                            axisLine={false}
                           />
-                       </svg>
-                       <div className="absolute inset-0 flex flex-col items-center justify-center">
-                          <span className="text-8xl font-black text-white tracking-widest">{Math.round((hardware?.vram_used || 0) / (hardware?.vram_total || 24576) * 100)}</span>
-                          <span className="text-[10px] text-white/40 font-black tracking-[0.4em] uppercase mt-2">VRAM LOAD %</span>
-                       </div>
-                    </div>
-                    <div className="flex gap-20">
-                       <div className="text-center group">
-                          <div className="text-[9px] text-slate-500 font-black uppercase tracking-[0.5em] mb-2">Température</div>
-                          <div className="text-3xl font-black text-white group-hover:scale-110 transition-transform">{hardware?.temperature || 0}°C</div>
-                       </div>
-                       <div className="text-center group">
-                          <div className="text-[9px] text-slate-500 font-black uppercase tracking-[0.5em] mb-2">Index Modèles</div>
-                          <div className="text-3xl font-black text-white group-hover:scale-110 transition-transform">{ollamaModels.length}</div>
-                       </div>
+                          <YAxis 
+                            stroke="rgba(255,255,255,0.3)" 
+                            fontSize={10} 
+                            tickLine={false} 
+                            axisLine={false}
+                            tickFormatter={(val) => `${Math.round(val / 1024)}G`}
+                          />
+                          <Tooltip 
+                            contentStyle={{ backgroundColor: '#000', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '1rem', fontSize: '10px' }}
+                            itemStyle={{ color: '#fff' }}
+                          />
+                          <Area 
+                            type="monotone" 
+                            dataKey="vram_used" 
+                            stroke="#ffffff" 
+                            strokeWidth={3}
+                            fillOpacity={1} 
+                            fill="url(#colorVram)" 
+                            animationDuration={1500}
+                          />
+                       </AreaChart>
+                    </ResponsiveContainer>
+                 </div>
+                 <div className="flex gap-10 mt-10 overflow-x-auto pb-4 no-scrollbar">
+                    {history[history.length - 1]?.models.map((m: any, i: number) => (
+                      <div key={i} className="flex items-center gap-4 px-6 py-3 bg-white/5 border border-white/10 rounded-2xl whitespace-nowrap group">
+                         <div className="w-2 h-2 rounded-full bg-emerald-400 shadow-glow-emerald" />
+                         <span className="text-[10px] font-black text-white uppercase tracking-widest">{m.name}</span>
+                         <span className="text-[9px] text-slate-500 font-bold">{m.processor}</span>
+                      </div>
+                    ))}
+                    {(!history[history.length - 1]?.models.length) && (
+                      <div className="text-[10px] text-slate-600 font-black uppercase tracking-[0.4em]">Aucun modèle chargé en VRAM</div>
+                    )}
+                 </div>
+              </BentoCard>
+
+              <BentoCard title="VRAM Mobile" icon={Zap} className="col-span-12 lg:col-span-4 h-[520px]">
+                 <div className="flex flex-col items-center justify-center h-full gap-10 text-center">
+                    <div className="text-8xl font-black text-white glow-text-white">{Math.round((hardware?.vram_used || 0) / (hardware?.vram_total || 24576) * 100)}%</div>
+                    <div>
+                       <div className="text-[10px] font-black text-slate-500 uppercase tracking-[0.4em] mb-2">Charge Totale</div>
+                       <div className="text-xl font-black text-white">{Math.round(hardware?.vram_used || 0)} MB / {hardware?.vram_total || 24576} MB</div>
                     </div>
                  </div>
               </BentoCard>

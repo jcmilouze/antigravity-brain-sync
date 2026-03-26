@@ -192,7 +192,7 @@ const App = () => {
              <div className="absolute inset-0 z-0 bg-radial-at-c from-gold/10 to-transparent opacity-20 pointer-events-none" />
              <Aura3DConfig currentMaterial={activeMaterial} />
              <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-[10px] text-white/20 tracking-[1em] uppercase">
-                DRAIN TO ROTATE • 360° EXPERIENCE
+                DRAG TO ROTATE • 360° EXPERIENCE
              </div>
           </div>
         </div>

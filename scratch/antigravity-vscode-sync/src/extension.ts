@@ -1,10 +1,10 @@
 import * as vscode from 'vscode';
 import * as os from 'os';
 import * as path from 'path';
-import { exec } from 'child_process';
+import { execFile } from 'child_process';
 import { promisify } from 'util';
 
-const execAsync = promisify(exec);
+const execFileAsync = promisify(execFile);
 
 export function activate(context: vscode.ExtensionContext) {
     const antigravityPath = path.join(os.homedir(), '.gemini', 'antigravity');
@@ -19,19 +19,22 @@ export function activate(context: vscode.ExtensionContext) {
     statusBarItem.show();
 
     // Helper: Run Git command safely
-    const gitExec = async (cmd: string, useSSH: boolean = false) => {
-        const sshOpt = useSSH ? '-c core.sshCommand="ssh -o StrictHostKeyChecking=no" ' : '';
-        return execAsync(`cd "${antigravityPath}" && git ${sshOpt}${cmd}`);
+    const gitExec = async (args: string[], useSSH: boolean = false) => {
+        const env = { ...process.env };
+        if (useSSH) {
+            env.GIT_SSH_COMMAND = "ssh -o StrictHostKeyChecking=no";
+        }
+        return execFileAsync('git', args, { cwd: antigravityPath, env });
     };
 
     // Polling Logic
     const pollSyncStatus = async () => {
         try {
-            const { stdout: branchRaw } = await gitExec(`branch --show-current`);
+            const { stdout: branchRaw } = await gitExec(['branch', '--show-current']);
             const currentBranch = branchRaw.trim() || 'master';
 
                 try { 
-                    const { stderr } = await gitExec(`fetch origin ${currentBranch}`, true); 
+                    const { stderr } = await gitExec(['fetch', 'origin', currentBranch], true); 
                     if (stderr && stderr.includes("Permission denied")) {
                         statusBarItem.text = `$(lock) Brain: Access Denied`;
                         statusBarItem.color = '#ff4444';
@@ -47,7 +50,7 @@ export function activate(context: vscode.ExtensionContext) {
                     }
                 }
 
-            const { stdout: statusRaw } = await gitExec(`status --porcelain`);
+            const { stdout: statusRaw } = await gitExec(['status', '--porcelain']);
             const isDirty = statusRaw.trim().length > 0;
 
             let behind = 0;
@@ -55,9 +58,9 @@ export function activate(context: vscode.ExtensionContext) {
             let remoteExists = false;
 
             try {
-                await gitExec(`show-ref --quiet --verify refs/remotes/origin/${currentBranch}`);
+                await gitExec(['show-ref', '--quiet', '--verify', `refs/remotes/origin/${currentBranch}`]);
                 remoteExists = true;
-                const { stdout: revRaw } = await gitExec(`rev-list --left-right --count origin/${currentBranch}...${currentBranch}`);
+                const { stdout: revRaw } = await gitExec(['rev-list', '--left-right', '--count', `origin/${currentBranch}...${currentBranch}`]);
                 const counts = revRaw.trim().split(/\s+/).map(Number);
                 behind = counts[0] || 0;
                 ahead = counts[1] || 0;
@@ -108,7 +111,11 @@ export function activate(context: vscode.ExtensionContext) {
 
         if (url) {
             try {
-                await gitExec(`remote set-url origin "${url}" || git remote add origin "${url}"`);
+                try {
+                    await gitExec(['remote', 'set-url', 'origin', url]);
+                } catch (e) {
+                    await gitExec(['remote', 'add', 'origin', url]);
+                }
                 vscode.window.showInformationMessage(`✅ Remote Cloud configuré : ${url}`);
                 pollSyncStatus();
             } catch (e) {
@@ -119,7 +126,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     // Command: Menu
     const menuCommand = vscode.commands.registerCommand('antigravity.syncMenu', async () => {
-        const { stdout: branchRaw } = await gitExec(`branch --show-current`);
+        const { stdout: branchRaw } = await gitExec(['branch', '--show-current']);
         const currentBranch = branchRaw.trim() || 'master';
 
         const options: vscode.QuickPickItem[] = [
@@ -145,12 +152,12 @@ export function activate(context: vscode.ExtensionContext) {
                     progress.report({ message: "Émission vers le Cloud..." });
                     const stamp = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
                     const commitMsg = `🌀 Brain Sync [${machineName}]: ${stamp}`;
-                    await gitExec(`add .`);
-                    await gitExec(`commit -m "${commitMsg}"`);
-                    await gitExec(`push -u origin ${currentBranch}`, true);
+                    await gitExec(['add', '.']);
+                    await gitExec(['commit', '-m', commitMsg]);
+                    await gitExec(['push', '-u', 'origin', currentBranch], true);
                 } else {
                     progress.report({ message: "Fusion neuronale..." });
-                    await gitExec(`pull --rebase origin ${currentBranch}`, true);
+                    await gitExec(['pull', '--rebase', 'origin', currentBranch], true);
                 }
                 vscode.window.showInformationMessage(`✅ Brain : ${choice.label} terminé.`);
                 pollSyncStatus();
@@ -164,11 +171,11 @@ export function activate(context: vscode.ExtensionContext) {
                     const act = await vscode.window.showErrorMessage("🚨 Erreur SSH (Permission denied). Pourriez-vous passer par l'authentification HTTPS ?", btn);
                     if (act === btn) {
                         try {
-                            const { stdout: remoteUrlRaw } = await gitExec(`remote get-url origin`);
+                            const { stdout: remoteUrlRaw } = await gitExec(['remote', 'get-url', 'origin']);
                             const currentUrl = remoteUrlRaw.trim();
                             if (currentUrl.startsWith('git@github.com:')) {
                                 const httpsUrl = currentUrl.replace('git@github.com:', 'https://github.com/').replace('.git', '');
-                                await gitExec(`remote set-url origin "${httpsUrl}"`);
+                                await gitExec(['remote', 'set-url', 'origin', httpsUrl]);
                                 vscode.window.showInformationMessage(`✅ Cloud basculé en HTTPS : ${httpsUrl}`);
                                 pollSyncStatus();
                             } else {
