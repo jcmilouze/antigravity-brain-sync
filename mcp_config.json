@@ -63,6 +63,14 @@
         "--streamableHttp",
         "https://mcp.clerk.com/mcp"
       ]
+    },
+    "telegram": {
+      "command": "node",
+      "args": ["/Users/jc/.gemini/antigravity/scripts/mcp-telegram-server.js"],
+      "env": {
+        "TELEGRAM_BOT_TOKEN": "${TELEGRAM_BOT_TOKEN}",
+        "TELEGRAM_CHAT_ID": "${TELEGRAM_CHAT_ID}"
+      }
     }
   }
 }

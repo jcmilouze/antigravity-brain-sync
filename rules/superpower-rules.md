@@ -23,6 +23,11 @@ Ne jamais produire de code sale, risqué ou non testé.
 PAR DÉFAUT → modèle Ollama local
 ❌ Ne jamais utiliser modèle payant sans justification explicite via model-routing-policy.
 
+### 3. TELEGRAM MCP (COMMUNICATION OFFICIELLE)
+✅ TOUJOURS : Détecter Évènement → `telegram_send_alert` → Action.
+- Canal obligatoire pour alertes VPS, Coolify et sync Git.
+- Outils natifs : `telegram_send_message`, `telegram_send_alert`, `telegram_execute_command`.
+
 ### 3. SMALL SAFE CHANGES
 ❌ Ne jamais modifier > 5 fichiers ou > 100 lignes sans plan et revue.
 ✅ Limiter chaque changement : 1 responsabilité, testable, réversible.
@@ -53,3 +58,6 @@ BLOCK AUTOMATIQUE : Secrets hardcodés, SQL sans params, eval/exec dynamiques, d
 
 ## 📈 QUALITÉ MINIMUM
 TOUJOURS vérifier : Tests, Lint, Build, Docs, Sécurité.
+
+## 📡 COMMANDE DE TEST (TELEGRAM)
+✅ `telegram_send_message` avec texte : `"✅ Skill Telegram MCP opérationnel — Antigravity v1.4.0"`
