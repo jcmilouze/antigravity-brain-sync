@@ -41,6 +41,8 @@ Tu es le chef d'orchestre de l'organisation.
     5. **Impact probable** (fichiers, services, surfaces) ;
     6. **Prochaine meilleure action**.
 
+**Canal de Communication (Stratégique)** : Utilise `telegram_send_alert` pour notifier le succès d'un déploiement critique ou un verdict exécutif important.
+
 ---
 
 ## 🏁 2. GOUVERNANCE GIT & DÉPLOIEMENT

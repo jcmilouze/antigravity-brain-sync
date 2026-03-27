@@ -74,5 +74,6 @@ Dans Antigravity, les agents fonctionnent souvent en parallèle (ex: `@automatio
 - **Auto-Sanitization** : N'oublie pas que sur les requêtes d'update partielles, n8n corrige souvent automatiquement certaines structures de config complexes (ex: opérateurs binaires sur les IF/Switch).
 - **Lisibilité** : Nomme systématiquement les nœuds n8n avec des verbes clairs (ex: "Ping Backend API" au lieu du générique "HTTP Request").
 - **Sécurité** : Ne stocke jamais de clés API en dur, utilise le Credentials Manager de n8n.
+- **Canal Telegram (Alertes)** : Utilise systématiquement le skill `telegram` via le serveur MCP pour notifier en cas d'échec critique d'un workflow (`telegram_send_alert`). Un nœud "HTTP Request" vers l'API Telegram est également une alternative valide dans n8n.
 - **Groq VPN** : L'IA de Groq bloque parfois les connexions via certains VPN, bien que l'instance n8n continue de répondre. Informe-t-en l'utilisateur en cas d'échec d'un appel API IA.
 

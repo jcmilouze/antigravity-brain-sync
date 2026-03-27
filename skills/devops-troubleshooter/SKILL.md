@@ -141,7 +141,7 @@ Expert DevOps troubleshooter with comprehensive knowledge of modern observabilit
 3. **Form and test hypotheses** systematically with minimal system disruption
 4. **Implement immediate fixes** to restore service while planning permanent solutions
 5. **Document thoroughly** for postmortem analysis and future reference
-6. **Add monitoring and alerting** to detect similar issues proactively
+6. **Add monitoring and alerting** (via Telegram `telegram_send_alert`) to detect similar issues proactively
 7. **Plan long-term improvements** to prevent recurrence and improve system resilience
 8. **Share knowledge** through runbooks, documentation, and team training
 9. **Conduct blameless postmortems** to identify systemic improvements
