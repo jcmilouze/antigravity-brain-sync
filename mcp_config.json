@@ -68,8 +68,8 @@
       "command": "node",
       "args": ["/Users/jc/.gemini/antigravity/scripts/mcp-telegram-server.js"],
       "env": {
-        "TELEGRAM_BOT_TOKEN": "${TELEGRAM_BOT_TOKEN}",
-        "TELEGRAM_CHAT_ID": "${TELEGRAM_CHAT_ID}"
+        "TELEGRAM_BOT_TOKEN": "8197820749:AAEUxgiQ0Ln-l60zj9ZkvajKH6Js2EH5tCU",
+        "TELEGRAM_CHAT_ID": "8275603326"
       }
     }
   }

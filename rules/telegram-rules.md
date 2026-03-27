@@ -14,7 +14,38 @@ Toute détection d'un événement critique DOIT déclencher un appel à `telegra
 - **Agents Monitoring:** Responsables de la détection et de l'envoi des alertes via `telegram_send_alert`.
 - **Agents DevOps:** Responsables de l'exécution des commandes reçues (/restart, /deploy) via `telegram_execute_command`.
 
-## 📝 FORMAT DES ALERTES
-- Utilisez systématiquement les émojis correspondants : 🔴 (Critique), 🟡 (Warning), 🟢 (Info).
-- Incluez toujours le nom du service ou de la ressource concernée entre crochets : `[VPS-01]`, `[Coolify]`.
-- En cas d'erreur, joindre un extrait court du log via `<code>`.
+## 📝 FORMAT DES ALERTES (PREMIUM)
+Les alertes doivent suivre ce formatage HTML pour une lisibilité maximale :
+
+### **🔴 CRITIQUE**
+```html
+🔴 <b>[ALERTE CRITIQUE]</b>
+━━━━━━━━━━━━━━━━━━━
+🔥 <b>[SERVICE]: Message d'erreur</b>
+<code>COURT EXTRAIT DU LOG</code>
+🚨 <b>Action:</b> Suggestion d'action
+━━━━━━━━━━━━━━━━━━━
+<i>Antigravity v1.4.0 — Superpower DevOps</i>
+```
+
+### **🟡 WARNING**
+```html
+🟡 <b>[WARNING]</b>
+━━━━━━━━━━━━━━━━━━━
+📉 <b>[RESSOURCE]: Seuil atteint</b>
+<code>Détails techniques</code>
+💡 <b>Conseil:</b> Suggestion d'optimisation
+━━━━━━━━━━━━━━━━━━━
+<i>Antigravity v1.4.0 — Superpower DevOps</i>
+```
+
+### **🟢 INFO**
+```html
+🟢 <b>[INFORMATION]</b>
+━━━━━━━━━━━━━━━━━━━
+🚀 <b>[EVENT]: Succès</b>
+<code>Statut/Détails</code>
+🔗 <a href='...'>Lien utile</a>
+━━━━━━━━━━━━━━━━━━━
+<i>Antigravity v1.4.0 — Superpower DevOps</i>
+```

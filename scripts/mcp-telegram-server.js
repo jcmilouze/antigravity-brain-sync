@@ -65,13 +65,20 @@ const tools = {
     });
   },
 
-  telegram_send_alert: async ({ level, message }) => {
-    let prefix = 'ℹ️';
-    if (level === 'critical') prefix = '🔴 [CRITIQUE]';
-    else if (level === 'warning') prefix = '🟡 [WARNING]';
-    else if (level === 'info') prefix = '🟢 [INFO]';
+  telegram_send_alert: async ({ level, message, details, action, service }) => {
+    const divider = "\n━━━━━━━━━━━━━━━━━━━\n";
+    let text = "";
+    
+    if (level === 'critical') {
+      text = `🔴 <b>[ALERTE CRITIQUE]</b>${divider}🔥 <b>${service || 'SERVICE'}:</b> ${message}\n\n<code>${details || 'Détails non spécifiés'}</code>\n\n🚨 <b>Action:</b> ${action || 'Redémarrage recommandé'}`;
+    } else if (level === 'warning') {
+      text = `🟡 <b>[WARNING]</b>${divider}📉 <b>${service || 'RESSOURCE'}:</b> ${message}\n\n<code>${details || ''}</code>\n\n💡 <b>Conseil:</b> ${action || 'Surveiller les logs'}`;
+    } else {
+      text = `🟢 <b>[INFORMATION]</b>${divider}🚀 <b>${service || 'EVENT'}:</b> ${message}\n\n<code>${details || ''}</code>\n\n🔗 ${action || 'Opération réussie'}`;
+    }
 
-    const text = `<b>${prefix}</b>\n\n${message}`;
+    text += `${divider}<i>Antigravity v1.4.0 — Superpower DevOps</i>`;
+    
     return await callTelegram('sendMessage', {
       chat_id: CHAT_ID,
       text: text,
@@ -157,12 +164,15 @@ rl.on('line', async (line) => {
         },
         {
           name: 'telegram_send_alert',
-          description: 'Envoie une alerte formattée (critical, warning, info)',
+          description: 'Envoie une alerte formattée Premium (critical, warning, info)',
           input_schema: {
             type: 'object',
             properties: {
               level: { type: 'string', enum: ['critical', 'warning', 'info'] },
-              message: { type: 'string' }
+              message: { type: 'string' },
+              service: { type: 'string' },
+              details: { type: 'string' },
+              action: { type: 'string' }
             },
             required: ['level', 'message']
           }
