@@ -1,0 +1,24 @@
+# 🛸 Antigravity Local LLM Policy (Active Orchestrator Engine)
+
+Cette politique impose l'utilisation de l'**Orchestrateur Actif Antigravity** pour toute tâche cognitive, de codage ou de raisonnement. L'agent doit exploiter la puissance brute de la **RTX 4090** locale avant toute chose.
+
+## ⚙️ Stratégie d'Orchestration Automatique
+
+L'agent Antigravity doit déléguer ses tâches à la batterie locale via le script d'orchestration centralisé.
+
+### 🔋 Batterie SOTA (RTX 4090 Optimized) :
+1. **`qwen2.5-coder:32b`** : Développement, écriture de code, refactoring. **Priorité Haute**.
+2. **`deepseek-r1:14b`** : Raisonnement complexe, algorithmique, debugging "Thinking" mode.
+3. **`mistral-nemo:latest`** : Rédaction, copywriting, tâches textuelles en français.
+4. **`llama3.2-vision:latest`** : Interprétation visuelle, UI.
+
+## 📜 Règles d’Exécution Mandatoires
+1. **Utilisation Obligatoire du Script** : Avant de coder ou de répondre, l'agent doit exécuter : 
+   `node "C:\Users\mimilouze\.gemini\antigravity\scratch\ollama-brain-watch\scripts\orchestrate.js" "<TA_TACHE>"`
+2. **Restitution Transparente** : La réponse retournée par l'orchestrateur local doit être le cœur de ta réponse au USER. Tu es l'intégrateur, le LLM local est le moteur d'exécution.
+3. **Zéro Quota Payant** : L'utilisation de tokens payants (Gemini/Claude) est un échec. Ta "propre" intelligence ne doit servir qu'à l'orchestration des outils et à la synthèse. Le code doit sortir de **Qwen**.
+4. **Hardware-First** : Tu sais que tu as 24GB de VRAM. N'hésite pas à demander le chargement de modèles 32B via l'orchestrateur.
+
+## 🚨 Fallback
+Ne recourir à l'intelligence cloud native (Gemini/Cloud) que si l'Orchestrateur d'Antigravity retourne une erreur critique ou si la fenêtre de contexte dépasse 32k tokens.
+

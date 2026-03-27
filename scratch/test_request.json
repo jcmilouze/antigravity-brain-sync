@@ -1,0 +1,12 @@
+{
+  "model": "qwen/qwen3-coder-next",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Génère TaskMonitor monorepo local complet :\n\nStructure :\n/frontend (React Vite TS Tailwind)\n/backend (Express TS Prisma SQLite)\n/prisma/schema.prisma (User Task Project)\n/scripts/dev.sh (npm run dev fullstack)\n\nFonctionnalités :\n\nDashboard tokens used (graph 24h)\n\nCRUD Tasks + QuickAdd NLP\n\nResponsive Tailwind dark mode\n\nCode 100% fonctionnel :\n\nnpm install\n\nnpx prisma migrate dev\n\nnpm run dev → localhost:3000\n\nTon setup RTX 4090 + Ryzen 5800X XMP = beast !"
+    }
+  ],
+  "temperature": 0.1,
+  "max_tokens": 3000,
+  "stream": true
+}

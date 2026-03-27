@@ -1,51 +1,66 @@
-#!/usr/bin/env node
-const { execSync } = require('child_process');
+const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
 /**
- * OLLAMA FORCE PROTOCOL - Execution Governor Script
- * Date: 22 Mars 2026
- * Mission: Delegate heavy generation to local expert models.
+ * Antigravity Ollama Force Connector v1.1.0
+ * Purpose: Reliable local generation with direct file output.
  */
 
-const modelMap = {
-    'code': 'qwen2.5-coder:32b',
-    'logic': 'ministral-3:14b',
-    'vision': 'llama3.2-vision:latest',
-    'polish': 'mistral-nemo',
-    'fast': 'llama3.2:1b'
+const args = process.argv.slice(2);
+const prompt = args[0] || 'Hello';
+const model = args[1] || 'qwen2.5-coder:32b';
+const outputFilePath = args[2] || null; // Optional output file path
+const system = args[3] || 'You are an elite coding assistant. Respond with CODE ONLY. No chat, no markdown blocks, just the raw code.';
+
+const postData = JSON.stringify({
+    model: model,
+    prompt: prompt,
+    system: system,
+    stream: false,
+    options: {
+        num_ctx: 16384,
+        temperature: 0.1
+    }
+});
+
+const options = {
+    hostname: '127.0.0.1',
+    port: 11434,
+    path: '/api/generate',
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(postData)
+    }
 };
 
-const alias = process.argv[2];
-const promptInput = process.argv[3];
-
-if (!alias || !promptInput) {
-    console.error("Usage: node ollama-force.js <alias|model> <prompt_content|file_path>");
-    console.log("Aliases available:", Object.keys(modelMap).join(', '));
-    process.exit(1);
-}
-
-const model = modelMap[alias] || alias;
-let prompt = promptInput;
-
-// If promptInput is a path to a file, read it. Otherwise use it directly.
-if (fs.existsSync(promptInput)) {
-    prompt = fs.readFileSync(promptInput, 'utf8');
-}
-
-try {
-    process.stderr.write(`🌀 Delegating to local expert: ${model}...\n`);
-    
-    // Using stdin to avoid CLI argument length limits and escape issues
-    const result = execSync(`ollama run ${model}`, { 
-        input: prompt,
-        encoding: 'utf8',
-        maxBuffer: 50 * 1024 * 1024 // 50MB for large codebases
+const req = http.request(options, (res) => {
+    let data = '';
+    res.on('data', (chunk) => data += chunk);
+    res.on('end', () => {
+        try {
+            const response = JSON.parse(data);
+            if (response.response) {
+                const cleanedResponse = response.response.trim();
+                if (outputFilePath) {
+                    require('fs').writeFileSync(outputFilePath, cleanedResponse, 'utf8');
+                    console.log(`✅ Generation complete. Output saved to: ${outputFilePath}`);
+                } else {
+                    process.stdout.write(cleanedResponse);
+                }
+            } else {
+                process.stderr.write("Error: No 'response' field.\n");
+            }
+        } catch (e) {
+            process.stderr.write("Parsing Error: " + e.message + "\n");
+        }
     });
-    
-    process.stdout.write(result);
-} catch (error) {
-    process.stderr.write(`❌ Error in OLLAMA FORCE execution: ${error.message}\n`);
-    process.exit(1);
-}
+});
+
+req.on('error', (e) => {
+    process.stderr.write(`Ollama Error: ${e.message}\n`);
+});
+
+req.write(postData);
+req.end();

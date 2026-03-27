@@ -10,6 +10,20 @@
         "GITHUB_PERSONAL_ACCESS_TOKEN": "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"
       }
     },
+    "github-mcp-server": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "GITHUB_PERSONAL_ACCESS_TOKEN",
+        "ghcr.io/github/github-mcp-server"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": ""
+      }
+    },
     "n8n-mcp": {
       "command": "npx",
       "args": [
@@ -22,6 +36,7 @@
       ]
     },
     "StitchMCP": {
+      "$typeName": "exa.cascade_plugins_pb.CascadePluginCommandTemplate",
       "command": "npx",
       "args": [
         "-y",
@@ -29,7 +44,8 @@
         "https://stitch.googleapis.com/mcp",
         "--header",
         "X-Goog-Api-Key: AQ.Ab8RN6JcLUlncvBkqVpg-txQJuzYjFE8rxBEVwsDwX9ibZS6jw"
-      ]
+      ],
+      "env": {}
     },
     "postgres-velotrack": {
       "command": "npx",

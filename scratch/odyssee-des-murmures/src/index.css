@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+@theme {
+  --font-lexend: "Lexend", sans-serif;
+  --color-dys-cream: #FFFDD0;
+  --color-dys-text: #2C3E50;
+  --color-dys-accent: #6C5CE7;
+  --color-dys-success: #00B894;
+}
+
+:root {
+  background-color: var(--color-dys-cream);
+  color: var(--color-dys-text);
+  font-family: var(--font-lexend);
+}
+
+body {
+  @apply min-h-screen m-0;
+  font-feature-settings: "kern" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Dyslexia friendly spacing */
+p, h1, h2, h3, button {
+  letter-spacing: 0.05em;
+  line-height: 1.6;
+}

@@ -1,40 +1,46 @@
-# 🌌 Antigravity Brain Sync
+# 🌌 Antigravity Brain Sync — Unified Cloud Infrastructure (v1.4.0)
 
-Ce dépôt contient la synchronisation du "Search & Knowledge" de l'instance Antigravity (PC/Mac).
-
-## 🍏 Setup & Migration Mac (Copy-Paste)
-
-Pour installer ton environnement Antigravity sur un nouveau Mac :
-
-### 1. Initialiser le Cerveau (The Brain)
-```bash
-mkdir -p ~/.gemini/antigravity && cd ~/.gemini/antigravity && git clone https://github.com/jcmilouze/antigravity-brain-sync.git .
-```
-
-### 2. Compiler l'Extension Sync
-```bash
-cd extension && npm install && npm run package
-```
-
-### 3. Installer dans VS Code
-1. Ouvre VS Code sur Mac.
-2. `Cmd + Shift + X` (Extensions) > `...` (Menu) > **Install from VSIX...**.
-3. Sélectionne : `~/.gemini/antigravity/extension/antigravity-vscode-sync-1.0.0.vsix`.
-
-### 4. Première Synchronisation
-Clique sur `🌀 Antigravity Sync` (Barre de statut) > `📥 Pull from Cloud`.
+Bienvenue dans votre "Single Source of Truth". Ce dépôt centralise votre conscience agentique (Rules, Skills, Knowledge, Scratch) et assure une synchronisation **Hardened** entre vos stations de travail (PC Windows / Mac).
 
 ---
 
-## Contenu du Cerveau
-- **.agents** : Workflows et instructions d'agents.
-- **skills** : Compétences personnalisées (SKILL.md).
-- **knowledge** : Base de connaissances distillée (Knowledge Items).
-- **brain** : Historique et journaux de conversations.
-- **extension** : Code source de l'outil de synchronisation.
+## 🔒 Certification de Sécurité (v1.4.0) — Hardened Edition
+- **Protection Anti-Injection** : Migration vers `execFile` pour tous les appels Git système.
+- **Canal de Sync** : Branche unique `main` consolidée.
+- **Audit de Validité** : Signature de conformité des jetons d'authentification.
 
-## Architecture
-La conscience collective est synchronisée via une passerelle Git privée. Toute modification poussée depuis le PC est immédiatement récupérable par le Mac via l'extension VS Code.
+## 🛠️ Capacités Agentiques (MCP Stack)
+Le système est interfacé avec les services suivants via le protocole **Model Context Protocol (MCP)** :
+- 🐙 **GitHub** : Gestion automatisée du code et des Pull Requests.
+- 🌀 **n8n Automation** : Orchestration de workflows et webhooks intelligents.
+- 🎨 **Stitch UI** : Prototypage rapide et design systems par IA.
+- 👤 **Clerk SDK** : Authentification et gestion utilisateur SaaS.
+
+👉 [**Documentation Technique Étendue (MCP_STACK.md)**](./docs/MCP_STACK.md)
 
 ---
-*Mis à jour le : 22 Mars 2026 — Gouverneur d'Exécution Antigravity.*
+
+## 🍏 Setup & Migration Mac (v1.4.0)
+
+### 1. Initialiser la structure d'accueil
+```bash
+# Crée le dossier racine obligatoire
+mkdir -p ~/.gemini/antigravity
+```
+
+### 2. Le Manuel de Bord (INDISPENSABLE)
+Pour votre première installation sur macOS, suivez rigoureusement le manuel détaillé que nous avons conçu ce soir :
+👉 [**Guide d'installation Mac (v1.4.0)**](./scratch/antigravity-vscode-sync/DOCS_MAC_INSTALL.md)
+
+---
+
+## 🏛️ Structure du Brain (Consolidée)
+- 📁 **`rules/`** : Vos principes de gouvernance (Superpower).
+- 📁 **`skills/`** : Votre bibliothèque de compétences (Générateur de plans, Expert DevOps, etc.).
+- 📁 **`scratch/`** : Vos projets actifs (AURA SOTA 3D, Ollama Monitor Dashboard).
+- 📁 **`knowledge/`** : Vos items de connaissance distillés (Knowledge Items).
+- 📁 **`scripts/`** : Vos outils d'automatisation et orchestrateurs.
+- 📁 **`docs/`** : Documentation technique et protocoles système.
+
+---
+*Gouverneur d'Exécution Antigravity — Update v1.4.0 : 27 Mars 2026 — Protocol @superpower Active.*

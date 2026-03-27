@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@theme {
+  --font-inter: "Inter", sans-serif;
+  
+  /* Midnight Onyx Color Palette using OKLCH */
+  --color-bg: oklch(0.05 0 0);
+  --color-text: oklch(0.95 0.02 180);
+  --color-accent: oklch(0.65 0.03 240);
+  --color-gold: oklch(0.75 0.15 85);
+  --color-premium-glow: rgba(255, 255, 255, 0.08);
+  
+  /* Animations */
+  --animate-fade-in-up: fade-in-up 1.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+  --animate-slow-reveal: reveal 2.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+  
+  @keyframes fade-in-up {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+:root {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-inter);
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Glassmorphism Classes */
+.glass-premium {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Light Noise / Grain Texture (Dynamic Animation) */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; width: 300%; height: 300%;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 9999;
+  animation: noise 2s steps(4) infinite;
+}
+
+@keyframes noise {
+  0% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -5%); }
+  20% { transform: translate(-10%, 5%); }
+  30% { transform: translate(5%, -10%); }
+  40% { transform: translate(-5%, 15%); }
+  50% { transform: translate(-10%, 5%); }
+  60% { transform: translate(15%, 0); }
+  70% { transform: translate(0, 10%); }
+  80% { transform: translate(-15%, 0); }
+  90% { transform: translate(10%, 5%); }
+  100% { transform: translate(5%, 0); }
+}

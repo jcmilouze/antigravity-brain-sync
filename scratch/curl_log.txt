@@ -1,0 +1,34 @@
+Warning: The provided HTTP header '"' does not look like a header?
+* Host localhost:1234 was resolved.
+* IPv6: ::1
+* IPv4: 127.0.0.1
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+  0      0   0      0   0      0      0      0                              0*   Trying [::1]:1234...
+*   Trying 127.0.0.1:1234...
+* Established connection to localhost (127.0.0.1 port 1234) from 127.0.0.1 port 64790 
+* using HTTP/1.x
+> POST /v1/chat/completions HTTP/1.1
+> Host: localhost:1234
+> User-Agent: curl/8.18.0
+> Accept: */*
+> 
+* Request completely sent off
+< HTTP/1.1 415 Unsupported Media Type
+< X-Powered-By: Express
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 152
+< ETag: W/"98-3Vwo8shOTSN7br+6moEnWZBfNW0"
+< Date: Sat, 21 Mar 2026 19:59:08 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+< 
+{ [152 bytes data]
+100    152 100    152   0      0    550      0                              0100    152 100    152   0      0    550      0                              0100    152 100    152   0      0    549      0                              0
+* Connection #0 to host localhost:1234 left intact
+* URL rejected: Port number was not a decimal number between 0 and 65535
+* closing connection #-1
+curl: (3) URL rejected: Port number was not a decimal number between 0 and 65535
+* URL rejected: Malformed input to a URL function
+* closing connection #-1
+curl: (3) URL rejected: Malformed input to a URL function

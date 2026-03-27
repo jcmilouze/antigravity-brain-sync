@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA Pro Max — L'excellence acoustique transcendée</title>
+    <meta name="description" content="Découvrez les AURA Pro Max, des écouteurs sans fil ultra-premium pour ceux qui n'exigent rien de moins que l'exceptionnel.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script defer src="app.js"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "AURA Pro Max",
+      "image": [
+        "https://aura-audio.com/assets/hero.png"
+      ],
+      "description": "L'excellence acoustique transcendée. Écouteurs sans fil ultra-premium avec processeur Obsidian H2.",
+      "brand": {
+        "@type": "Brand",
+        "name": "AURA"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://aura-audio.com/purchase",
+        "priceCurrency": "EUR",
+        "price": "1499.00",
+        "availability": "https://schema.org/InStock"
+      }
+    }
+    </script>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">AURA</div>
+            <ul class="nav-links">
+                <li><a href="#features">Technologie</a></li>
+                <li><a href="#" onclick="openModal('control-center')">Expérience</a></li>
+                <li><a href="#" onclick="openModal('member-portal')" class="btn-buy">Membres</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h1 class="hero-title">AURA Pro Max</h1>
+                <p class="hero-subtitle">Le silence est un privilège.</p>
+                <div class="hero-image-container">
+                    <img src="assets/hero.png" alt="AURA Pro Max Earphones" class="hero-image">
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="features">
+            <div class="container grid">
+                <div class="feature-card">
+                    <h3>Spatial Audio v4</h3>
+                    <p>Une immersion sonore en 4D, calculée en temps réel par notre processeur hybride Obsidian.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Absolu Silence</h3>
+                    <p>Une réduction de bruit active atteignant -48dB. Le reste du monde n'existe plus.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Titanium Audio</h3>
+                    <p>Des diaphragmes en titane grade 5 pour une précision chirurgicale sur tout le spectre.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Immersive Tech Section: Obsidian H2 -->
+        <section class="sticky-wrapper">
+            <div class="sticky-content">
+                <div class="scroll-text left" id="text-1">
+                    <h2>Obsidian H2</h2>
+                    <p>Le cerveau de l'exceptionnel. Un processeur gravé en 3nm dédié exclusivement à la pureté acoustique.</p>
+                </div>
+                <div class="scroll-text right" id="text-2">
+                    <h2>Neural Noise Control</h2>
+                    <p>12 millions d'ajustements par seconde. Un silence absolu, même au cœur du chaos.</p>
+                </div>
+                <img src="assets/chip.png" alt="Obsidian H2 Chip" class="chip-img animate-glow">
+            </div>
+        </section>
+
+        <!-- Product Image 2 Section -->
+        <section class="visual-break">
+            <div class="container reveal">
+                <img src="assets/case.png" alt="AURA Pro Case" class="case-image">
+            </div>
+        </section>
+
+        <!-- Call to Action / Pricing -->
+        <section id="purchase" class="purchase">
+            <div class="container text-center reveal">
+                <h2>L'exclusivité a un nom.</h2>
+                <div class="price-tag">1 499,00 €</div>
+                <p class="availability">Disponible uniquement pour les membres du cercle AURA.</p>
+                <button class="cta-button">Réserver le vôtre</button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 AURA Audio. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <!-- AURA Control Center Modal (Simulated) -->
+    <div id="control-center" class="modal-overlay">
+        <div class="modal-content glass-premium">
+            <button class="close-modal" onclick="closeModal('control-center')">&times;</button>
+            <div class="modal-header">
+                <h2>Signature Acoustique</h2>
+                <p>Ajustez l'émotion de chaque fréquence.</p>
+            </div>
+            <div class="ui-preview-container">
+                <img src="assets/controls.png" alt="AURA Interface" class="ui-background">
+                <div class="ui-overlay-sliders">
+                    <div class="slider-group">
+                        <label>Sub-Bass</label>
+                        <input type="range" min="-12" max="12" value="4">
+                    </div>
+                    <div class="slider-group">
+                        <label>Mid-Range</label>
+                        <input type="range" min="-12" max="12" value="0">
+                    </div>
+                    <div class="slider-group">
+                        <label>High-Tension</label>
+                        <input type="range" min="-12" max="12" value="2">
+                    </div>
+                </div>
+            </div>
+            <button class="cta-button secondary" onclick="saveProfile()">Mémoriser mon profil</button>
+        </div>
+    </div>
+
+    <!-- Cercle AURA Portal (Simulated) -->
+    <div id="member-portal" class="modal-overlay">
+        <div class="modal-content glass-premium">
+            <button class="close-modal" onclick="closeModal('member-portal')">&times;</button>
+            <div class="modal-header">
+                <h2>Accès Cercle AURA</h2>
+                <p>L'excellence vous appartient.</p>
+            </div>
+            <div class="login-sim">
+                <input type="email" placeholder="Email d'invitation" class="premium-input">
+                <p class="concierge-note">Vérification instantanée par conciergerie biométrique.</p>
+                <button class="cta-button" onclick="simulateLogin()">Entrer dans le Cercle</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Scrollytelling & Reveal Observation
+        const observerOptions = {
+            threshold: 0.2
+        };
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        // Complex Scroll Logic for Obsidian Section
+        window.addEventListener('scroll', () => {
+            const wrapper = document.querySelector('.sticky-wrapper');
+            const rect = wrapper.getBoundingClientRect();
+            const progress = Math.abs(rect.top) / (wrapper.offsetHeight - window.innerHeight);
+
+            const text1 = document.getElementById('text-1');
+            const text2 = document.getElementById('text-2');
+
+            if (rect.top <= 0 && rect.bottom >= window.innerHeight) {
+                if (progress > 0.1 && progress < 0.4) {
+                    text1.classList.add('active');
+                    text2.classList.remove('active');
+                } else if (progress > 0.5 && progress < 0.8) {
+                    text1.classList.remove('active');
+                    text2.classList.add('active');
+                } else {
+                    text1.classList.remove('active');
+                    text2.classList.remove('active');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
