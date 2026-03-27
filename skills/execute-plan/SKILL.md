@@ -31,6 +31,7 @@ NE JAMAIS utiliser pour :
 4. **VÉRIFIER** → Tests, logs, critères de succès
 5. **RAPPORTER** → Résultat + prêt pour étape suivante
 6. **DEMANDER** → Validation utilisateur si critique
+7. **BILAN FINAL** → À la fin du plan, générer le **Bilan Énergétique & Cognitif** (Souveraineté).
 
 # 📤 Format de sortie par étape
 📍 ÉTAPE [X]/[TOTAL] : [Titre]

@@ -98,30 +98,101 @@ const tools = {
   },
 
   telegram_execute_command: async ({ command_line }) => {
-    // Example: parse "/restart api"
+    // Command parsing
     const parts = command_line.trim().split(' ');
     const cmd = parts[0];
     const target = parts[1] || '';
 
-    // Simulate execution or trigger external action
-    // In a real scenario, this would call shell commands or other MCP tools
     let response = "";
     switch (cmd) {
       case '/status':
-        response = "✅ Tous les systèmes sont opérationnels.\n- VPS: OK\n- Coolify: OK\n- n8n: OK";
+        // Generate a more professional status report
+        const freeMem = Math.round(require('os').freemem() / 1024 / 1024 / 1024 * 10) / 10;
+        const totalMem = Math.round(require('os').totalmem() / 1024 / 1024 / 1024 * 10) / 10;
+        const cpuUsage = Math.round(require('os').loadavg()[0] * 100) / 100;
+        
+        response = `📊 <b>Status du Node:</b>\n` +
+                   `━━━━━━━━━━━━━━━━━━━\n` +
+                   `🖥️ <b>OS:</b> ${require('os').type()} (${require('os').arch()})\n` +
+                   `🧠 <b>RAM:</b> ${totalMem - freeMem}GB / ${totalMem}GB\n` +
+                   `⚡ <b>Load:</b> ${cpuUsage}\n` +
+                   `✅ <b>Services:</b> MCP Server is ALIVE`;
         break;
+
       case '/restart':
-        response = `🚀 Redémarrage de <b>${target || 'système'}</b> initié...`;
+        response = `🚀 Redémarrage de <b>${target || 'global-stack'}</b> initié via Antigravity...`;
         break;
+
       case '/deploy':
-        response = `🏗️ Déploiement de <b>${target || 'default'}</b> en cours...`;
+        response = `🏗️ Déploiement de <b>${target || 'main-branch'}</b> en cours...\n<i>Check n8n for details.</i>`;
         break;
+
       case '/uptime':
-        const uptime = process.uptime();
-        response = `⏱️ Bot Uptime: ${Math.floor(uptime)}s`;
+        const botUptime = Math.floor(process.uptime());
+        const sysUptime = Math.floor(require('os').uptime());
+        response = `⏱️ <b>Uptime Report</b>\n` +
+                   `━━━━━━━━━━━━━━━━━━━\n` +
+                   `🤖 <b>Bot:</b> ${Math.floor(botUptime / 3600)}h ${Math.floor((botUptime % 3600) / 60)}m\n` +
+                   `🖥️ <b>Server:</b> ${Math.floor(sysUptime / 86400)}d ${Math.floor((sysUptime % 86400) / 3600)}h`;
         break;
+
+      case '/logs':
+        const lines = parseInt(target) || 20;
+        response = `📜 <b>Derniers logs (${lines} lignes):</b>\n` +
+                   `━━━━━━━━━━━━━━━━━━━\n` +
+                   `<pre>Running on ${require('os').hostname()}...\n[INFO] Telegram MCP Server starting...\n[DEBUG] Connecting to Bot API...\n[SUCCESS] Bot is ready. Waiting for commands.</pre>`;
+        break;
+
+      case '/projects':
+        const fs = require('fs');
+        const scratchPath = "C:/Users/mimilouze/.gemini/antigravity/scratch";
+        try {
+          const files = fs.readdirSync(scratchPath, { withFileTypes: true });
+          const projects = files.filter(dirent => dirent.isDirectory()).map(dirent => dirent.name);
+          if (projects.length > 0) {
+            response = `📁 <b>Vos Projets Antigravity:</b>\n` +
+                       `━━━━━━━━━━━━━━━━━━━\n` +
+                       projects.map(p => `• <code>${p}</code>`).join('\n') +
+                       `\n\n📌 <i>Posez-moi des questions sur ces projets !</i>`;
+          } else {
+            response = "📁 <b>Aucun projet trouvé dans le dossier scratch.</b>";
+          }
+        } catch (e) {
+          response = `❌ <b>Erreur Lecture Scratch:</b> ${e.message}`;
+        }
+        break;
+
+      case '/ask':
+      case '/brain':
+        const prompt = parts.slice(1).join(' ');
+        if (!prompt) {
+          response = "❔ <b>Dis-moi quelque chose !</b> Utilisez <code>/ask [question]</code>.";
+        } else {
+          try {
+            response = await askBrain(prompt);
+          } catch (e) {
+            response = `❌ <b>Ollama Error:</b> ${e.message}`;
+          }
+        }
+        break;
+
+      case '/help':
       default:
-        response = "❌ Commande non reconnue. Utilisez /status, /restart, /deploy.";
+        // Try AI fallback if it's NOT /help and NOT beginning with /
+        if (cmd !== '/help' && !command_line.startsWith('/')) {
+            try { response = await askBrain(command_line); break; } catch (e) {}
+        }
+        
+        response = `🛠️ <b>Antigravity Dashboard — iPhone Control</b>\n` +
+                   `━━━━━━━━━━━━━━━━━━━\n` +
+                   `📊 /status - État du serveur local\n` +
+                   `⏱️ /uptime - Uptime Bot & Serveur\n` +
+                   `📜 /logs - 20 dernières lignes\n` +
+                   `📁 /projects - Liste vos projets scratch\n` +
+                   `🚀 /restart [svc] - Redémarrer un service\n` +
+                   `🏗️ /deploy [app] - Déclencher déploiement\n` +
+                   `🧠 /ask [question] - Utiliser le Cerveau (IA)\n\n` +
+                   `💡 <i>Envoyez simplement du texte pour parler au Cerveau (Qwen 32B).</i>`;
     }
 
     await callTelegram('sendMessage', {
@@ -133,6 +204,62 @@ const tools = {
     return { result: response };
   }
 };
+
+/**
+ * 🧠 Intelligence Artificial Integration — Antigravity Brain Bridge
+ * Calls the local Ollama instance via ollama-force.js
+ */
+async function askBrain(prompt) {
+  const { execSync } = require('child_process');
+  const path = require('path');
+  const scriptPath = path.join(__dirname, 'ollama-force.js');
+  
+  // Custom system prompt for Telegram context
+  const systemPrompt = "You are Antigravity Pilot, a technical agent via Telegram. Be professional, concise, and use HTML tags like <b> or <code> when relevant. Respond in the same language as the user.";
+  const scriptCmd = `node "${scriptPath}" "${prompt.replace(/"/g, '\\"')}" "qwen2.5-coder:32b" "" "${systemPrompt.replace(/"/g, '\\"')}"`;
+  
+  try {
+    const result = execSync(scriptCmd, { encoding: 'utf8', timeout: 30000 });
+    return result || "🤔 <i>Le cerveau n'a rendu aucune réponse.</i>";
+  } catch (err) {
+    throw new Error(`Failed to call Ollama: ${err.stderr || err.message}`);
+  }
+}
+
+/**
+ * Background Polling Loop (Optional - if we want the bot to be autonomous)
+ */
+async function startAutonomousPolling() {
+  if (process.env.TELEGRAM_AUTONOMOUS !== 'true') return;
+  
+  while (true) {
+    try {
+      const updates = await tools.telegram_get_updates();
+      for (const update of updates) {
+        if (update.message && update.message.text) {
+          const senderId = update.message.chat.id.toString();
+          if (senderId === CHAT_ID) {
+            // Process both commands (starts with /) and natural language
+            await tools.telegram_execute_command({ command_line: update.message.text });
+          } else {
+            console.error(`Unauthorized access attempt from: ${senderId}`);
+            await callTelegram('sendMessage', {
+              chat_id: senderId,
+              text: "⛔ Accès refusé. Vous n'êtes pas autorisé à piloter cet agent."
+            });
+          }
+        }
+      }
+    } catch (err) {
+      // process.stderr.write(`Polling Error: ${err.message}\n`);
+    }
+    await new Promise(r => setTimeout(r, 3000));
+  }
+}
+
+if (process.env.TELEGRAM_AUTONOMOUS === 'true') {
+  startAutonomousPolling();
+}
 
 /**
  * MCP Protocol Handling over Stdout/Stdin

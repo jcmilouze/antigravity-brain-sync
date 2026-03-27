@@ -51,6 +51,11 @@ Selon le protocole **Ollama Force**, tu structures ton travail ainsi :
 - **Coolify Networking** : Utilise les aliases de service pour la communication inter-conteneurs.
 - **Auto-Migration** : Commande CMD incluant `npx prisma db push`.
 
+### 2.3 Coolify Port Configuration (Fix 502 Bad Gateway)
+- **Port 80 Requirement** : Puisque nous utilisons Nginx (`nginx:alpine`) en production, le container écoute sur le port **80**.
+- **Internal Port Mapping** : Dans les `Settings` de Coolify, forcer le champ **Port** (Internal Port) sur **80** au lieu de 3000 (standard Node/Vite).
+- **Domain Binding** : Ne jamais oublier d'attendre que le reverse proxy se propage après le changement de port pour résoudre l'erreur 502.
+
 ---
 
 ## 📊 3. Audit & Performance
