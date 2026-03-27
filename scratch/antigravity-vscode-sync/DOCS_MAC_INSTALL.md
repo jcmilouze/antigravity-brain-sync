@@ -1,4 +1,4 @@
-# 🌀 Antigravity Brain Sync : Protocole MAC (v1.3.1)
+# 🌀 Antigravity Brain Sync : Protocole MAC (v1.4.0)
 
 Ce document décrit la marche à suivre pour synchroniser l'infrastructure **Antigravity** (Rules, Skills, Knowledge, Scratch) entre ton PC et ton Mac via GitHub.
 
@@ -18,7 +18,7 @@ Avant d'installer l'extension, assure-toi que ton environnement macOS est prêt 
 ---
 
 ## 2. 🔌 Installation de l'Extension Sync
-Tu dois installer l'extension **Antigravity Cloud Sync** (v1.3.1) sur le VS Code de ton Mac.
+Tu dois installer l'extension **Antigravity Cloud Sync** (v1.4.0) sur le VS Code de ton Mac.
 
 1. **Transfert du .vsix** : Transfère le fichier `antigravity-vscode-sync-1.3.1.vsix` depuis ton PC vers ton Mac (via AirDrop, USB ou GitHub).
 2. **Installation** :
@@ -50,7 +50,7 @@ C'est ici que ton Mac "apprend" tout ce que ton PC connaît déjà.
 
 ---
 
-### ⚠️ Sécurité (Hardening v1.3.1)
+### ⚠️ Sécurité (Hardening v1.4.0)
 L'extension installe une protection native contre les injections de commandes. Tes données sont synchronisées par **`execFile`**, garantissant l'intégrité de ton infrastructure de calcul.
 
 **Statut du Protocole : 🟢 OPÉRATIONNEL**
