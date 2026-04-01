@@ -1,9 +1,10 @@
 {
   "manifest_version": 3,
-  "name": "Antigravity - Ollama Tracker",
-  "version": "1.0.0",
-  "description": "Monitore l'état d'Ollama en temps réel avec un rendu premium.",
+  "name": "Antigravity — Ollama Monitor",
+  "version": "2.0.0",
+  "description": "Premium Local Brain Monitoring. Real-time VRAM, Model Status, and Management for Ollama.",
   "permissions": [
+    "storage",
     "activeTab"
   ],
   "host_permissions": [
@@ -16,10 +17,17 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["content.js"]
+      "js": ["content.js"],
+      "run_at": "document_end"
     }
   ],
   "action": {
-    "default_popup": "popup.html"
+    "default_popup": "popup.html",
+    "default_icon": {
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "128": "icons/icon128.png"
   }
 }

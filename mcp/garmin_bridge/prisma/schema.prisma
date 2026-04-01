@@ -1,0 +1,19 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgres://postgres:BFGgZdxMVpMWYVeMU3Sh0sflM7ZhJU2wUGeJl8zQdPMsNHzWjiFg7Dr42lmxs0rI@s84g4c8s4o8k8w8swc0go8os:5432/postgres"
+}
+
+model Route {
+  id        Int      @id @default(autoincrement())
+  name      String?
+  waypoints Json
+  routeType String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("routes")
+}

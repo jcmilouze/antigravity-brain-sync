@@ -1,10 +1,17 @@
 {
   "dependencies": {
+    "@clerk/clerk-react": "^5.61.4",
+    "@fontsource-variable/inter": "^5.2.8",
+    "@fontsource-variable/outfit": "^5.2.8",
+    "@iconify/react": "^6.0.2",
+    "@supabase/supabase-js": "^2.100.1",
+    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.38.0",
     "idb": "^8.0.3",
     "lucide-react": "^0.577.0",
     "papaparse": "^5.5.3",
+    "react-router-dom": "^7.13.2",
     "tailwind-merge": "^3.5.0"
   },
   "devDependencies": {
