@@ -2,8 +2,10 @@ import * as vscode from 'vscode';
 import * as os from 'os';
 import * as path from 'path';
 import { exec } from 'child_process';
+import { OllamaMonitor } from './ollamaMonitor';
 
 export function activate(context: vscode.ExtensionContext) {
+    // --- Antigravity Sync ---
     const statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
     statusBarItem.text = `🌀 Antigravity Sync`;
     statusBarItem.tooltip = 'Synchroniser votre Brain avec le Cloud (PC/Mac)';
@@ -16,9 +18,9 @@ export function activate(context: vscode.ExtensionContext) {
             { label: '📤 Push to Cloud', description: 'Envoyer les modifications locales vers Git' },
             { label: '📥 Pull from Cloud', description: 'Récupérer les dernières évolutions du Brain' }
         ];
-        
-        const choice = await vscode.window.showQuickPick(options, { 
-            placeHolder: '🌌 Antigravity Brain : Synchronisation' 
+
+        const choice = await vscode.window.showQuickPick(options, {
+            placeHolder: '🌌 Antigravity Brain : Synchronisation'
         });
 
         if (!choice) return;
@@ -53,6 +55,9 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     context.subscriptions.push(syncCommand);
+
+    // --- Ollama Monitor ---
+    new OllamaMonitor(context);
 }
 
 export function deactivate() {}
