@@ -19,11 +19,11 @@ Choisir le **modèle Ollama optimal** pour chaque tâche de développement en fo
 
 | Modèle | Taille | Forces principales | Idéal pour |
 |--------|--------|-------------------|------------|
-| `qwen2.5-coder:32b` (19GB) | 32B | **Code complexe, génération, raisonnement, fixing** | Architecture, refactor lourd, debug complexe, code critique |
-| `deepseek-r1:14b` (9GB) | 14B | **Raisonnement avancé, math, logique, contexte long** | Algorithmes, optimisation, analyse données, SQL complexe |
-| `mistral-nemo:latest` (7.1GB) | 12B | **Instructions précises, multi-turn, code compression** | Workflows multi-étapes, génération structurée, API/design |
-| `llama3.1:8b` (4.9GB) | 8B | **Vitesse, généraliste, bon rapport perf/qualité** | Tâches standard, CRUD, composants simples, boilerplate |
-| `llama3.2-vision:latest` (7.8GB) | Vision | **Analyse visuelle, UI/UX, captures d'écran, diagrammes** | Debug visuel, UI review, analyse screenshots, charts |
+| `qwen3.5:35b-q3_K_M` | 35B (MoE) | **SWE 37-69%, MoE efficace, 20-50 t/s 4090** | Code expert, debug, scripts principaux |
+| `qwen3.5:27b` | 27B | **Contexte 256K, généraliste** | Code long, pédagogie, documentation dense |
+| `deepseek-r1:14b` | 14B | **Raisonnement top (~68% SWE)** | Raisonnement pur, maths, logique complexe |
+| `mistral-nemo:latest` | 12B | **Rédaction fluide, multi-turn** | Chat standard, pédagogie éducative, copywriting |
+| `llama3.2-vision:latest` | Vision | **Multimodal, éval visuelle** | Images éval élèves, debug UI, screenshots |
 
 # 🔄 Classification des tâches
 
@@ -37,7 +37,7 @@ Choisir le **modèle Ollama optimal** pour chaque tâche de développement en fo
 ├── commits, petits refactors
 
 ## 🟡 LOCAL-FIRST (modèle spécialisé)
-qwen2.5-coder:32b → deepseek-r1:14b → mistral-nemo
+qwen3.5:35b → qwen3.5:27b → deepseek-r1:14b
 ├── composants moyens/complexes
 ├── logique métier, business rules
 ├── refactors multi-fichiers
@@ -67,7 +67,7 @@ PRIORITÉ 1 : VITESSE (llama3.1:8b)
 ├── contexte court (< 8k tokens)
 ├── pas de raisonnement complexe
 
-PRIORITÉ 2 : QUALITÉ CODE (qwen2.5-coder:32b)
+PRIORITÉ 2 : QUALITÉ CODE (qwen3.5:35b-q3_K_M)
 ├── génération/refactor complexe
 ├── architecture, design patterns
 ├── code critique (prod)
@@ -134,8 +134,8 @@ Tâche : "Implémente OAuth2 avec refresh tokens"
 Raison : sécurité critique + logique complexe
 
 # 🎛️ Commandes de sélection rapide
-@model-fast → llama3.1:8b
-@model-code → qwen2.5-coder:32b
+@model-fast → qwen3.5:27b
+@model-code → qwen3.5:35b-q3_K_M
 @model-reason → deepseek-r1:14b
 @model-precise → mistral-nemo:latest
 @model-vision → llama3.2-vision:latest

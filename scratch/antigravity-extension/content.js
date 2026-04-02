@@ -139,38 +139,54 @@ function updateUI(status) {
 
     const isActive = status.models.length > 0;
     island.className = `island ${isActive ? 'active-theme' : 'idle-theme'}`;
-    label.textContent = isActive ? 'Ollama Active' : 'Ollama Idle';
-    subtext.textContent = `${(status.vramUsed / 1024).toFixed(1)} GB VRAM`;
 
-    // Update models summary hover
+    // Affiche le nom du modèle actif en temps réel, ou "Ollama Idle"
+    if (isActive) {
+        const activeModel = status.models[0];
+        const shortName = activeModel.name.split(':')[0];
+        label.textContent = shortName.toUpperCase();
+        const vramGB = ((activeModel.size_vram || 0) / (1024 * 1024 * 1024)).toFixed(1);
+        subtext.textContent = `${vramGB} GB VRAM · ${activeModel.name.includes(':') ? activeModel.name.split(':')[1] : 'latest'}`;
+    } else {
+        label.textContent = 'Ollama Idle';
+        subtext.textContent = `${(status.vramUsed / 1024).toFixed(1)} GB libre`;
+    }
+
+    // Détail au survol : tous les modèles chargés
     modelsList.innerHTML = '';
-    const stats = status.usageStats || {};
-    const sorted = Object.entries(stats).sort((a, b) => b[1] - a[1]).slice(0, 3);
-
-    sorted.forEach(([name]) => {
-        const isLoaded = status.models.some(m => m.name === name);
-        const shortName = name.split(':')[0].toUpperCase();
-        const percentage = isLoaded ? 20 : 100;
-        
-        let segmentsHtml = '';
-        for(let i=1; i<=5; i++) {
-            const filled = (percentage >= (i * 20)) ? 'filled' : '';
-            segmentsHtml += `<div class="segment ${filled}"></div>`;
-        }
-
+    status.models.forEach(m => {
+        const shortName = m.name.split(':')[0].toUpperCase();
+        const vramGB = ((m.size_vram || 0) / (1024 * 1024 * 1024)).toFixed(1);
         const mini = document.createElement('div');
         mini.className = 'mini-card';
         mini.innerHTML = `
-            <span class="mini-name">${isActive ? '🚀' : '○'} ${shortName}</span>
-            <div class="segmented-bar">${segmentsHtml}</div>
+            <span class="mini-name">🟢 ${shortName}</span>
+            <span class="mini-name" style="opacity:0.5">${vramGB} GB</span>
         `;
         modelsList.appendChild(mini);
     });
+
+    // Si aucun modèle chargé, affiche le top 3 des modèles utilisés récemment
+    if (!isActive) {
+        const stats = status.usageStats || {};
+        const sorted = Object.entries(stats).sort((a, b) => b[1] - a[1]).slice(0, 3);
+        sorted.forEach(([name, secs]) => {
+            const shortName = name.split(':')[0].toUpperCase();
+            const mins = Math.round(secs / 60);
+            const mini = document.createElement('div');
+            mini.className = 'mini-card';
+            mini.innerHTML = `
+                <span class="mini-name" style="opacity:0.5">○ ${shortName}</span>
+                <span class="mini-name" style="opacity:0.3">${mins}m</span>
+            `;
+            modelsList.appendChild(mini);
+        });
+    }
 }
 
-// Initial status
-chrome.storage.local.get(['ollamaStatus'], (data) => {
-    updateUI(data.ollamaStatus);
+// Au chargement : demande l'état frais directement au background (évite le cache périmé)
+chrome.runtime.sendMessage({ type: 'GET_OLLAMA_STATUS' }, (response) => {
+    if (response) updateUI(response);
 });
 
 // Periodic update

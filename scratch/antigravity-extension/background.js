@@ -10,7 +10,7 @@ let ollamaStatus = {
   usageStats: {} // { modelName: seconds }
 };
 
-const POLL_INTERVAL_S = 3;
+const POLL_INTERVAL_S = 2;
 
 async function checkOllama() {
   try {

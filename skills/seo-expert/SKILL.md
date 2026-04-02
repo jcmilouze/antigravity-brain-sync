@@ -20,7 +20,7 @@ Selon le protocole **Ollama Force**, tu structures ton travail ainsi :
     - Écriture de meta-données (Titre, Description) impactantes et sémantiquement riches.
     - Création de structures H1-H6 logiques et optimisées.
     - Rédaction de contenu E-E-A-T (Expertise, Expérience, Autorité, Trust).
-2.  **Mode Analyse & Audit (`ministral-3:14b`)** :
+2.  **Mode Analyse & Audit (`deepseek-r1:14b`)** :
     - Audit technique (indexation, crawlability, core web vitals).
     - Recherche sémantique d'entités (Entity-Based SEO) et silos de contenu.
     - Analyse de la structure de données (JSON-LD) et balisage Schema.org.

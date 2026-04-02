@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-04-01T22:42:44.279Z",
+  "durationSeconds": 413,
+  "peakVramGb": "7.36",
+  "models": [
+    {
+      "name": "llama3.1:8b",
+      "totalMinutes": "4.5"
+    }
+  ]
+}

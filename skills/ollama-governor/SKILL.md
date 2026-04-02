@@ -12,7 +12,7 @@ date_added: "2026-03-23"
 
 ## 🆔 ID & Mission
 **Nom** : `ollama-governor`
-**Mission** : Gérer l'alternance entre les modèles de Codage Lourd (32B+) et les modèles de Raisonnement (14B) sur une RTX 4090 pour garantir 0 lag et 100% de précision. 
+**Mission** : Gérer l'alternance entre les modèles de Codage Lourd (Qwen 3.5 35B) et les modèles de Raisonnement (14B) sur une RTX 4090 pour garantir 0 lag et 100% de précision. 
 **Priorité Absolue** : Le Local-First. Utiliser les modèles Ollama au détriment des jetons Gemini payants pour toutes les tâches de code et de raisonnement standard.
 
 ---
@@ -21,24 +21,24 @@ date_added: "2026-03-23"
 À chaque début de session ou de nouveau développement :
 1. **Audit Serveur** : Vérifier si `ollama` est en cours d'exécution via le port 11434.
 2. **Auto-Lancement** : Si le serveur est éteint, lancer `& "$env:LOCALAPPDATA\Programs\Ollama\ollama.exe" serve`.
-3. **Ciblage Antigravity** : S'assurer que les deux agents (`ministral-3:14b` et `qwen2.5-coder:32b`) sont présents.
+3. **Ciblage Antigravity** : S'assurer que les modèles critiques (`deepseek-r1:14b` et `qwen3.5:35b`) sont présents.
 
 ---
 
 ## 🛠️ MODES D'EXÉCUTION
 
 ### 1. 💻 MODE CODAGE (Power Shift)
-- **Modèle** : `qwen2.5-coder:32b`
+- **Modèle** : `qwen3.5:35b`
 - **Action** : 
-  1. Décharger le modèle de raisonnement : `Invoke-RestMethod -Method Post -Uri "http://localhost:11434/api/generate" -Body '{"model": "ministral-3:14b", "keep_alive": 0}'`
-  2. Charger le Coder : `& "$env:LOCALAPPDATA\Programs\Ollama\ollama.exe" run qwen2.5-coder:32b`
+  1. Décharger le modèle de raisonnement : `Invoke-RestMethod -Method Post -Uri "http://localhost:11434/api/generate" -Body '{"model": "deepseek-r1:14b", "keep_alive": 0}'`
+  2. Charger le MoE : `& "$env:LOCALAPPDATA\Programs\Ollama\ollama.exe" run qwen3.5:35b`
 - **Usage** : Génération de composants React, refactorisation massive, CSS complexe.
 
 ### 2. 🧠 MODE ANALYSE (Reasoning Shift)
-- **Modèle** : `ministral-3:14b`
+- **Modèle** : `deepseek-r1:14b`
 - **Action** :
-  1. **API Unload** : `Invoke-RestMethod -Method Post -Uri "http://localhost:11434/api/generate" -Body '{"model": "qwen2.5-coder:32b", "keep_alive": 0}'`
-  2. **Load Analyst** : `ollama run ministral-3:14b`
+  1. **API Unload** : `Invoke-RestMethod -Method Post -Uri "http://localhost:11434/api/generate" -Body '{"model": "qwen3.5:35b", "keep_alive": 0}'`
+  2. **Load Analyst** : `ollama run deepseek-r1:14b`
 - **Usage** : Planification, audit UI/UX, stratégie de marque, logique métier.
 
 ### 3. ⚡ ASTUCE PERFORMANCE (Zero-Restart)
