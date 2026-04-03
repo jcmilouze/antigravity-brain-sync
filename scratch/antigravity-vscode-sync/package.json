@@ -29,7 +29,17 @@
         "command": "antigravity.syncConfig",
         "title": "Antigravity: Configure Cloud Sync"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Antigravity Sync",
+      "properties": {
+        "antigravity.autoSync": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable automatic synchronization (Push) when changes are detected."
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run package",
