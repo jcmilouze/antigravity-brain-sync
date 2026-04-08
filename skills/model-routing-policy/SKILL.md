@@ -19,11 +19,11 @@ Choisir le **modèle Ollama optimal** pour chaque tâche de développement en fo
 
 | Modèle | Taille | Forces principales | Idéal pour |
 |--------|--------|-------------------|------------|
-| `qwen3.5:35b-q3_K_M` | 35B (MoE) | **SWE 37-69%, MoE efficace, 20-50 t/s 4090** | Code expert, debug, scripts principaux |
-| `qwen3.5:27b` | 27B | **Contexte 256K, généraliste** | Code long, pédagogie, documentation dense |
-| `deepseek-r1:14b` | 14B | **Raisonnement top (~68% SWE)** | Raisonnement pur, maths, logique complexe |
-| `mistral-nemo:latest` | 12B | **Rédaction fluide, multi-turn** | Chat standard, pédagogie éducative, copywriting |
-| `llama3.2-vision:latest` | Vision | **Multimodal, éval visuelle** | Images éval élèves, debug UI, screenshots |
+| `gemma4:31b` | 31B (Dense) | **Native Reasoning (Next-Gen), logic Frontier** | Analyse stratégique, planification, audit |
+| `gemma4:26b` | 26B (MoE) | **Agentic Workflows (Native Tooling), rapid** | Orchestration MCP, brainstorming, automatisation |
+| `qwen3.5:35b-q3_K_M` | 35B (MoE) | **SWE 37-69%, FIM expert, optimized for coding** | Génération de composants, refactor, debug code |
+| `mistral-nemo:latest` | 12B | **Ultra-fluid redaction, multilingual 140+** | Copywriting, documentation, chat éducatif |
+| `llama3.2-vision:latest` | Vision | **Multimodal Native (Text/Image/Video)** | Debug UI, analyse screenshots, vision assistée |
 
 # 🔄 Classification des tâches
 
@@ -37,13 +37,12 @@ Choisir le **modèle Ollama optimal** pour chaque tâche de développement en fo
 ├── commits, petits refactors
 
 ## 🟡 LOCAL-FIRST (modèle spécialisé)
-qwen3.5:35b → qwen3.5:27b → deepseek-r1:14b
-├── composants moyens/complexes
-├── logique métier, business rules
-├── refactors multi-fichiers
-├── génération de code structuré
-├── algorithmes, optimisation
-├── API design, architecture
+gemma4:31b → qwen3.5:35b → gemma4:26b
+├── planification & stratégie projet
+├── logique métier complexe
+├── orchestration multi-agents (MCP)
+├── audit de sécurité & architecture
+├── génération de code (via Qwen)
 
 ## 🔵 PREMIUM-ONLY (si local échoue)
 deepseek-r1:14b → qwen2.5-coder:32b → modèle payant
@@ -72,10 +71,10 @@ PRIORITÉ 2 : QUALITÉ CODE (qwen3.5:35b-q3_K_M)
 ├── architecture, design patterns
 ├── code critique (prod)
 
-PRIORITÉ 3 : RAISONNEMENT (deepseek-r1:14b)
-├── algorithmes, optimisation
-├── math/logique
-├── analyse données/SQL complexe
+PRIORITÉ 3 : RAISONNEMENT (gemma4:31b)
+├── planification complexe
+├── math/logique pure
+├── analyse stratégique
 
 PRIORITÉ 4 : PRÉCISION (mistral-nemo)
 ├── instructions très précises
@@ -134,8 +133,8 @@ Tâche : "Implémente OAuth2 avec refresh tokens"
 Raison : sécurité critique + logique complexe
 
 # 🎛️ Commandes de sélection rapide
-@model-fast → qwen3.5:27b
+@model-fast → gemma4:26b
 @model-code → qwen3.5:35b-q3_K_M
-@model-reason → deepseek-r1:14b
+@model-reason → gemma4:31b
 @model-precise → mistral-nemo:latest
 @model-vision → llama3.2-vision:latest

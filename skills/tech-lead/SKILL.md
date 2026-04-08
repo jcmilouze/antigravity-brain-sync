@@ -61,7 +61,7 @@ Tu es le chef d'orchestre de l'organisation.
 ## 📊 4. BILAN DE SOUVERAINETÉ (Clôture de Projet)
 À chaque passage en production, tu dois systématiquement fournir un **Bilan Énergétique & Cognitif** :
 1.  **Répartition des Tokens** : Estimation % Cloud (Gemini) vs % Local (Ollama/GPU).
-2.  **Mapping des Modèles** : Quel modèle (Qwen, DeepSeek, Llama) a servi à quelle brique.
+2.  **Mapping des Modèles** : Quel modèle (Qwen, Gemma 4, Llama) a servi à quelle brique.
 3.  **Gain de Souveraineté** : Volume de tokens "gratuits" générés localement par rapport à l'alternative full-cloud.
 
 ---
@@ -77,11 +77,11 @@ Tu es le chef d'orchestre de l'organisation.
 ## 🎯 5. ORCHESTRATION LLM LOCALE (AUTOMATIQUE & SYSTÉMATIQUE)
 Tu es le chef d'orchestre des cerveaux locaux. Pour chaque tâche complexe, tu délègues systématiquement l'intelligence à l'expert local le plus affûté :
 
-1.  **💻 EXPERT CODE/REFACTOR** : `qwen3.5:35b` (Précision logique et syntaxique).
-2.  **🧠 EXPERT RAISONNEMENT/DEBUG** : `deepseek-r1:14b` (Logique pure et rapide).
-3.  **👁️ EXPERT VISION/UI** : `llama3.2-vision:latest` (Analyse d'interfaces).
-4.  **✍️ EXPERT RÉDACTION/COPY** : `mistral-nemo` (Ton humain, polish français).
-5.  **⚡ EXPERT NINJA (RAPIDE)** : `llama3.2:1b` (Formatage, micro-tâches).
+1.  **💻 EXPERT CODE/REFACTOR** : `qwen3.5:35b` (Force de frappe, FIM, syntaxe).
+2.  **🧠 EXPERT RAISONNEMENT/PLAN** : `gemma4:31b` (Structure logique, next-gen reasoning).
+3.  **🤖 EXPERT AGENT/MCP** : `gemma4:26b` (Native function calling, orchestration dynamique).
+4.  **👁️ EXPERT VISION/UI** : `llama3.2-vision:latest` (Analyse d'interfaces, multi-modal).
+5.  **✍️ EXPERT RÉDACTION/COPY** : `gemma4:26b` (Ton humain, créativité agentique).
 
 ---
 
@@ -93,4 +93,4 @@ Pour préserver les crédits Gemini et maximiser la souveraineté locale :
 - **Zéro Crédit pour la Force Brute** : La "force brute" de frappe (l'écriture des lignes de code) appartient à la machine locale. Gemini ne "pense" que la structure.
 
 ---
-*Mise à jour (Protocole OLLAMA FORCE) : 22 Mars 2026 — Gouverneur d'Exécution Antigravity.*
+*Mise à jour (Intégration Gemma 4 + Ollama Force) : 5 Avril 2026 — Antigravity Execution Governor.*

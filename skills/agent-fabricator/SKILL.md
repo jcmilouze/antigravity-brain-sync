@@ -24,7 +24,9 @@ Tu ne dois JAMAIS générer le fichier final immédiatement si la demande est fl
 ### Étape 1 : Le Cadrage & l'Anti-Fragilité (Discussion)
 Pose des questions ciblées pour définir l'ADN de la compétence. **Pour chaque question, propose 2-3 options pour guider l'utilisateur.**
 1. **Objectif & Déclencheurs** : Quel problème exact la compétence résout-elle ? A quel moment précis l'agent doit-il l'invoquer ?
-2. **Garde-fous (Hard Gates)** : Que doit interdire formellement cette compétence ? (Propose des limites).
+2. **Garde-fous- **Lead Stratégie**: Consulte `@tech-lead` pour l'architecture.
+- **UI/Layout**: Invoque `@21st-specialist` pour les templates et composants AI-native.
+- **Déploiement**: `@devsecops` pour la mise en ligne.
 3. **Cas Limites** : Que se passe-t-il si une API externe échoue ou si l'utilisateur donne un mauvais fichier ?
 
 ### Étape 2 : Le Plan de Conception (Validation)

@@ -1,34 +1,27 @@
-# 🌀 Antigravity Brain Sync (v1.3.1) — Hardened Edition
+# 🌀 Antigravity Brain Sync (v1.5.0) — Sidebar Edition
 
-Synchronisez votre mémoire agentique, ruleset et skills entre vos machines (PC / Mac) via un canal Git privé et sécurisé.
+Synchronisez votre mémoire agentique, ruleset et skills entre vos machines via un canal Git privé et sécurisé.
 
 ---
 
-## 🔒 Certification de Sécurité (v1.3.1)
-Cette version intègre un **renforcement drastique (Hardening)** de l'infrastructure de synchronisation :
-- **Migration `exec` ➔ `execFile`** : Les commandes Git sont désormais isolées et protégées contre les injections de commandes.
-- **Défense Native** : Protection de l'intégrité de votre Brain lors des phases de Pull/Push.
-- **Logique Robuste** : Gestion d'erreurs avancée pour la synchronisation SSH/HTTPS.
-
-## 🍏 Protocole de Migration Mac
-Si vous effectuez votre première installation sur macOS, veuillez suivre impérativement le manuel détaillé :
-👉 [**DOCS_MAC_INSTALL.md (Manuel de Bord)**](./DOCS_MAC_INSTALL.md)
+## 🔒 Certification de Sécurité (v1.5.0)
+Cette version apporte une visibilité accrue et une expérience utilisateur premium :
+- **Nouveau Sync Hub Sidebar** : Une interface dédiée dans la barre d'activité pour piloter votre synchronisation.
+- **Migration `exec` ➔ `execFile`** : Commandes Git isolées et protégées.
+- **Défense Native** : Protection de l'intégrité de votre Brain.
 
 ---
 
 ## 🚀 Fonctionnalités
-- 📥 **Neural Fusion (Pull)** : Récupération de votre conscience collective (Rules/Knowledge/Skills).
-- 📤 **Synaptic Archive (Push)** : Archivage automatique de vos souvenirs locaux et nouveaux skills.
-- 🌀 **Cognitive Bar** : Indicateur dynamique dans la barre de statut :
-  - `$(pass) Brain Synced` : Synchro parfaite.
-  - `$(cloud-download)` : Retard de conscience détecté.
-  - `$(cloud-upload)` : Nouveaux souvenirs non archivés.
-- ⚙️ **Configurable** : Liaison Plug & Play à votre dépôt privé via SSH ou HTTPS.
+- 🎨 **Sync Hub (Nouveau)** : Interface visuelle riche avec état en temps réel (Cloud Status).
+- 📥 **Neural Fusion (Pull)** : Récupération de votre conscience collective.
+- 📤 **Synaptic Archive (Push)** : Archivage automatique de vos souvenirs.
+- 🌀 **Cognitive Bar** : Rappel subtil dans la barre de statut.
 
-## 🛠️ Installation & Build
-1. **Build** : `npm run package` pour générer le `.vsix`.
-2. **Setup** : Installez le `.vsix` sur VS Code Mac/PC.
-3. **Connect** : Configurez votre URL de Repo via la barre de statut.
+## 🛠️ Installation
+1. Dans VS Code, ouvrez le terminal.
+2. Lancez : `code --install-extension antigravity-vscode-sync-1.5.0.vsix`
+3. Recherchez l'icône **Cloud** dans votre barre latérale gauche.
 
 ---
-*,Gouverneur d'Exécution Antigravity — 27 Mars 2026.*
+*Gouverneur d'Exécution Antigravity — 08 Avril 2026.*

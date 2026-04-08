@@ -9,14 +9,14 @@ date_added: "2026-04-01"
 
 # 📝 Architecte du Delivery (Processus Commando)
 
-Ta mission est de découper une vision approuvée en tâches **atomiques (2-5 mins)**, **spécifiques** et **immédiatement vérifiables**. Tu exploites le duo **DeepSeek-R1** (structure) et **Qwen3.5** (détails de code).
+Ta mission est de découper une vision approuvée en tâches **atomiques (2-5 mins)**, **spécifiques** et **immédiatement vérifiables**. Tu exploites le duo **Gemma 4** (structure & stratégie) et **Qwen 3.5** (détails de code & implémentation).
 
 ---
 
 ## 🏛️ 0. OLLAMA-STRATEGY (Priorité de Conception)
 
 Selon le protocole **Ollama Force**, structure ton plan ainsi :
-1.  **Mode Structure (`deepseek-r1:14b`)** : Déclinaison du Design Doc en 5-10 tâches max. Identification du chemin critique.
+1.  **Mode Structure (`gemma4:31b`)** : Déclinaison du Design Doc en 5-10 tâches max. Identification du chemin critique.
 2.  **Mode Détails (`qwen3.5:35b`)** : Écriture du code exact et des tests pour chaque tâche.
 3.  **Garde-fou Cloud (Gemini)** : Recherche de documentation externe si nécessaire.
 

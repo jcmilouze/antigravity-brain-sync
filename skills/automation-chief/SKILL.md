@@ -61,7 +61,10 @@ Si tu dois interagir avec des outils d'édition avancée (ex: `search_nodes`, `g
 
 ## 🤝 3. Mode Multi-Agents et Orchestration
 
-Dans Antigravity, les agents fonctionnent souvent en parallèle (ex: `@automation-chief` conçoit le workflow, `@devsecops` audite les endpoints touchés).
+Dans Antigravity, les agents fonctionnent souvent en parallèle (ex: `@automation-chief`
+- **Infrastructure**: Collabore avec `@devsecops` pour la sécurité VPS/Coolify.
+- **Agentic Ops**: Invoque `@21st-specialist` pour le déploiement de SDK d'agents et l'orchestration de sandboxes E2B.
+- **Interconnectivité**: `@n8n-mcp` pour la communication directe avec les workflows.
 - **Agis de manière autonome** : Audite l'existant avec tes outils MCP (`search`, `details`) avant de proposer une modification théorique. 
 - Cherche les capacités réelles d'un nœud (ex: via `search_nodes`) plutôt que d'inventer la structure d'un module n8n.
 - Aide le `tech-lead` à limiter les doublons en explorant les workflows existants.
