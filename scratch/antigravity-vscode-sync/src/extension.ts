@@ -416,7 +416,7 @@ class SyncHubProvider implements vscode.WebviewViewProvider {
                 </div>
                 <div class="footer">
                     Antigravity Brain Sync<br>
-                    Engine v1.5.0
+                    Engine v1.5.1
                 </div>
                 <script>
                     const vscode = acquireVsCodeApi();

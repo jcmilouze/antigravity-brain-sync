@@ -34,14 +34,10 @@ mcp_config.json*
 # Local Temp/Scratch
 /tmp/
 .temp/
-
-# Backup from origin/main additions (if unique)
-antigravity-brain-sync/
-code_tracker/
-implicit/
-knowledge/
-playground/
+# scratch/ (Allow selective folders)
 scratch/
+!scratch/antigravity-vscode-sync/
+
 extension/node_modules/
 extension/dist/
 extension/package-lock.json
