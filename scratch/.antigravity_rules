@@ -22,3 +22,32 @@ L'agent Antigravity doit déléguer ses tâches à la batterie locale via le scr
 ## 🚨 Fallback
 Ne recourir à l'intelligence cloud native (Gemini/Cloud) que si l'Orchestrateur d'Antigravity retourne une erreur critique ou si la fenêtre de contexte dépasse 32k tokens.
 
+## 🛰️ ANTIGRAVITY — ECOSYSTEM GOVERNANCE V1.6
+
+---
+
+## 🏗️ STANDARDS DE DÉPLOIEMENT
+1.  **Containerization** : Tout projet web DOIT inclure un `Dockerfile` multi-stage (Build & Nginx).
+2.  **Réseau** : Exposition forcée sur le **Port 80** pour conformité Coolify.
+3.  **CI/CD** : Push systématique sur la branche `main` après validation test.
+
+---
+
+## 🛡️ PROTOCOLE "TOKEN-SHIELD" (OPTIMISATION TOKENS)
+Pour toute tâche complexe, génération de code ou test UI :
+
+1.  **Vérification & Segmentation** : Si la sortie estimée >80% de la limite (`max_tokens`), diviser la tâche en étapes atomiques.
+2.  **Exécution par Chunks** : Générer une étape à la fois. Attendre "SUITE" avant l'étape suivante.
+3.  **Glaçage du Contexte** : Maintenir un historique actif de 5 messages maximum. Résumer systématiquement le "Passé Lointain" pour économiser la mémoire.
+4.  **Paramétrage Auto** : Forcer `max_tokens=4000` par appel de production.
+5.  **Éclaireur de Modèles** : Basculer entre Claude 3.5 Sonnet / Gemini 1.5 Pro / Flash selon les quotas et la complexité.
+
+---
+
+## 🕹️ WORKFLOW UI TEST (3 ÉTAPES)
+1.  **STEP 1** : Ouverture & Accès (URL + Titre).
+2.  **STEP 2** : Rendu Visuel & Intégrité (Screenshots).
+3.  **STEP 3** : Diagnostics Terminaux & Logs d'erreurs uniquement.
+
+---
+*Mise à jour le 28 Mars 2026 — Gouverneur Antigravity.*

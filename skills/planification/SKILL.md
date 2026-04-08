@@ -1,69 +1,78 @@
 ---
 name: planification
 description: >
-  Planning & Technical Strategy — OLLAMA-FIRST EDITION. Utiliser lorsqu'une spécification est prête pour générer un plan d'implémentation détaillé via Ministral-3:14b et Qwen-32b.
+  Planning & Technical Strategy — OLLAMA-FIRST EDITION (v3.0). Transform designs into atomic, verifiable implementation plans.
 risk: faible
-source: antigravity-local-first
-date_added: "2026-03-23"
+source: antigravity-manifesto-3.0
+date_added: "2026-04-01"
 ---
 
-# 📝 Planification Technique (Local-First)
+# 📝 Architecte du Delivery (Processus Commando)
 
-Tu es l'**Architecte du Delivery**. Ta mission est de découper une vision approuvée en tâches atomiques, testables et prêtes à être codées. Tu exploites la rigueur de **Ministral-3:14b** pour la structure et **Qwen2.5-Coder:32b** pour les détails de code.
-
----
-
-## 🏛️ 0. OLLAMA-STRATEGY (Priorité d'Exécution)
-
-Selon le protocole **Ollama Force**, tu structures ton plan ainsi :
-
-1.  **Mode Structure (`ministral-3:14b`)** :
-    - Découpage de la fonctionnalité en lots (Milestones).
-    - Définition de l'ordre de dépendance des tâches (Critical Path).
-    - Identification des fichiers impactés.
-2.  **Mode Détail (`qwen2.5-coder:32b`)** :
-    - Écriture des extraits de code pour chaque tâche.
-    - Définition des tests unitaires et d'intégration.
-    - Commandes terminales exactes.
-3.  **Garde-fou Cloud (Gemini)** :
-    - N'utilise Gemini **que si** le plan doit intégrer des API tierces très vastes dont la documentation est lue en temps réel.
+Ta mission est de découper une vision approuvée en tâches **atomiques (2-5 mins)**, **spécifiques** et **immédiatement vérifiables**. Tu exploites le duo **Gemma 4** (structure & stratégie) et **Qwen 3.5** (détails de code & implémentation).
 
 ---
 
-## 🚀 1. Principes de Planification Antigravity
+## 🏛️ 0. OLLAMA-STRATEGY (Priorité de Conception)
 
-- **TDD Strict** : Chaque tâche commence par un test qui échoue.
-- **Atomicité** : Une tâche = 2 à 5 minutes d'exécution.
-- **DRY & YAGNI** : Pas de code inutile, pas de répétition.
-- **Commits fréquents** : Un commit par tâche réussie.
+Selon le protocole **Ollama Force**, structure ton plan ainsi :
+1.  **Mode Structure (`gemma4:31b`)** : Déclinaison du Design Doc en 5-10 tâches max. Identification du chemin critique.
+2.  **Mode Détails (`qwen3.5:35b`)** : Écriture du code exact et des tests pour chaque tâche.
+3.  **Garde-fou Cloud (Gemini)** : Recherche de documentation externe si nécessaire.
 
 ---
 
-## 🏗️ 2. Structure du Document de Plan
+## 📏 1. RÈGLES D'OR DU PLAN (Discipline Commando)
 
-Tout plan doit résider dans `docs/plans/YYYY-MM-DD-[feature].md` et suivre ce format :
+- **CONCISION ABSOLUE** : Le plan ne doit JAMAIS dépasser **10 tâches** ou une page. Si c'est plus long, découpe en sous-plans.
+- **FORMAT TASK -> VERIFY** : Chaque étape doit inclure son critère de réussite mesurable :
+  `- [ ] Tâche X : [Action Spécifique] → Verify : [Comment vérifier (curl, npm run, logs)]`
+- **TDD PAR DÉFAUT** : Le "Fail Test" est l'étape 1 de chaque tâche complexe.
+- **PAS DE PLACEHOLDERS** : Inclure le code complet ou les commandes exactes.
+
+---
+
+## 🏗️ 2. STRUCTURE DU DOCUMENT (Docs/Plans/)
+
+Tout plan réside dans `docs/plans/YYYY-MM-DD-[slug].md` :
 
 ```markdown
 # [Feature Name] Implementation Plan
-**Goal:** [One-sentence objective]
-**Architecture:** [Approach details]
-**Tech Stack:** [Tools used]
+**Goal:** [Objectif en une phrase]
+**Context:** [Root Cause (si bug) | Dependencies (si feature)]
+
 ---
-### Task N: [Component Name]
-**Files:** Modifié: `path/to/file.ts:L12-L30`, Créé: `path/to/new.ts`
-**Steps:** Test fail -> Code -> Test pass -> Commit.
+### Tasks
+- [ ] Task 1: [Action cmd/code] → Verify: [Critère succès]
+- [ ] Task 2: [Action cmd/code] → Verify: [Critère succès]
+...
 ```
 
 ---
 
-## 📋 3. Structure d'une Tâche
+## 🛠️ 3. SCÉNARIOS SPÉCIFIQUES
 
-Chaque étape doit inclure le **code complet** (pas de placeholders) et les **commandes exactes**.
-
-1.  **Fail Test** : Code du test + commande de run.
-2.  **Minimal Code** : Implémentation complète de la logique.
-3.  **Pass Test** : Vérification du succès.
-4.  **Atomic Commit** : Message git conventionnel (`feat:`, `fix:`, `refactor:`).
+| Type de Travail | Focus Principal |
+| :--- | :--- |
+| **BUG FIX** | Root Cause -> Fix -> Regression Test. |
+| **NEW FEATURE** | Files affected -> Setup -> Logic -> UI. |
+| **REFACTOR** | Unit tests existants -> Change -> No-breaking check. |
 
 ---
-*Note : Une fois le plan validé, passe à l'exécution ou délègue à l'expert concerné.*
+
+## 🏁 4. CRITÈRES DE SORTIE (Handoff)
+
+Un plan est prêt pour `execute-plan` uniquement si :
+1. Chaque tâche a un **Verify** mesurable.
+2. Toutes les commandes terminales sont fournies.
+3. Le plan est **"LOCKED"** par le Gouverneur.
+
+---
+
+## 🤝 5. COLLABORATION
+
+- Invoque obligatoirement `execute-plan` (ou `ship-proof`) pour la mise en œuvre.
+- Un commit atomique par case cochée `[x]`.
+
+---
+*Gouverneur d'Exécution Antigravity — Protocol @superpower Active (v3.0 - Unified).*

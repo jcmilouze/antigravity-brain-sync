@@ -1,0 +1,19 @@
+{
+  "timestamp": "2026-04-01T22:35:28.594Z",
+  "durationSeconds": 3141,
+  "peakVramGb": "18.12",
+  "models": [
+    {
+      "name": "mistral-nemo:latest",
+      "totalMinutes": "27.4"
+    },
+    {
+      "name": "deepseek-r1:14b",
+      "totalMinutes": "27.4"
+    },
+    {
+      "name": "qwen3.5:35b",
+      "totalMinutes": "5.7"
+    }
+  ]
+}

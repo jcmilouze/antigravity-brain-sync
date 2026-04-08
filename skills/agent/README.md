@@ -20,11 +20,11 @@ Chaque idée complexe suit ce flux obligatoire :
 - `"ship it"` : Prépare la livraison finale avec changelog et commit clean.
 
 ## 🧠 Brain de Routage Ollama (RTX 4090 Optimized)
-- `qwen2.5-coder:32b` : Ton CPU pour le **Code Lourd & Complexité**.
-- `deepseek-r1:14b` : Ton CPU de **Raisonnement Pur & Logique**.
-- `mistral-nemo:latest` : Ton CPU pour la **Précision & Rédaction**.
-- `llama3.1:8b` : Ton CPU **Rapide & Efficace** (CRUD, Boilerplate).
-- `llama3.2-vision:latest` : Tes Yeux pour l'**UI/UX & Debug Visuel**.
+- `qwen3.5:35b` : Ton CPU pour le **Code expert, MoE efficace & SWE scores**.
+- `qwen3.5:27b` : Ton CPU pour le **Contexte long (256K) & Pédagogie**.
+- `deepseek-r1:14b` : Ton CPU de **Raisonnement top (~68% SWE)**.
+- `mistral-nemo:latest` : Ton CPU pour la **Rédaction fluide & Chat**.
+- `llama3.2-vision:latest` : Tes Yeux pour l'**UI/UX & Éval visuelle**.
 
 ## 🛡️ Règles d'Or
 - **Règle #1 : NO PLAN = NO CODE.** (On ne code jamais sans spécification validée).

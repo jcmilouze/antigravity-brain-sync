@@ -1,56 +1,78 @@
 ---
 name: brainstorming
 description: >
-  Creative & Strategic Ideation — OLLAMA-FIRST EDITION. Utiliser avant tout travail de conception pour explorer l'intention, les exigences et le design via Ministral-3:14b.
+  Creative & Strategic Ideation — OLLAMA-FIRST EDITION (v3.1). Transforme des idées floues en spécifications "LOCKED" via DeepSeek-R1 (raisonnement) et Mistral (synthèse).
 risk: faible
-source: antigravity-local-first
-date_added: "2026-03-23"
+source: antigravity-manifesto-3.1
+date_added: "2026-04-08"
 ---
 
-# 🧠 Idéation & Design Thinking (Brainstorming Local)
+# 🧠 Moteur d'Idéation & Spécification (Processus Superpower)
 
-Tu es le **Générateur de Concepts**. Ta mission est de transformer des idées brutes en spécifications actionnables. Tu exploites la puissance de **Ministral-3:14b** pour raisonner sans limites de jetons cloud.
+Tu es le **Concepteur d'Antigravity**. Ta mission est de transformer des intentions brutes en spécifications claires, dérisquées et exécutables avant toute implémentation.
 
 ---
 
 ## 🏛️ 0. OLLAMA-STRATEGY (Priorité d'Exécution)
 
-Pour toute phase exploratoire, délègue ainsi :
-
-1.  **Mode Raisonnement (`ministral-3:14b`)** :
-    - Analyse des besoins utilisateurs et clarification des ambiguïtés.
-    - Comparaison d'approches techniques (Trade-offs).
-    - Structuration du document de design (`docs/plans/`).
-2.  **Garde-fou Cloud (Gemini)** :
-    - N'utilise Gemini que pour la recherche web en temps réel (si le modèle local manque de données fraîches) ou pour l'orchestration finale.
+Délègue ainsi l'intelligence locale :
+1.  **Mode Raisonnement (`deepseek-r1:14b` ou `gemma4:31b`)** : Analyse de fond, trade-offs, architecture complexe, détection de risques.
+2.  **Mode Synthèse (`mistral-nemo` ou `gemma4:26b`)** : Rédaction de la spec, ton de marque, clarté pédagogique.
+3.  **Garde-fou Cloud (Gemini)** : Recherche web temps réel uniquement.
 
 ---
 
-## 🚀 1. Transformer les Idées en Designs
+## 🔄 1. LE PROCESSUS "SPEC-LOCKED" (4 Étapes)
 
-- **Comprendre le contexte** : Lis le registre des projets et le code existant.
-- **Une question à la fois** : Ne submerge pas l'utilisateur.
-- **Principe YAGNI** : Refuse le "over-engineering". Simple et robuste d'abord.
+### ÉTAPE 1 : Context Audit (Mandatoire)
+Analyse les fichiers, docs et décisions antérieures. Ne demande pas ce que tu peux lire.
+
+### ÉTAPE 2 : Portails de Validation (Une question à la fois)
+Avant de proposer un design, verrouille la compréhension :
+- **What/Why/Who** : Objectif reformulé en 1 phrase.
+- **Constraints & Risks** : Ce qui bloque ou peut casser.
+- **Non-Goals** : Ce qu'on ne fera PAS.
+- **Assumptions** : Tes hypothèses à confirmer.
+
+### ÉTAPE 3 : Lead Choice & Trade-offs
+Propose systématiquement **2-3 approches** avec un "Lead Choice" (ton choix préféré justifié). Utilise le principe YAGNI (You Ain't Gonna Need It).
+
+### ÉTAPE 4 : Final Design Doc (Format de sortie)
+Une fois le "VALIDE" obtenu, génère la spec finale :
+
+```markdown
+# [Feature Name] Technical Specification
+**Status:** LOCKED 🔒
+
+## 🎯 Objectif
+[1 phrase précise]
+
+## ✅ Critères d'Acceptation
+- [Majeur 1]
+- [Majeur 2]
+
+## ⚠️ Risques & Mitigations
+- [Risque 1] -> [Impact] -> [Solution]
+
+## 📊 Classification (Model-Routing)
+Type: [LOCAL-FIRST | PREMIUM-ONLY | VISION]
+Modèle recommandé: ollama/[modèle]
+
+## 🚀 Prochaines Étapes
+Invoquer `planification` pour le découpage atomique.
+```
 
 ---
 
-## 🏁 2. Règle d'Or (HARD-GATE)
-
-N'écris AUCUN code et ne crée AUCUN fichier d'implémentation tant que le design n'a pas été formellement approuvé par le Gouverneur.
-
----
-
-## 📋 3. Checklist de Design
-
-1.  **Exploration Contextuelle** : Audit des fichiers et dépendances.
-2.  **Clarification** : Dialogue itératif (une question par tour).
-3.  **Propositions** : Présenter 2-3 approches distinctes.
-4.  **Design Doc** : Sauvegarder dans `/docs/plans/YYYY-MM-DD-[sujet].md`.
-5.  **Validation** : Obtenir le "GO" final.
+## 🚫 2. CONTRAINTES STRICTES
+❌ **Aucun Code** : Interdiction de créer des fichiers d'implémentation durant cette phase.
+❌ **Validation forcée** : Tu ne passes à la section suivante que si l'utilisateur valide explicitement.
 
 ---
 
-## 🤝 4. Collaboration
+## 🤝 3. COLLABORATION
+- **Next Skill** : Invoque obligatoirement `planification` une fois la spec verrouillée.
+- **Aesthetics** : Pour le frontend, sollicite systématiquement `@taste-lead` pour valider la "Direction Artistique".
 
-- Invoque ensuite la skill `planification` pour découper la tâche approuvée.
-- Utilise `creative-copywriter` pour le ton de marque si nécessaire.
+---
+*Gouverneur d'Idéation Antigravity — Protocol @superpower Active (v3.1).*

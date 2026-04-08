@@ -286,53 +286,36 @@ async function showDashboard(context: vscode.ExtensionContext) {
             totalSeconds += time;
             const vram = vramMap[model] || 0;
             const isLoaded = loadedModels.has(model);
-            const percentage = Math.max(2, Math.round((time / maxSeconds) * 100));
+            const shortName = model.split(':')[0].toUpperCase();
             
+            // Percentage logic: if active, show some "usage", else 100% (ready)
+            const percentage = isLoaded ? 20 : 100; 
+            const themeClass = isLoaded ? 'active-theme' : 'idle-theme';
+            const statusText = isLoaded ? 'Active Session' : 'Not started';
+
             localRowsHtml += `
-                <div class="chart-row ${isLoaded ? 'loaded' : ''}">
-                    <div class="model-info">
-                        <div class="model-name">
-                            #${index + 1} ${model}
-                            ${isLoaded ? '<span class="status-badge active">LOADED</span>' : ''}
-                        </div>
-                        <div class="header-version">ANTIGRAVITY CORE v1.1.0</div>
-                        <div class="model-meta">Last VRAM: ${formatSize(vram)}</div>
+                <div class="stat-card ${themeClass}">
+                    <div class="card-header">${shortName}</div>
+                    <div class="card-percentage">${percentage}%</div>
+                    <div class="segmented-bar">
+                        <div class="segment ${percentage >= 20 ? 'filled' : ''}"></div>
+                        <div class="segment ${percentage >= 40 ? 'filled' : ''}"></div>
+                        <div class="segment ${percentage >= 60 ? 'filled' : ''}"></div>
+                        <div class="segment ${percentage >= 80 ? 'filled' : ''}"></div>
+                        <div class="segment ${percentage >= 100 ? 'filled' : ''}"></div>
                     </div>
-                    <div class="bar-container">
-                        <div class="bar local-bar" style="width: ${percentage}%;"></div>
-                        <span class="bar-label">${formatTime(time)}</span>
-                    </div>
-                    <div class="actions">
-                        ${isLoaded ? `<button class="btn-unload" onclick="unload('${model}')">Unload</button>` : ''}
-                    </div>
+                    <div class="card-time">${formatTime(time)}</div>
+                    <div class="card-status">${statusText}</div>
+                    ${isLoaded ? `<div class="vram-tag">${formatSize(vram)} VRAM</div>` : ''}
                 </div>
             `;
         });
-
-        let libraryHtml = '';
-        if (tags?.models) {
-            tags.models.forEach((m: any) => {
-                const isLoaded = loadedModels.has(m.name);
-                libraryHtml += `
-                    <div class="lib-item">
-                        <div class="lib-header">
-                            <span class="lib-name">${m.name}</span>
-                            <span class="lib-size">${formatSize(m.size)}</span>
-                        </div>
-                        <div class="lib-footer">
-                            <span class="status-dot ${isLoaded ? 'dot-active' : ''}"></span>
-                            ${isLoaded ? 'Active in VRAM' : 'Installed'}
-                        </div>
-                    </div>
-                `;
-            });
-        }
 
         const totalVramBytes = ps?.models.reduce((acc, m) => acc + (m.size_vram || 0), 0) || 0;
         const vramLimitBytes = 24 * 1024 * 1024 * 1024; // 24GB RTX 4090
         const vramPercentage = Math.min(100, Math.round((totalVramBytes / vramLimitBytes) * 100));
 
-        panel.webview.html = getWebviewContent(localRowsHtml, libraryHtml, formatTime(totalSeconds), formatSize(totalVramBytes), vramPercentage);
+        panel.webview.html = getWebviewContent(localRowsHtml, formatTime(totalSeconds), formatSize(totalVramBytes), vramPercentage);
     };
 
     panel.webview.onDidReceiveMessage(async (message: any) => {
@@ -347,7 +330,7 @@ async function showDashboard(context: vscode.ExtensionContext) {
     updateWebview();
 }
 
-function getWebviewContent(rowsHtml: string, libraryHtml: string, totalTime: string, currentVram: string, vramPercentage: number) {
+function getWebviewContent(cardsHtml: string, totalTime: string, currentVram: string, vramPercentage: number) {
     return `
         <!DOCTYPE html>
         <html lang="en">
@@ -356,251 +339,267 @@ function getWebviewContent(rowsHtml: string, libraryHtml: string, totalTime: str
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <style>
                 :root {
-                    --bg: #0d1117;
-                    --card-bg: rgba(22, 27, 34, 0.7);
-                    --accent: #238636;
-                    --accent-glow: rgba(35, 134, 54, 0.3);
-                    --text: #e6edf3;
-                    --text-muted: #8b949e;
-                    --border: 1px solid rgba(48, 54, 61, 0.8);
-                    --error: #da3633;
+                    --bg: #1a1b1e;
+                    --card-bg: #25262b;
+                    --cyan: #3bc9db;
+                    --pink: #ff6b6b;
+                    --text-main: #c1c2c5;
+                    --text-dim: #909296;
                 }
-                
                 body {
-                    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
                     background-color: var(--bg);
-                    color: var(--text);
-                    padding: 40px;
-                    line-height: 1.5;
+                    color: var(--text-main);
+                    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
                     margin: 0;
+                    padding: 32px;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 40px;
                 }
-
-                .container { max-width: 900px; margin: 0 auto; }
 
                 header {
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
-                    margin-bottom: 40px;
-                    animation: fadeInDown 0.8s ease-out;
+                    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+                    padding-bottom: 24px;
                 }
 
-                h1 {
-                    font-size: 28px;
-                    font-weight: 700;
-                    background: linear-gradient(135deg, #fff 0%, #8b949e 100%);
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    letter-spacing: -1px;
+                .logo-section {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 4px;
                 }
 
-                .summary-card {
-                    background: var(--card-bg);
-                    backdrop-filter: blur(10px);
-                    border: var(--border);
-                    padding: 24px;
-                    border-radius: 16px;
-                    margin-bottom: 40px;
-                    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-                    position: relative;
-                    overflow: hidden;
-                }
-                .summary-card::before {
-                    content: '';
-                    position: absolute;
-                    top: 0; left: 0; width: 4px; height: 100%;
-                    background: var(--accent);
-                }
-
-                h2 {
-                    font-size: 14px;
-                    text-transform: uppercase;
+                .logo {
+                    font-size: 16px;
+                    font-weight: 900;
                     letter-spacing: 2px;
-                    color: var(--text-muted);
-                    margin-top: 40px;
-                    margin-bottom: 20px;
-                }
-
-                .chart-row {
-                    display: flex;
-                    align-items: center;
-                    background: var(--card-bg);
-                    padding: 16px 24px;
-                    border-radius: 12px;
-                    margin-bottom: 12px;
-                    border: var(--border);
-                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                }
-                .chart-row:hover {
-                    transform: translateX(8px);
-                    border-color: rgba(56, 139, 253, 0.4);
-                    background: rgba(48, 54, 61, 0.4);
-                }
-                .chart-row.loaded {
-                    border-color: var(--accent);
-                    background: rgba(35, 134, 54, 0.05);
-                    box-shadow: 0 0 20px var(--accent-glow);
-                }
-
-                .model-info { width: 300px; }
-                .model-name { font-weight: 600; font-size: 15px; display: flex; align-items: center; gap: 8px; }
-                .model-meta { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
-
-                .bar-container {
-                    flex-grow: 1;
-                    height: 8px;
-                    background: #161b22;
-                    border-radius: 4px;
-                    margin: 0 30px;
-                    position: relative;
-                    overflow: hidden;
-                }
-                .bar {
-                    height: 100%;
-                    background: linear-gradient(90deg, #238636 0%, #2ea043 100%);
-                    box-shadow: 0 0 10px rgba(46, 160, 67, 0.4);
-                    border-radius: 4px;
-                    transition: width 1.5s cubic-bezier(0.19, 1, 0.22, 1);
-                }
-                .bar-label {
-                    position: absolute;
-                    top: -20px;
-                    right: 0;
-                    font-size: 11px;
-                    font-weight: 600;
-                    color: var(--text-muted);
-                }
-
-                .vram-capacity {
-                    height: 12px;
-                    background: #161b22;
-                    border-radius: 6px;
-                    margin-top: 15px;
-                    overflow: hidden;
-                    position: relative;
-                    border: 1px solid rgba(255, 255, 255, 0.05);
-                }
-                .vram-fill {
-                    height: 100%;
-                    background: linear-gradient(90deg, #388bfd 0%, #238636 100%);
-                    transition: width 1s ease-in-out;
-                }
-                .vram-label {
-                    display: flex;
-                    justify-content: space-between;
-                    font-size: 11px;
-                    color: var(--text-muted);
-                    margin-top: 6px;
-                    font-weight: 600;
+                    text-transform: uppercase;
+                    color: #fff;
                 }
 
                 .status-badge {
                     font-size: 10px;
                     font-weight: 800;
-                    padding: 2px 8px;
-                    border-radius: 40px;
-                    background: var(--accent);
-                    color: white;
+                    letter-spacing: 1.5px;
+                    color: var(--cyan);
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                }
+
+                .status-badge::before {
+                    content: '';
+                    width: 6px;
+                    height: 6px;
+                    background: var(--cyan);
+                    border-radius: 50%;
+                    box-shadow: 0 0 10px var(--cyan);
+                }
+
+                nav {
+                    display: flex;
+                    gap: 32px;
+                }
+
+                nav span {
+                    font-size: 12px;
+                    font-weight: 700;
+                    color: var(--text-dim);
+                    cursor: pointer;
+                    transition: color 0.3s;
+                }
+
+                nav span:hover, nav span.active {
+                    color: #fff;
+                }
+
+                .vram-section {
+                    background: var(--card-bg);
+                    border: 1px solid rgba(255, 255, 255, 0.05);
+                    border-radius: 16px;
+                    padding: 24px;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 16px;
+                }
+
+                .vram-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+
+                .vram-label {
+                    font-size: 11px;
+                    font-weight: 800;
+                    color: #fff;
+                    letter-spacing: 1px;
                     text-transform: uppercase;
                 }
 
-                .btn-unload {
-                    background: transparent;
-                    color: #f85149;
-                    border: 1px solid rgba(248, 81, 73, 0.4);
-                    padding: 6px 14px;
-                    border-radius: 8px;
-                    cursor: pointer;
-                    font-size: 12px;
-                    font-weight: 600;
-                    transition: all 0.2s;
-                }
-                .btn-unload:hover {
-                    background: #f85149;
-                    color: white;
+                .vram-val {
+                    font-size: 11px;
+                    font-weight: 700;
+                    color: var(--text-dim);
                 }
 
-                .grid-library {
+                .vram-track {
+                    height: 6px;
+                    background: rgba(255, 255, 255, 0.03);
+                    border-radius: 10px;
+                    overflow: hidden;
+                }
+
+                .vram-fill {
+                    height: 100%;
+                    background: linear-gradient(90deg, var(--cyan), #22d3ee);
+                    border-radius: 10px;
+                    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+                }
+
+                .grid {
                     display: grid;
-                    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
                     gap: 20px;
                 }
-                .lib-item {
-                    background: var(--card-bg);
-                    padding: 20px;
-                    border-radius: 12px;
-                    border: var(--border);
-                    transition: border 0.2s;
+
+                .stat-card {
                     position: relative;
-                }
-                .lib-item:hover { border-color: rgba(139, 148, 158, 0.5); }
-                .lib-header { display: flex; justify-content: space-between; margin-bottom: 12px; }
-                .lib-name { font-weight: 700; font-size: 14px; }
-                .lib-size { font-size: 12px; color: var(--text-muted); }
-                
-                .status-dot { width: 10px; height: 10px; border-radius: 50%; background: #30363d; margin-right: 10px; }
-                .dot-active { background: #238636; box-shadow: 0 0 8px var(--accent); animation: pulse 2s infinite; }
-
-                @keyframes pulse {
-                    0% { transform: scale(1); opacity: 1; }
-                    50% { transform: scale(1.2); opacity: 0.7; }
-                    100% { transform: scale(1); opacity: 1; }
+                    background: var(--card-bg);
+                    border-radius: 12px;
+                    padding: 32px 24px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 16px;
+                    border: 1px solid rgba(255, 255, 255, 0.03);
+                    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+                    overflow: hidden;
                 }
 
-                @keyframes fadeInDown {
-                    from { opacity: 0; transform: translateY(-20px); }
-                    to { opacity: 1; transform: translateY(0); }
+                .stat-card:hover {
+                    transform: translateY(-8px);
+                    border-color: rgba(255, 255, 255, 0.1);
+                    background: #2c2d32;
                 }
 
-                .refresh-btn {
-                    padding: 8px 16px;
-                    background: #21262d;
-                    border: var(--border);
+                .active-theme { border-bottom: 2px solid var(--cyan); }
+                .idle-theme { border-bottom: 2px solid var(--pink); }
+
+                .card-header {
+                    font-size: 12px;
+                    font-weight: 850;
+                    letter-spacing: 1.5px;
+                    color: #fff;
+                    text-transform: uppercase;
+                }
+
+                .card-percentage {
+                    font-size: 38px;
+                    font-weight: 900;
+                    letter-spacing: -2px;
+                    color: #fff;
+                    line-height: 1;
+                }
+
+                .segmented-bar {
+                    display: flex;
+                    gap: 4px;
+                    margin: 4px 0;
+                }
+
+                .segment {
+                    width: 22px;
+                    height: 4px;
+                    background: rgba(255, 255, 255, 0.05);
+                    border-radius: 2px;
+                }
+
+                .active-theme .segment.filled { background: var(--cyan); box-shadow: 0 0 10px rgba(59, 201, 219, 0.3); }
+                .idle-theme .segment.filled { background: var(--pink); box-shadow: 0 0 10px rgba(255, 107, 107, 0.3); }
+
+                .card-time {
+                    font-size: 11px;
+                    font-weight: 700;
+                    color: var(--text-dim);
+                }
+
+                .card-status {
+                    font-size: 10px;
+                    font-weight: 800;
+                    color: var(--text-dim);
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                }
+
+                .vram-tag {
+                    position: absolute;
+                    top: 12px;
+                    right: 12px;
+                    background: rgba(59, 201, 219, 0.1);
+                    color: var(--cyan);
+                    padding: 4px 8px;
+                    border-radius: 6px;
+                    font-size: 9px;
+                    font-weight: 700;
+                }
+
+                .footer {
+                    margin-top: 20px;
+                    display: flex;
+                    justify-content: center;
+                }
+
+                .btn-sync {
+                    background: transparent;
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    color: var(--text-dim);
+                    padding: 10px 24px;
                     border-radius: 8px;
-                    font-size: 13px;
-                    font-weight: 600;
+                    font-size: 11px;
+                    font-weight: 800;
+                    letter-spacing: 1px;
                     cursor: pointer;
-                    transition: all 0.2s;
+                    transition: all 0.3s;
                 }
-                .refresh-btn:hover { background: #30363d; }
+
+                .btn-sync:hover {
+                    border-color: #fff;
+                    color: #fff;
+                }
             </style>
         </head>
         <body>
-            <div class="container">
-                <header>
-                    <h1>ANTIGRAVITY COMMAND</h1>
-                    <div class="refresh-btn" onclick="refresh()">REBOOT SYNC</div>
-                </header>
-
-                <div class="summary-card">
-                    <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 8px;">TOTAL LOCAL UPTIME</div>
-                    <div style="font-size: 36px; font-weight: 800; letter-spacing: -1px;">${totalTime}</div>
-                    
-                    <div style="margin-top: 24px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px;">
-                        <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px;">VRAM USAGE (24GB TOTAL)</div>
-                        <div class="vram-capacity">
-                            <div class="vram-fill" style="width: ${vramPercentage}%;"></div>
-                        </div>
-                        <div class="vram-label">
-                            <span>${currentVram} USED</span>
-                            <span>${vramPercentage}%</span>
-                        </div>
-                    </div>
+            <header>
+                <div class="logo-section">
+                    <div class="logo">Antigravity</div>
+                    <div class="status-badge">CONNECTED</div>
                 </div>
+                <nav>
+                    <span class="active">Dashboard</span>
+                    <span>History</span>
+                    <span>Models</span>
+                </nav>
+            </header>
 
-                <h2>SYSTEM STATUS / LIVE VRAM</h2>
-                <div class="leaderboard">
-                    ${rowsHtml}
+            <section class="vram-section">
+                <div class="vram-header">
+                    <div class="vram-label">Global VRAM Load</div>
+                    <div class="vram-val">${currentVram} / 24.0 GB</div>
                 </div>
-
-                <h2>REPO ASSETS / LIBRARY</h2>
-                <div class="grid-library">
-                    ${libraryHtml}
+                <div class="vram-track">
+                    <div class="vram-fill" style="width: ${vramPercentage}%"></div>
                 </div>
+            </section>
 
-                <footer style="margin-top: 80px; padding: 40px 0; border-top: var(--border); opacity: 0.4; font-size: 11px; text-align: center; letter-spacing: 1px;">
-                    ANTIGRAVITY CORE v1.0.2 — OLLAMA FIRST PROTOCOL ACTIVE
-                </footer>
+            <div class="grid">
+                ${cardsHtml}
+            </div>
+
+            <div class="footer">
+                <button class="btn-sync" onclick="refresh()">REBOOT SYNC</button>
             </div>
 
             <script>
@@ -611,6 +610,9 @@ function getWebviewContent(rowsHtml: string, libraryHtml: string, totalTime: str
                 function refresh() {
                     vscode.postMessage({ command: 'refresh' });
                 }
+                setInterval(() => {
+                    vscode.postMessage({ command: 'refresh' });
+                }, 5000);
             </script>
         </body>
         </html>

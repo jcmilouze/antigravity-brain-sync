@@ -19,11 +19,11 @@ Choisir le **modèle Ollama optimal** pour chaque tâche de développement en fo
 
 | Modèle | Taille | Forces principales | Idéal pour |
 |--------|--------|-------------------|------------|
-| `qwen2.5-coder:32b` (19GB) | 32B | **Code complexe, génération, raisonnement, fixing** | Architecture, refactor lourd, debug complexe, code critique |
-| `deepseek-r1:14b` (9GB) | 14B | **Raisonnement avancé, math, logique, contexte long** | Algorithmes, optimisation, analyse données, SQL complexe |
-| `mistral-nemo:latest` (7.1GB) | 12B | **Instructions précises, multi-turn, code compression** | Workflows multi-étapes, génération structurée, API/design |
-| `llama3.1:8b` (4.9GB) | 8B | **Vitesse, généraliste, bon rapport perf/qualité** | Tâches standard, CRUD, composants simples, boilerplate |
-| `llama3.2-vision:latest` (7.8GB) | Vision | **Analyse visuelle, UI/UX, captures d'écran, diagrammes** | Debug visuel, UI review, analyse screenshots, charts |
+| `gemma4:31b` | 31B (Dense) | **Native Reasoning (Next-Gen), logic Frontier** | Analyse stratégique, planification, audit |
+| `gemma4:26b` | 26B (MoE) | **Agentic Workflows (Native Tooling), rapid** | Orchestration MCP, brainstorming, automatisation |
+| `qwen3.5:35b-q3_K_M` | 35B (MoE) | **SWE 37-69%, FIM expert, optimized for coding** | Génération de composants, refactor, debug code |
+| `mistral-nemo:latest` | 12B | **Ultra-fluid redaction, multilingual 140+** | Copywriting, documentation, chat éducatif |
+| `llama3.2-vision:latest` | Vision | **Multimodal Native (Text/Image/Video)** | Debug UI, analyse screenshots, vision assistée |
 
 # 🔄 Classification des tâches
 
@@ -37,13 +37,12 @@ Choisir le **modèle Ollama optimal** pour chaque tâche de développement en fo
 ├── commits, petits refactors
 
 ## 🟡 LOCAL-FIRST (modèle spécialisé)
-qwen2.5-coder:32b → deepseek-r1:14b → mistral-nemo
-├── composants moyens/complexes
-├── logique métier, business rules
-├── refactors multi-fichiers
-├── génération de code structuré
-├── algorithmes, optimisation
-├── API design, architecture
+gemma4:31b → qwen3.5:35b → gemma4:26b
+├── planification & stratégie projet
+├── logique métier complexe
+├── orchestration multi-agents (MCP)
+├── audit de sécurité & architecture
+├── génération de code (via Qwen)
 
 ## 🔵 PREMIUM-ONLY (si local échoue)
 deepseek-r1:14b → qwen2.5-coder:32b → modèle payant
@@ -67,15 +66,15 @@ PRIORITÉ 1 : VITESSE (llama3.1:8b)
 ├── contexte court (< 8k tokens)
 ├── pas de raisonnement complexe
 
-PRIORITÉ 2 : QUALITÉ CODE (qwen2.5-coder:32b)
+PRIORITÉ 2 : QUALITÉ CODE (qwen3.5:35b-q3_K_M)
 ├── génération/refactor complexe
 ├── architecture, design patterns
 ├── code critique (prod)
 
-PRIORITÉ 3 : RAISONNEMENT (deepseek-r1:14b)
-├── algorithmes, optimisation
-├── math/logique
-├── analyse données/SQL complexe
+PRIORITÉ 3 : RAISONNEMENT (gemma4:31b)
+├── planification complexe
+├── math/logique pure
+├── analyse stratégique
 
 PRIORITÉ 4 : PRÉCISION (mistral-nemo)
 ├── instructions très précises
@@ -134,8 +133,8 @@ Tâche : "Implémente OAuth2 avec refresh tokens"
 Raison : sécurité critique + logique complexe
 
 # 🎛️ Commandes de sélection rapide
-@model-fast → llama3.1:8b
-@model-code → qwen2.5-coder:32b
-@model-reason → deepseek-r1:14b
+@model-fast → gemma4:26b
+@model-code → qwen3.5:35b-q3_K_M
+@model-reason → gemma4:31b
 @model-precise → mistral-nemo:latest
 @model-vision → llama3.2-vision:latest

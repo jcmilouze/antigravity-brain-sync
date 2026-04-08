@@ -29,14 +29,15 @@ FACULTATIF pour :
 ├── CSS/UI purement visuelle
 ├── documentation / commentaires
 
-# 🔍 Processus d'analyse (7 étapes)
+# 🔍 Processus d'analyse (8 étapes)
 1. **REFORMULER** → Objectif en 1 phrase claire
 2. **CONTEXTE** → Fichiers, dépendances, agents/MCPs concernés
 3. **HYPOTHÈSES** → Ce qui doit être vrai pour réussir
 4. **CRITÈRES** → Conditions d'acceptation mesurables
 5. **RISQUES** → Ce qui peut casser ou dégrader
-6. **CLASSIFICATION** → Type de tâche + modèle recommandé
-7. **PROCHAINES ÉTAPES** → Skills suivantes suggérées
+6. **DÉCISION** → Proposer systématiquement l'option préférée (Tech Lead Choice) avec justification.
+7. **CLASSIFICATION** → Type de tâche + modèle recommandé
+8. **PROCHAINES ÉTAPES** → Skills suivantes suggérées
 
 # 📤 Format de sortie obligatoire
 🎯 Objectif reformulé
@@ -84,7 +85,8 @@ Modèle recommandé : ollama/[modèle]
 ❌ Ne pas élargir le périmètre
 ❌ Ne pas ignorer les risques
 ✅ Toujours classer la tâche explicitement
-✅ Toujours proposer critères mesurables
+✅ Toujours proposer des critères mesurables
+✅ Toujours orienter vers la meilleure solution technique (Décision Lead).
 ✅ Toujours signaler les zones floues
 
 # 💡 Exemples concrets

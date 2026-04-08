@@ -8,21 +8,8 @@
       ],
       "env": {
         "GITHUB_PERSONAL_ACCESS_TOKEN": "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"
-      }
-    },
-    "github-mcp-server": {
-      "command": "docker",
-      "args": [
-        "run",
-        "-i",
-        "--rm",
-        "-e",
-        "GITHUB_PERSONAL_ACCESS_TOKEN",
-        "ghcr.io/github/github-mcp-server"
-      ],
-      "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": ""
-      }
+      },
+      "disabled": false
     },
     "n8n-mcp": {
       "command": "npx",
@@ -33,7 +20,8 @@
         "https://n8n.bessacvps.fr/mcp-server/http",
         "--header",
         "authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlMWEzMDQ0MS05NWNhLTQ5ODMtODhiNC05OGNiYjBiOTNmZjYiLCJpc3MiOiJuOG4iLCJhdWQiOiJtY3Atc2VydmVyLWFwaSIsImp0aSI6IjYxM2Q0Yzc3LTQ5OTQtNDRmMS1iY2U5LWIzMWNjMmIwOWQ1ZCIsImlhdCI6MTc3MjMwMzA3Nn0.Gam1IBaTqWFiQA4DC-beKjhjSo0gcxDywfXX5a9I7sk"
-      ]
+      ],
+      "disabled": true
     },
     "StitchMCP": {
       "$typeName": "exa.cascade_plugins_pb.CascadePluginCommandTemplate",
@@ -45,15 +33,8 @@
         "--header",
         "X-Goog-Api-Key: AQ.Ab8RN6JcLUlncvBkqVpg-txQJuzYjFE8rxBEVwsDwX9ibZS6jw"
       ],
-      "env": {}
-    },
-    "postgres-velotrack": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-postgres",
-        "postgresql://postgres:BFGgZdxMVpMWYVeMU3Sh0sflM7ZhJU2wUGeJl8zQdPMsNHzWjiFg7Dr42lmxs0rI@localhost:5433/postgres"
-      ]
+      "env": {},
+      "disabled": true
     },
     "clerk": {
       "command": "npx",
@@ -62,15 +43,42 @@
         "supergateway",
         "--streamableHttp",
         "https://mcp.clerk.com/mcp"
-      ]
+      ],
+      "disabled": true
     },
     "telegram": {
       "command": "node",
-      "args": ["C:/Users/mimilouze/.gemini/antigravity/scripts/mcp-telegram-server.js"],
+      "args": [
+        "C:/Users/mimilouze/.gemini/antigravity/scripts/mcp-telegram-server.js"
+      ],
       "env": {
         "TELEGRAM_BOT_TOKEN": "8197820749:AAEUxgiQ0Ln-l60zj9ZkvajKH6Js2EH5tCU",
         "TELEGRAM_CHAT_ID": "8275603326",
         "TELEGRAM_AUTONOMOUS": "true"
+      }
+    },
+    "garmin-bridge": {
+      "command": "node",
+      "args": [
+        "C:/Users/mimilouze/.gemini/antigravity/mcp/garmin_bridge/index.js"
+      ],
+      "env": {
+        "DATABASE_URL": "postgres://postgres:BFGgZdxMVpMWYVeMU3Sh0sflM7ZhJU2wUGeJl8zQdPMsNHzWjiFg7Dr42lmxs0rI@s84g4c8s4o8k8w8swc0go8os:5432/postgres",
+        "GARMIN_EMAIL": "votre@email.com",
+        "GARMIN_PASSWORD": "votre_password"
+      }
+    },
+    "garmin-mcp": {
+      "command": "C:/Users/mimilouze/AppData/Roaming/Python/Python312/Scripts/uv.exe",
+      "args": [
+        "--directory",
+        "C:/Users/mimilouze/.gemini/antigravity/mcp/garmin_mcp",
+        "run",
+        "garmin-mcp"
+      ],
+      "env": {
+        "GARMIN_EMAIL": "votre@email.com",
+        "GARMIN_PASSWORD": "votre_password"
       }
     }
   }

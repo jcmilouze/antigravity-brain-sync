@@ -62,5 +62,5 @@ OBLIGATOIRE pour TOUS les bugs :
 - SIMPLE (syntaxe) → llama3.1:8b
 - LOGIQUE/FLUX → mistral-nemo
 - SQL/PERF → deepseek-r1:14b
-- COMPLEXE/STATE → qwen2.5-coder:32b
+- COMPLEXE/STATE → qwen3.5:35b
 - UI VISUEL → llama3.2-vision

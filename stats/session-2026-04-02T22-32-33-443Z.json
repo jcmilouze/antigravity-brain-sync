@@ -1,0 +1,15 @@
+{
+  "timestamp": "2026-04-02T22:32:33.443Z",
+  "durationSeconds": 4980,
+  "peakVramGb": "18.12",
+  "models": [
+    {
+      "name": "qwen3.5:35b-q3_K_M",
+      "totalMinutes": "45.8"
+    },
+    {
+      "name": "deepseek-r1:14b",
+      "totalMinutes": "3.5"
+    }
+  ]
+}

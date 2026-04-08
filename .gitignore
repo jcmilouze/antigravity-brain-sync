@@ -1,10 +1,8 @@
-<<<<<<< HEAD
 node_modules/
 .env
 dist/
 out/
 build/
-# .vsix
 *.vsix
 *.log
 .DS_Store
@@ -23,40 +21,31 @@ mcp-bridge-lmstudio/
 context_state/
 annotations/
 installation_id
-
-# Antigravity System
-.agents/
-mcp_config.json*
 browserAllowlist.txt
 browserOnboardingStatus.txt
 user_settings.pb
 prompting/
 *.zip
 
+# Antigravity System
+.agents/
+mcp_config.json*
+
 # Local Temp/Scratch
 /tmp/
 .temp/
 
-=======
-.DS_Store
-annotations/
+# Backup from origin/main additions (if unique)
 antigravity-brain-sync/
-brain/
-browser_recordings/
-browserAllowlist.txt
-browserOnboardingStatus.txt
 code_tracker/
-context_state/
-conversations/
-html_artifacts/
 implicit/
-installation_id
 knowledge/
 playground/
 scratch/
-user_settings.pb
 extension/node_modules/
 extension/dist/
 extension/package-lock.json
 extension/*.vsix
->>>>>>> origin/main
+
+# Ensure stats is tracked (was in user request)
+# stats/ is tracked by default since not ignored

@@ -3,18 +3,200 @@
 <head>
   <meta charset="utf-8">
   <style>
-    body { width: 250px; font-family: sans-serif; background: #1a1a20; color: white; padding: 20px; }
-    h1 { font-size: 16px; margin: 0 0 10px 0; color: #06B6D4; }
-    .status-card { border: 1px solid #333; border-radius: 8px; padding: 15px; background: #222; }
-    .status-text { font-size: 14px; margin-bottom: 5px; }
-    .hint { font-size: 11px; color: #888; margin-top: 10px; }
+    :root {
+      --bg: #1a1b1e;
+      --card-bg: #25262b;
+      --text: #ffffff;
+      --text-dim: #909296;
+      --pink: #ff6b6b;
+      --cyan: #3bc9db;
+      --segment-empty: #373a40;
+    }
+    
+    body { 
+      width: 480px; 
+      margin: 0;
+      padding: 30px;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+      background: var(--bg); 
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    .header-nav {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 30px;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    .header-nav span { color: var(--text-dim); }
+    .header-nav a { 
+        color: var(--cyan); 
+        text-decoration: none; 
+    }
+
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+
+    .stat-card {
+        background: var(--card-bg);
+        border-radius: 12px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        position: relative;
+    }
+
+    .card-header {
+        font-weight: 800;
+        font-size: 11px;
+        letter-spacing: 1px;
+        margin-bottom: 12px;
+        text-transform: uppercase;
+    }
+
+    .card-percentage {
+        font-size: 32px;
+        font-weight: 900;
+        margin-bottom: 15px;
+    }
+
+    .segmented-bar {
+        display: flex;
+        gap: 4px;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .segment {
+        height: 4px;
+        flex: 1;
+        border-radius: 2px;
+        background: var(--segment-empty);
+    }
+
+    /* Active Theme (Pink) */
+    .active-theme .card-percentage { color: var(--pink); }
+    .active-theme .segment.filled { 
+        background: var(--pink); 
+        box-shadow: 0 0 8px rgba(255, 107, 107, 0.4);
+    }
+
+    /* Idle Theme (Cyan) */
+    .idle-theme .card-percentage { color: var(--cyan); }
+    .idle-theme .segment.filled { 
+        background: var(--cyan);
+        box-shadow: 0 0 8px rgba(59, 201, 219, 0.4);
+    }
+
+    .card-time {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 3px;
+    }
+
+    .card-status {
+        font-size: 11px;
+        color: var(--text-dim);
+        font-weight: 500;
+    }
+
+    .global-stats {
+        background: rgba(255,255,255,0.02);
+        border-radius: 12px;
+        padding: 20px;
+        border: 1px dashed rgba(255,255,255,0.1);
+        text-align: center;
+    }
+
+    .vram-info {
+        display: flex;
+        justify-content: space-between;
+        font-size: 10px;
+        font-weight: 800;
+        color: var(--text-dim);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .vram-bar-bg {
+        height: 6px;
+        background: var(--segment-empty);
+        border-radius: 100px;
+        overflow: hidden;
+        margin: 10px 0;
+    }
+
+    .vram-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--cyan), var(--pink));
+        transition: width 0.5s ease-out;
+    }
+
+    .footer {
+        margin-top: 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        opacity: 0.5;
+        font-size: 9px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .btn-action {
+        cursor: pointer;
+        color: var(--pink);
+    }
+    .btn-action:hover { opacity: 0.7; }
   </style>
 </head>
 <body>
-  <h1>Antigravity status</h1>
-  <div class="status-card">
-    <div class="status-text">Ollama Monitoring Connected</div>
-    <div class="hint">Check the bottom-right corner of your browser for the real-time indicator.</div>
+  <div class="header-nav">
+    <span>Google AI Pro</span>
+    •
+    <a href="#">Dashboard</a>
+    •
+    <a href="#">Models</a>
+    •
+    <a href="#">Settings</a>
   </div>
+
+  <div id="dashboard-grid" class="dashboard-grid">
+    <!-- Cards injected here -->
+  </div>
+
+  <div class="global-stats">
+    <div class="vram-info">
+      <span>VRAM: <span id="vram-val">0 MB</span></span>
+      <span id="vram-percent-label">0%</span>
+    </div>
+    <div class="vram-bar-bg">
+      <div id="vram-progress" class="vram-bar-fill"></div>
+    </div>
+    <div style="font-size: 10px; color: var(--text-dim); margin-top: 10px;">
+      STATUS: <span id="status-badge">CONNECTED</span>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div>Antigravity V2.1</div>
+    <div id="reset-stats" class="btn-action">RESET LOGS</div>
+  </div>
+
+  <script src="popup.js"></script>
 </body>
 </html>

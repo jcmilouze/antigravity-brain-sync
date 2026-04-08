@@ -275,7 +275,23 @@ rl.on('line', async (line) => {
     const request = JSON.parse(line);
     const { method, params, id } = request;
 
-    if (method === 'list_tools') {
+    if (method === 'initialize') {
+      const response = {
+        jsonrpc: "2.0",
+        id,
+        result: {
+          protocolVersion: "2024-11-05",
+          capabilities: {
+            tools: {}
+          },
+          serverInfo: {
+            name: "mcp-telegram-server",
+            version: "1.0.0"
+          }
+        }
+      };
+      console.log(JSON.stringify(response));
+    } else if (method === 'list_tools') {
       const toolList = [
         {
           name: 'telegram_send_message',
