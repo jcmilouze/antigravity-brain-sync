@@ -1,73 +1,103 @@
 ---
 name: execute-plan
-description: Exécute STRICTEMENT un plan validé, étape par étape, sans dériver du périmètre. Vérifie après chaque étape.
+description: Exécute STRICTEMENT un plan validé, étape par étape, sans dériver du périmètre. Vérifie après chaque étape avant de passer à la suivante.
 keywords: ["exécute", "implémente", "étape", "plan", "strict", "vérification", "diff"]
 priority: high
-depends_on: ["write-plan", "model-routing-policy"]
+depends_on: ["write-plan"]
+allowed-tools:
+  - Bash(curl -s http://localhost:11434/api/generate *)
+  - Bash(curl -s http://localhost:11434/api/tags *)
 ---
 
-# 🎯 Objectif
-**Exécuter fidèlement un plan validé, étape par étape, sans élargir le périmètre.**
+# Execute-Plan
+
+**Mission : exécuter fidèlement un plan validé, étape par étape, sans élargir le périmètre.**
 
 Règles d'or :
 - **1 étape = 1 réponse**
 - **Vérifier avant de passer à la suivante**
-- **Respecter le modèle assigné**
+- **Déléguer le code à Ollama local**
 - **Ne jamais dériver du plan**
 
-# 📋 Quand utiliser cette Skill
-OBLIGATOIRE quand :
-├── plan write-plan validé et demandé
-├── "exécute le plan", "implémente étape X"
-├── utilisateur valide l'étape courante
+## Processus par étape
 
-NE JAMAIS utiliser pour :
-├── planification ou analyse (brainstorm-spec/write-plan)
+1. **CONFIRMER** → Afficher l'étape courante et son critère de succès
+2. **DÉLÉGUER** → Appeler Ollama avec le modèle assigné à l'étape
+3. **EXÉCUTER** → Appliquer le code généré (review rapide sécurité)
+4. **VÉRIFIER** → Tester selon le critère de succès de l'étape
+5. **RAPPORTER** → Résultat + statut
+6. **DEMANDER** → Validation utilisateur avant étape suivante
 
-# 🔄 Processus d'exécution
-1. **CONFIRMER** → Plan + étape courante
-2. **CHARGER** → Modèle assigné à l'étape
-3. **EXÉCUTER** → Implémentation stricte
-4. **VÉRIFIER** → Tests, logs, critères de succès
-5. **RAPPORTER** → Résultat + prêt pour étape suivante
-6. **DEMANDER** → Validation utilisateur si critique
-7. **BILAN FINAL** → À la fin du plan, générer le **Bilan Énergétique & Cognitif** (Souveraineté).
+## Checkpoint taxonomy (GSD)
 
-# 📤 Format de sortie par étape
+Chaque checkpoint appartient à l'une de ces 3 catégories :
+
+| Type | Fréquence | Usage |
+|------|-----------|-------|
+| `human-verify` | 90% | Claude a fini, l'humain confirme que ça marche (UI, flows, comportement réel) |
+| `decision` | 9% | L'humain choisit une direction (stack, archi, design) |
+| `human-action` | 1% | Aucune alternative CLI/API (email link, SMS 2FA, OAuth browser) |
+
+**Règle d'or** : si Claude peut l'exécuter via CLI/API, Claude l'exécute — jamais demander à l'humain d'exécuter des commandes.
+
+## Dégradation contextuelle (GSD)
+
+Surveiller l'utilisation du contexte et adapter :
+
+| Tier | Utilisation | Comportement |
+|------|------------|--------------|
+| PEAK | 0–30% | Opérations complètes |
+| GOOD | 30–50% | Préférer résumés, déléguer agressivement |
+| DEGRADING | 50–70% | Frontmatter uniquement, avertir l'utilisateur |
+| POOR | 70%+ | Mode checkpoint d'urgence — `/reset-context` recommandé |
+
+## Détection d'overlap avant exécution parallèle
+
+Avant de lancer 2 étapes en parallèle, vérifier que leurs fichiers modifiés ne se chevauchent pas. Si overlap → exécution séquentielle.
+
+## Commande Ollama
+
+```bash
+curl -s http://localhost:11434/api/generate \
+  -H "Content-Type: application/json" \
+  -d '{"model": "qwen3.5:35b", "prompt": "<prompt>", "stream": false, "options": {"temperature": 0.15, "num_predict": 8192}}' \
+  | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('response','ERROR: '+str(d)))"
+```
+
+## Format de sortie par étape
+
+```
 📍 ÉTAPE [X]/[TOTAL] : [Titre]
+[LOCAL] qwen3.5:35b — <description courte>
+
 📂 Fichiers modifiés
-[diff ou chemin fichiers]
+[diff ou chemins]
 
 🧪 Vérification
 ☑️ [critère 1]
 ☑️ [critère 2]
 
-📊 Métriques
-Modèle : ollama/[modèle]
-Lignes : [+X -Y]
-Statut : [✅ OK | ⚠️ ATTENTION | ❌ ÉCHEC]
+📊 Statut : ✅ OK | ⚠️ ATTENTION | ❌ ÉCHEC
+Lignes : +X -Y
 
-🚀 Prochaine étape
-Étape [X+1] : [titre]
-Prêt ? [oui/non]
+🚀 Prochaine étape : Étape [X+1] — [titre]
+💬 Envoie "OK" pour continuer ou "fix" pour corriger
+```
 
-💬 Action requise
-[ ] "OK étape X" pour continuer
+## Commandes utilisateur
 
-# 🚫 Contraintes absolues
-❌ NE JAMAIS coder une autre étape
-❌ NE JAMAIS élargir le périmètre
-❌ NE JAMAIS passer à l'étape suivante sans validation
-✅ Limiter aux fichiers du plan
-✅ Vérifier immédiatement après modification
+- `OK` / `OK étape X` → passe à l'étape suivante
+- `fix` / `fix étape X` → corrige l'étape courante
+- `plan changé` → arrête et relance `/write-plan`
 
-# 🎛️ Commandes utilisateur
-- "OK étape X" → passe à X+1
-- "Fix étape X" → corrige l'étape courante
-- "Plan changé" → arrête et refait write-plan
+## Contraintes absolues
 
-# 📊 Métriques de qualité
-✅ 1 étape = 1 réponse max
-✅ Diff ou fichiers listés
-✅ Statut explicite
-✅ Respect strict du plan
+- Ne jamais coder une autre étape en avance
+- Ne jamais élargir le périmètre du plan
+- Ne jamais passer à la suivante sans validation
+- Limiter aux fichiers listés dans le plan
+- Si blockers sécu détectés → stopper et signaler
+
+## Tâche reçue
+
+$ARGUMENTS

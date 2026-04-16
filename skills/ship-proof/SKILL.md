@@ -1,53 +1,80 @@
 ---
 name: ship-proof
-description: Prépare une livraison production-ready : build final, tests complets, changelog, commit propre, checklist deploy.
+description: Prépare une livraison production-ready — build final, tests complets, changelog, commit conventionnel, checklist deploy avec rollback plan.
 keywords: ["ship", "deploy", "livraison", "release", "changelog", "commit", "build"]
 priority: critical
-depends_on: ["review-hardening", "execute-plan"]
+depends_on: ["review-hardening"]
 ---
 
-# 🎯 Objectif
-**Finaliser une livraison 100% production-ready** avec tous les artefacts nécessaires.
+# Ship-Proof
 
-Checklist 7 points :
-🔨 BUILD → compile/test/deploy OK
-📋 CHANGELOG → résumé changements
-💬 COMMIT → message standardisé
-🧪 TESTS FINAUX → smoke suite + coverage
-📚 DOCS → README/API à jour
-🚀 CHECKLIST DEPLOY → environnements
-✅ SIGN-OFF → validation finale
+**Mission : finaliser une livraison 100% production-ready.** Ne jamais shipper sans `/review-hardening` APPROVED.
 
-# 📋 Quand utiliser cette Skill
-OBLIGATOIRE après :
-├── review-hardening APPROVED
-├── utilisateur dit "ship it"
+## Quand l'utiliser
 
-# 🔍 Processus final (7 étapes)
-1. BUILD FINAL → tous environnements
-2. TESTS SMOKE → flux critiques
-3. CHANGELOG → résumé impact
-4. COMMIT PROPRE → conventional commits
-5. DOCS → README + API docs
-6. CHECKLIST DEPLOY → pré-prod → prod
-7. SIGN-OFF → prêt à livrer (Ollama/Mistral-Nemo recommandé)
+OBLIGATOIRE après `/review-hardening` APPROVED, ou quand l'utilisateur dit "ship it", "déploie", "livre".
 
-# 📤 Format de sortie SHIP-PROOF
+## Checklist 7 points
+
+1. **BUILD FINAL** → compile sans erreur, tous environnements
+2. **SMOKE TESTS** → flux critiques testés
+3. **CHANGELOG** → résumé des changements (format conventionnel)
+4. **COMMIT PROPRE** → conventional commits (`feat:`, `fix:`, `refactor:`, `chore:`)
+5. **DOCUMENTATION** → README / API docs mis à jour si nécessaire
+6. **CHECKLIST DEPLOY** → variables d'env, migrations, rollback plan
+7. **SIGN-OFF** → validation finale prêt pour prod
+
+## Format de sortie obligatoire
+
+```
 🚀 SHIP-PROOF : [Nom feature/bugfix]
-📊 STATUT GLOBAL (Build, Tests, Changements, Review)
-🔨 1. BUILD & TESTS FINAUX (npm run/test results)
-📋 2. CHANGELOG (Conventional format)
-💬 3. COMMIT MESSAGE (Conventional commit)
-📚 4. DOCUMENTATION (README/API updates)
-🚀 5. CHECKLIST DÉPLOIEMENT (Staging, Smoke, Rollback plan)
-✅ 6. SIGN-OFF FINAL (READY FOR PROD, Modèle, Risque)
 
-# 🚫 Contraintes absolues
-❌ NE JAMAIS shipper si build/test échouent ou si blockers existent.
-✅ TOUJOURS inclure le plan de Rollback (git revert HEAD).
-✅ Coverage de tests > 90% sur les nouveaux changements.
+📊 Statut global
+Build : ✅ | Tests : ✅ | Review : APPROVED | Couverture : X%
 
-# 🎛️ Modèles recommandés
-- SHIP STANDARD → mistral-nemo (précision)
-- SHIP COMPLEXE → qwen2.5-coder:32b (changelog)
-- RAPIDE → llama3.1:8b
+🔨 1. Build & Tests
+[résultat npm run build / test]
+
+📋 2. Changelog
+## [version] - YYYY-MM-DD
+### Added / Fixed / Changed / Removed
+- [changement 1]
+- [changement 2]
+
+💬 3. Commit message
+feat(scope): [description courte]
+
+[corps optionnel]
+
+Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
+
+📚 4. Documentation
+[fichiers docs mis à jour ou "aucun changement d'interface"]
+
+🚀 5. Checklist déploiement
+☑️ Variables d'env vérifiées
+☑️ Migrations DB appliquées (si applicable)
+☑️ Rollback plan : git revert HEAD ou tag [version-N-1]
+☑️ Smoke test post-deploy prévu
+
+✅ SIGN-OFF : READY FOR PROD
+Risque résiduel : [faible | moyen | élevé]
+```
+
+## Checklist Coolify (si déploiement VPS impliqué)
+
+- [ ] Variables `VITE_*` à jour dans Coolify UI (env section) → redéploiement déclenché
+- [ ] Volumes persistants vérifiés (données ne disparaissent pas au restart)
+- [ ] Alias réseau Coolify corrects (inter-services via alias, pas localhost)
+- [ ] Rollback : Coolify → service → deploy history → retour à la version précédente
+
+## Contraintes absolues
+
+- Ne jamais shipper si build ou tests échouent
+- Ne jamais shipper si des BLOCKERS de review-hardening sont ouverts
+- Toujours inclure un plan de rollback (`git revert HEAD`)
+- Couverture > 90% sur les nouvelles modifications
+
+## Tâche reçue
+
+$ARGUMENTS
