@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-04-20T07:39:47.133Z",
+  "durationSeconds": 3892,
+  "peakVramGb": "8.08",
+  "models": [
+    {
+      "name": "qwen3.5:latest",
+      "totalMinutes": "2.1"
+    }
+  ]
+}
