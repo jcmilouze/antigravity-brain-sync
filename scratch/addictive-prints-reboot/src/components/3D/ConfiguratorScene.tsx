@@ -31,18 +31,18 @@ function ConfigurableModel({ color }: ConfiguratorSceneProps) {
       {/* Accent elements */}
       <mesh position={[0.7, 0.3, 0]}>
         <sphereGeometry args={[0.25, 32, 32]} />
-        <meshStandardMaterial color="#FBBF24" metalness={0.9} roughness={0.1} />
+        <meshStandardMaterial color="#c2c9bc" metalness={0.9} roughness={0.1} />
       </mesh>
 
       <mesh position={[-0.7, 0.3, 0]}>
         <sphereGeometry args={[0.25, 32, 32]} />
-        <meshStandardMaterial color="#FBBF24" metalness={0.9} roughness={0.1} />
+        <meshStandardMaterial color="#c2c9bc" metalness={0.9} roughness={0.1} />
       </mesh>
 
       {/* Wobble element */}
       <mesh position={[0, 1.3, 0]}>
         <Icosahedron args={[0.3, 4]} />
-        <MeshWobbleMaterial color="#00D4FF" speed={3} factor={0.5} />
+        <MeshWobbleMaterial color="#becbb1" speed={3} factor={0.5} />
       </mesh>
     </group>
   );
@@ -59,8 +59,8 @@ export function ConfiguratorScene({ color }: ConfiguratorSceneProps) {
       dpr={Math.min(window.devicePixelRatio, 2)}
     >
       <ambientLight intensity={0.6} />
-      <pointLight position={[4, 4, 4]} intensity={0.8} color="#00D4FF" />
-      <pointLight position={[-4, 2, -4]} intensity={0.6} color="#7C3AED" />
+      <pointLight position={[4, 4, 4]} intensity={0.8} color="#becbb1" />
+      <pointLight position={[-4, 2, -4]} intensity={0.6} color="#88957d" />
 
       <ConfigurableModel color={color} />
     </Canvas>
