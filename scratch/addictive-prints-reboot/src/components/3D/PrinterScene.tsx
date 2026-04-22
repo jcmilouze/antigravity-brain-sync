@@ -22,10 +22,10 @@ function PrinterModel() {
 
   return (
     <group ref={groupRef}>
-      {/* Main body - purple cube */}
+      {/* Main body - olive cube */}
       <mesh position={[0, 0, 0]}>
         <boxGeometry args={[1.5, 2, 1.5]} />
-        <meshStandardMaterial color="#7C3AED" metalness={0.8} roughness={0.2} />
+        <meshStandardMaterial color="#88957d" metalness={0.8} roughness={0.2} />
       </mesh>
 
       {/* Top platform - cyan */}
