@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+:root {
+  --color-primary: #00D4FF;
+  --color-secondary: #7C3AED;
+  --color-accent: #FF006E;
+  --color-highlight: #FBBF24;
+  --color-background: #1A1A2E;
+  --color-surface: rgba(255, 255, 255, 0.05);
+  --color-text: #FFFFFF;
+  --color-text-muted: #A0A0B0;
+
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 40px;
+  --spacing-3xl: 60px;
+
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--color-background);
+  color: var(--color-text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Tailwind config integration */
+@layer components {
+  .btn-primary {
+    @apply px-6 py-3 rounded-lg bg-gradient-to-r from-[#00D4FF] to-[#7C3AED] text-white font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/30;
+  }
+
+  .btn-secondary {
+    @apply px-6 py-3 rounded-lg border border-[#00D4FF] text-[#00D4FF] font-semibold transition-all duration-300 hover:bg-[#00D4FF] hover:text-[#1A1A2E];
+  }
+
+  .card {
+    @apply bg-[rgba(255,255,255,0.05)] border border-[rgba(124,58,237,0.3)] rounded-xl p-6 transition-all duration-300 hover:border-[#00D4FF] hover:shadow-lg hover:shadow-cyan-500/20;
+  }
+
+  .section {
+    @apply py-20 px-6 max-w-7xl mx-auto;
+  }
+
+  .container {
+    @apply max-w-7xl mx-auto px-6;
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-secondary);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
+}
