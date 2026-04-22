@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { PRODUCTS, CYBER_COLORS, MATERIALS_LIST } from '@/lib/mockData';
+import { PRODUCTS, STITCH_COLORS, MATERIALS_LIST } from '@/lib/mockData';
 import { ColorPicker } from './ColorPicker';
 import { MaterialSelector } from './MaterialSelector';
 import { useCartStore } from '@/lib/store';
@@ -12,7 +12,7 @@ import { motion } from 'framer-motion';
 
 export function Configurator3D() {
   const [selectedProductId, setSelectedProductId] = useState(PRODUCTS[0].id);
-  const [selectedColor, setSelectedColor] = useState(CYBER_COLORS[0].hex);
+  const [selectedColor, setSelectedColor] = useState(STITCH_COLORS[0].hex);
   const [selectedMaterial, setSelectedMaterial] = useState('pla');
   const [addedNotif, setAddedNotif] = useState(false);
 

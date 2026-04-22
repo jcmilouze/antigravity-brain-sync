@@ -122,11 +122,13 @@ export interface FilterState {
   activeTab: 'ponçage' | 'aspiration' | 'essentiels';
   selectedMaterials: string[];
   selectedColors: string[];
+  selectedCompatibility: string[];
   priceRange: [number, number];
 
   setActiveTab: (tab: 'ponçage' | 'aspiration' | 'essentiels') => void;
   toggleMaterial: (materialId: string) => void;
   toggleColor: (colorHex: string) => void;
+  toggleCompatibility: (compat: string) => void;
   setPriceRange: (range: [number, number]) => void;
   resetFilters: () => void;
 }
@@ -135,6 +137,7 @@ export const useFilterStore = create<FilterState>((set) => ({
   activeTab: 'ponçage',
   selectedMaterials: [],
   selectedColors: [],
+  selectedCompatibility: [],
   priceRange: [0, 150],
 
   setActiveTab: (tab) => set({ activeTab: tab }),
@@ -153,12 +156,20 @@ export const useFilterStore = create<FilterState>((set) => ({
         : [...state.selectedColors, colorHex],
     })),
 
+  toggleCompatibility: (compat) =>
+    set(state => ({
+      selectedCompatibility: state.selectedCompatibility.includes(compat)
+        ? state.selectedCompatibility.filter(c => c !== compat)
+        : [...state.selectedCompatibility, compat],
+    })),
+
   setPriceRange: (range) => set({ priceRange: range }),
 
   resetFilters: () =>
     set({
       selectedMaterials: [],
       selectedColors: [],
+      selectedCompatibility: [],
       priceRange: [0, 150],
     }),
 }));

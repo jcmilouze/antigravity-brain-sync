@@ -26,6 +26,8 @@ export interface Product {
   rating: number;
   reviewCount: number;
   tags?: string[];
+  stock: number;
+  compatibility: string[];
 }
 
 export interface Review {
