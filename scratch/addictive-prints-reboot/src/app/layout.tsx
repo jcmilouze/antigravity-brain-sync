@@ -1,38 +1,22 @@
-import type { Metadata } from "next";
-import { Outfit, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import Navbar from "@/components/Navbar";
-
-const outfit = Outfit({
-  variable: "--font-outfit",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-  display: "swap",
-});
+import type { Metadata } from 'next';
+import { Header } from '@/components/Header';
+import './globals.css';
 
 export const metadata: Metadata = {
-  title: "Addictive Prints | Industrial Precision",
-  description: "Accessoires pour artisans et bricoleurs exigeants. Précision, Durabilité, Confort.",
+  title: 'Addictive Prints | Précision Addictive',
+  description: 'Accessoires pour artisans et bricoleurs exigeants. Où l\'artisanat rencontre la technologie.',
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html
-      lang="fr"
-      className={`${outfit.variable} ${geistMono.variable} antialiased`}
-    >
-      <body className="bg-zinc-950 text-zinc-50 min-h-screen flex flex-col">
-        <Navbar />
-        {children}
+    <html lang="fr">
+      <body>
+        <Header />
+        <main className="pt-16">{children}</main>
       </body>
     </html>
   );
