@@ -1,14 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  --color-primary: #00D4FF;
-  --color-secondary: #7C3AED;
-  --color-accent: #FF006E;
-  --color-highlight: #FBBF24;
-  --color-background: #1A1A2E;
-  --color-surface: rgba(255, 255, 255, 0.05);
-  --color-text: #FFFFFF;
-  --color-text-muted: #A0A0B0;
+  --color-primary: 190 203 177;
+  --color-primary-container: 136 149 125;
+  --color-background: 19 19 19;
+  --color-surface-container: 31 31 31;
+  --color-surface-container-high: 42 42 42;
+  --color-surface-container-highest: 53 53 53;
+  --color-on-surface: 226 226 226;
+  --color-on-surface-variant: 197 199 190;
+  --color-outline: 143 146 137;
+  --color-outline-variant: 69 72 64;
+  --color-tertiary: 194 201 188;
+  --color-inverse-primary: 86 98 77;
 
   --spacing-xs: 4px;
   --spacing-sm: 8px;
@@ -35,8 +39,8 @@ html {
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: var(--color-background);
-  color: var(--color-text);
+  background: rgb(var(--color-background));
+  color: rgb(var(--color-on-surface));
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -45,15 +49,45 @@ body {
 /* Tailwind config integration */
 @layer components {
   .btn-primary {
-    @apply px-6 py-3 rounded-lg bg-gradient-to-r from-[#00D4FF] to-[#7C3AED] text-white font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/30;
+    @apply bg-primary text-on-primary uppercase tracking-widest px-6 py-3 rounded-sm font-semibold hover:bg-primary-container transition;
   }
 
   .btn-secondary {
-    @apply px-6 py-3 rounded-lg border border-[#00D4FF] text-[#00D4FF] font-semibold transition-all duration-300 hover:bg-[#00D4FF] hover:text-[#1A1A2E];
+    @apply border border-outline text-on-surface-variant hover:border-primary px-6 py-3 rounded-sm uppercase transition;
   }
 
   .card {
-    @apply bg-[rgba(255,255,255,0.05)] border border-[rgba(124,58,237,0.3)] rounded-xl p-6 transition-all duration-300 hover:border-[#00D4FF] hover:shadow-lg hover:shadow-cyan-500/20;
+    @apply bg-surface-container border border-outline-variant rounded-sm hover:border-primary transition;
+  }
+
+  .bg-dot-pattern {
+    background: radial-gradient(circle, rgb(var(--color-on-surface-variant)) 1px, transparent 1px);
+    background-size: 24px 24px;
+    opacity: 0.1;
+  }
+
+  .img-grayscale {
+    @apply grayscale transition-all duration-500 hover:grayscale-0;
+  }
+
+  .nav-link {
+    @apply text-on-surface-variant hover:text-on-surface uppercase text-sm tracking-widest transition;
+  }
+
+  .nav-link-active {
+    @apply text-primary border-b border-primary;
+  }
+
+  .badge-in-stock {
+    @apply bg-primary text-on-primary px-2 py-1 rounded-sm text-xs font-semibold;
+  }
+
+  .badge-price {
+    @apply bg-primary-container text-on-surface px-2 py-1 rounded-sm text-xs font-semibold;
+  }
+
+  .icon-default {
+    @apply text-on-surface-variant;
   }
 
   .section {
@@ -71,14 +105,14 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-background);
+  background: rgb(var(--color-background));
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-secondary);
+  background: rgb(var(--color-primary-container));
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-primary);
+  background: rgb(var(--color-primary));
 }

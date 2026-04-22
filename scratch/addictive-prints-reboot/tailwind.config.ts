@@ -8,12 +8,18 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'cyber-primary': '#00D4FF',
-        'cyber-secondary': '#7C3AED',
-        'cyber-accent': '#FF006E',
-        'cyber-highlight': '#FBBF24',
-        'cyber-background': '#1A1A2E',
-        'cyber-surface': 'rgba(255, 255, 255, 0.05)',
+        primary: 'rgb(var(--color-primary) / <alpha-value>)',
+        'primary-container': 'rgb(var(--color-primary-container) / <alpha-value>)',
+        background: 'rgb(var(--color-background) / <alpha-value>)',
+        'surface-container': 'rgb(var(--color-surface-container) / <alpha-value>)',
+        'surface-container-high': 'rgb(var(--color-surface-container-high) / <alpha-value>)',
+        'surface-container-highest': 'rgb(var(--color-surface-container-highest) / <alpha-value>)',
+        'on-surface': 'rgb(var(--color-on-surface) / <alpha-value>)',
+        'on-surface-variant': 'rgb(var(--color-on-surface-variant) / <alpha-value>)',
+        outline: 'rgb(var(--color-outline) / <alpha-value>)',
+        'outline-variant': 'rgb(var(--color-outline-variant) / <alpha-value>)',
+        tertiary: 'rgb(var(--color-tertiary) / <alpha-value>)',
+        'inverse-primary': 'rgb(var(--color-inverse-primary) / <alpha-value>)',
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
