@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 
 export function FeaturedProducts() {
   return (
-    <section className="section">
+    <section className="section bg-background">
       <motion.div
         className="mb-12"
         initial={{ opacity: 0 }}
@@ -14,12 +14,10 @@ export function FeaturedProducts() {
         transition={{ duration: 0.6 }}
         viewport={{ once: true }}
       >
-        <h2 className="text-4xl font-bold mb-4">
-          <span className="bg-gradient-to-r from-[#00D4FF] to-[#7C3AED] bg-clip-text text-transparent">
-            Coup de Cœur
-          </span>
+        <h2 className="text-4xl font-bold mb-4 text-primary">
+          Coup de Cœur
         </h2>
-        <p className="text-[#A0A0B0] text-lg">
+        <p className="text-on-surface-variant text-lg">
           Nos produits les plus appréciés par les artisans exigeants
         </p>
       </motion.div>

@@ -12,7 +12,7 @@ interface ColorPickerProps {
 export function ColorPicker({ colors, selected, onSelect }: ColorPickerProps) {
   return (
     <div className="flex items-center gap-4">
-      <label className="text-white font-semibold">Couleur:</label>
+      <label className="text-on-surface font-semibold">Couleur:</label>
       <div className="flex gap-3">
         {colors.map(color => (
           <motion.button
@@ -20,8 +20,8 @@ export function ColorPicker({ colors, selected, onSelect }: ColorPickerProps) {
             onClick={() => onSelect(color.hex)}
             className={`w-12 h-12 rounded-full border-2 transition-all ${
               selected === color.hex
-                ? 'border-[#00D4FF] scale-110'
-                : 'border-[rgba(255,255,255,0.2)] hover:border-[#00D4FF]'
+                ? 'border-primary scale-110'
+                : 'border-outline-variant hover:border-primary'
             }`}
             style={{ backgroundColor: color.hex }}
             whileHover={{ scale: 1.1 }}

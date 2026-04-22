@@ -17,28 +17,28 @@ export function MaterialSelector({
 }: MaterialSelectorProps) {
   return (
     <div>
-      <label className="text-white font-semibold block mb-4">Matériau:</label>
+      <label className="text-on-surface font-semibold block mb-4">Matériau:</label>
       <div className="flex flex-col gap-3">
         {materials.map(material => (
           <motion.button
             key={material.id}
             onClick={() => onSelect(material.id)}
-            className={`p-4 rounded-lg border-2 text-left transition-all ${
+            className={`p-4 rounded-sm border-2 text-left transition-all ${
               selected === material.id
-                ? 'border-[#00D4FF] bg-[rgba(0,212,255,0.1)]'
-                : 'border-[rgba(124,58,237,0.3)] hover:border-[#00D4FF]'
+                ? 'border-primary bg-surface-container-high'
+                : 'border-outline-variant hover:border-primary'
             }`}
             whileHover={{ x: 4 }}
             whileTap={{ x: 0 }}
           >
             <div className="flex items-center justify-between">
               <div>
-                <div className="font-semibold text-white">{material.name}</div>
-                <div className="text-[#A0A0B0] text-sm">{material.description}</div>
+                <div className="font-semibold text-on-surface">{material.name}</div>
+                <div className="text-on-surface-variant text-sm">{material.description}</div>
               </div>
               {material.priceAddon ? (
                 material.priceAddon > 0 && (
-                  <div className="text-[#FBBF24] font-semibold">
+                  <div className="text-primary font-semibold">
                     +{formatPrice(material.priceAddon)}
                   </div>
                 )

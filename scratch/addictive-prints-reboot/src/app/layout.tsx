@@ -20,7 +20,7 @@ export default function RootLayout({
       </head>
       <body style={{ fontFamily: "'Inter', sans-serif" }}>
         <Header />
-        <main className="pt-16">{children}</main>
+        <main>{children}</main>
       </body>
     </html>
   );

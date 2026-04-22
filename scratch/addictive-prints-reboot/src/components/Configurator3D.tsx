@@ -34,7 +34,7 @@ export function Configurator3D() {
   };
 
   return (
-    <section className="section">
+    <section className="section bg-background">
       <motion.div
         className="mb-12"
         initial={{ opacity: 0 }}
@@ -42,12 +42,10 @@ export function Configurator3D() {
         transition={{ duration: 0.6 }}
         viewport={{ once: true }}
       >
-        <h2 className="text-4xl font-bold mb-4">
-          <span className="bg-gradient-to-r from-[#00D4FF] to-[#7C3AED] bg-clip-text text-transparent">
-            Personnalisez Votre Produit
-          </span>
+        <h2 className="text-4xl font-bold mb-4 text-primary">
+          Personnalisez Votre Produit
         </h2>
-        <p className="text-[#A0A0B0] text-lg">
+        <p className="text-on-surface-variant text-lg">
           Explorez les possibilités avec notre configurateur 3D
         </p>
       </motion.div>
@@ -55,13 +53,13 @@ export function Configurator3D() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* 3D Preview */}
         <motion.div
-          className="h-96 rounded-xl border border-[rgba(124,58,237,0.3)] overflow-hidden"
+          className="h-96 rounded-lg card overflow-hidden"
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <Suspense fallback={<div className="w-full h-full bg-[#0F0F1E]" />}>
+          <Suspense fallback={<div className="w-full h-full bg-surface-container-highest" />}>
             <ConfiguratorScene color={selectedColor} />
           </Suspense>
         </motion.div>
@@ -76,11 +74,11 @@ export function Configurator3D() {
         >
           {/* Product Selector */}
           <div>
-            <label className="text-white font-semibold block mb-4">Produit:</label>
+            <label className="text-on-surface font-semibold block mb-4">Produit:</label>
             <select
               value={selectedProductId}
               onChange={(e) => setSelectedProductId(e.target.value)}
-              className="w-full p-3 rounded-lg bg-[rgba(255,255,255,0.05)] border border-[rgba(124,58,237,0.3)] text-white focus:outline-none focus:border-[#00D4FF]"
+              className="w-full p-3 rounded-sm bg-surface-container border border-outline-variant text-on-surface focus:outline-none focus:border-primary"
             >
               {PRODUCTS.map(p => (
                 <option key={p.id} value={p.id}>
@@ -105,10 +103,10 @@ export function Configurator3D() {
           />
 
           {/* Price & CTA */}
-          <div className="border-t border-[rgba(124,58,237,0.3)] pt-8 mt-auto">
+          <div className="border-t border-outline-variant pt-8 mt-auto">
             <div className="mb-6">
-              <span className="text-[#A0A0B0] text-sm">Prix total:</span>
-              <div className="text-4xl font-bold bg-gradient-to-r from-[#00D4FF] to-[#7C3AED] bg-clip-text text-transparent">
+              <span className="text-on-surface-variant text-sm">Prix total:</span>
+              <div className="text-4xl font-bold text-primary">
                 {formatPrice(totalPrice)}
               </div>
             </div>
@@ -128,7 +126,7 @@ export function Configurator3D() {
       {/* Toast */}
       {addedNotif && (
         <motion.div
-          className="fixed bottom-8 right-8 bg-[#00D4FF] text-[#1A1A2E] px-6 py-3 rounded-lg font-semibold"
+          className="fixed bottom-8 right-8 bg-primary text-on-surface px-6 py-3 rounded-sm font-semibold z-50"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 20 }}

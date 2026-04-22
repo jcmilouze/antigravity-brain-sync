@@ -2,7 +2,6 @@
 
 import { Product } from '@/lib/types';
 import { motion } from 'framer-motion';
-import { ShoppingCart, Star } from 'lucide-react';
 import { formatPrice } from '@/lib/utils';
 import { useCartStore } from '@/lib/store';
 import { useState } from 'react';
@@ -30,71 +29,53 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
 
   return (
     <motion.div
-      className="card h-full flex flex-col overflow-hidden"
+      className="card p-4 h-full flex flex-col overflow-hidden"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1 }}
       viewport={{ once: true }}
     >
       {/* Image */}
-      <div className="relative h-64 overflow-hidden bg-[rgba(0,212,255,0.1)] rounded-lg mb-4">
+      <div className="relative h-48 overflow-hidden mb-3">
         {product.image && (
           <Image
             src={product.image}
             alt={product.name}
             fill
-            className="object-cover hover:scale-110 transition-transform duration-300"
+            className="img-grayscale w-full h-full object-cover rounded-sm"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         )}
-        {product.tags && product.tags.length > 0 && (
-          <div className="absolute top-3 left-3 flex flex-col gap-2">
-            {product.tags.map(tag => (
-              <span
-                key={tag}
-                className="bg-[#FF006E] text-white text-xs font-semibold px-3 py-1 rounded-full"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
+        {product.stock > 0 && (
+          <span className="badge-in-stock absolute top-2 right-2">In Stock</span>
+        )}
+        {product.stock === 0 && (
+          <span className="absolute top-2 right-2 bg-outline text-on-surface-variant px-2 py-1 rounded-sm text-xs uppercase">Out of Stock</span>
         )}
       </div>
 
       {/* Content */}
-      <div className="flex-1 flex flex-col">
-        <h3 className="text-lg font-semibold text-white mb-2">{product.name}</h3>
-        <p className="text-[#A0A0B0] text-sm mb-4 flex-1">{product.description}</p>
+      <div className="flex-1 flex flex-col space-y-3">
+        <h3 className="font-semibold text-on-surface text-sm">{product.name}</h3>
+        <p className="text-on-surface-variant text-xs flex-1">{product.description}</p>
 
         {/* Rating */}
-        <div className="flex items-center gap-2 mb-4">
-          <div className="flex items-center gap-1">
-            {[...Array(5)].map((_, i) => (
-              <Star
-                key={i}
-                size={16}
-                className={
-                  i < Math.floor(product.rating)
-                    ? 'fill-[#FBBF24] text-[#FBBF24]'
-                    : 'text-[#404050]'
-                }
-              />
-            ))}
-          </div>
-          <span className="text-[#A0A0B0] text-sm">({product.reviewCount})</span>
+        <div className="flex items-center gap-1">
+          <span className="material-symbols-outlined material-symbols-sm text-primary">star</span>
+          <span className="text-sm text-on-surface-variant">{product.rating} ({product.reviewCount})</span>
         </div>
 
         {/* Price & CTA */}
-        <div className="flex items-center justify-between mt-auto">
-          <span className="text-2xl font-bold bg-gradient-to-r from-[#00D4FF] to-[#7C3AED] bg-clip-text text-transparent">
-            {formatPrice(product.price)}
-          </span>
+        <div className="flex items-center justify-between gap-2 mt-auto">
+          <span className="text-lg font-bold text-on-surface">${formatPrice(product.price)}</span>
           <motion.button
             onClick={handleAddToCart}
-            className="p-3 bg-[#FF006E] hover:bg-[#FF006E]/80 text-white rounded-lg transition-colors"
-            whileHover={{ scale: 1.1 }}
+            className="btn-primary flex-1 text-xs py-2 flex items-center justify-center gap-1"
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <ShoppingCart size={20} />
+            <span className="material-symbols-outlined material-symbols-sm">shopping_cart</span>
+            Add
           </motion.button>
         </div>
       </div>
@@ -102,7 +83,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
       {/* Toast Notification */}
       {showNotification && (
         <motion.div
-          className="fixed bottom-8 right-8 bg-[#00D4FF] text-[#1A1A2E] px-6 py-3 rounded-lg font-semibold"
+          className="fixed bottom-8 right-8 bg-primary text-on-surface px-6 py-3 rounded-sm font-semibold z-50"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 20 }}
