@@ -37,6 +37,7 @@ mcp_config.json*
 # scratch/ (Allow selective folders)
 scratch/*
 !scratch/antigravity-vscode-sync/
+!scratch/addictive-prints-reboot/
 
 extension/node_modules/
 extension/dist/
